@@ -10,8 +10,8 @@ using UrbanDictionary.DataAccess.Data;
 namespace UrbanDictionary.DataAccess.Migrations
 {
     [DbContext(typeof(UrbanDictionaryDBContext))]
-    [Migration("20200411181017_rename_tables")]
-    partial class rename_tables
+    [Migration("20200411182444_rename-back")]
+    partial class renameback
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -236,7 +236,7 @@ namespace UrbanDictionary.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tag");
+                    b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("UrbanDictionary.DataAccess.Entities.UserSavedWord", b =>
@@ -258,7 +258,7 @@ namespace UrbanDictionary.DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserSavedWord");
+                    b.ToTable("UserSavedWords");
                 });
 
             modelBuilder.Entity("UrbanDictionary.DataAccess.Entities.Word", b =>
@@ -301,7 +301,7 @@ namespace UrbanDictionary.DataAccess.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.ToTable("Word");
+                    b.ToTable("Words");
                 });
 
             modelBuilder.Entity("UrbanDictionary.DataAccess.Entities.WordTag", b =>
@@ -323,7 +323,7 @@ namespace UrbanDictionary.DataAccess.Migrations
 
                     b.HasIndex("WordId");
 
-                    b.ToTable("WordTag");
+                    b.ToTable("WordTags");
                 });
 
             modelBuilder.Entity("UrbanDictionary.DataAccess.Entities.User", b =>

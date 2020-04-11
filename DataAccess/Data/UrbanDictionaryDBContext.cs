@@ -15,7 +15,7 @@ namespace UrbanDictionary.DataAccess.Data
         }
 
         public DbSet<User> Users { get; set; }
-        public DbSet<Word> Word { get; set; }
+        public DbSet<Word> Words { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<WordTag> WordTags { get; set; }
         public DbSet<UserSavedWord> UserSavedWords { get; set; }

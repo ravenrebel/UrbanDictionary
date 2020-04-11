@@ -5,7 +5,6 @@ using System.Text;
 
 namespace UrbanDictionary.DataAccess.Entities
 {
-    [Table("UserSavedWord")]
     public class UserSavedWord : BaseEntity
     {
         public string UserId { get; set; }

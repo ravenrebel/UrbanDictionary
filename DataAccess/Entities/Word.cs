@@ -6,7 +6,6 @@ using System.Text;
 
 namespace UrbanDictionary.DataAccess.Entities
 {
-    [Table("Word")]
     public class Word : BaseEntity
     {
         [Required]
