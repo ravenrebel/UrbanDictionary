@@ -4,24 +4,21 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using UrbanDictionary.DataAccess.Entities;
+using UrbanDictionary.DataAccess.Repositories.Contracts;
 
 namespace UrbanDictionary.Controllers
 {
     [ApiController]
-    [Route("api/test")]
-    public class Test : ControllerBase
+    [Route("api/home")]
+    public class HomeController : ControllerBase
     {
-        private readonly ILogger<Test> _logger;
+        private readonly IRepositoryWrapper _repoWrapper;
 
-        public Test(ILogger<Test> logger)
+        public HomeController( IRepositoryWrapper repoWrapper)
         {
-            _logger = logger;
+            _repoWrapper = repoWrapper;
         }
 
-        [HttpGet]
-        public string Get()
-        {
-            return "The best dictionary ever";
-        }
     }
 }

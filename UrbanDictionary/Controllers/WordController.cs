@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.Logging;
+using UrbanDictionary.DataAccess.Entities;
 using UrbanDictionary.DataAccess.Repositories.Contracts;
+using System.IO;
 
 namespace UrbanDictionary.Controllers
 {
@@ -12,19 +15,19 @@ namespace UrbanDictionary.Controllers
     [Route("api/word")]
     public class WordController : ControllerBase
     {
-        private readonly ILogger<Test> _logger;
+        private readonly ILogger<Word> _logger;
         private readonly IRepositoryWrapper _repoWrapper;
 
-        public WordController(ILogger<Test> logger, IRepositoryWrapper repoWrapper)
+        public WordController(ILogger<Word> logger, IRepositoryWrapper repoWrapper)
         {
             _logger = logger;
             _repoWrapper = repoWrapper;
         }
 
         [HttpGet]
-        public string Get()
+        public IEnumerable<Word> Get()
         {
-            return "The best dictionary ever";
+            return _repoWrapper.Word.FindAll().ToList();
         }
     }
 }

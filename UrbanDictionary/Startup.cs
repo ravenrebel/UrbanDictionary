@@ -10,6 +10,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using UrbanDictionary.DataAccess.Data;
 using UrbanDictionary.DataAccess.Entities;
+using UrbanDictionary.DataAccess.Repositories;
+using UrbanDictionary.DataAccess.Repositories.Contracts;
 
 namespace UrbanDictionary
 {
@@ -31,7 +33,10 @@ namespace UrbanDictionary
                     .AddEntityFrameworkStores<UrbanDictionaryDBContext>()
                     .AddDefaultTokenProviders();
 
+            services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
             services.AddControllersWithViews();
+
+
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {

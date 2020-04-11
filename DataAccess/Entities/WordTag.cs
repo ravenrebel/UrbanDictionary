@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace UrbanDictionary.DataAccess.Entities
 {
+    [Table("WordTag")]
    public class WordTag : BaseEntity
     {
         public long WordId { get; set; }

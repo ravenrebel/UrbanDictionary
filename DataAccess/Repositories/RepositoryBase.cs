@@ -6,6 +6,8 @@ using System.Linq.Expressions;
 using UrbanDictionary.DataAccess.Repositories.Contracts;
 using UrbanDictionary.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
+
 
 namespace UrbanDictionary.DataAccess.Repositories
 {

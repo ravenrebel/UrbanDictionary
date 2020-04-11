@@ -16,6 +16,11 @@ namespace UrbanDictionary.DataAccess.Repositories
         private IWordRepository _word;
         private UrbanDictionaryDBContext _dbContext;
 
+        public RepositoryWrapper(UrbanDictionaryDBContext urbanDictionaryDBContext)
+        {
+            _dbContext = urbanDictionaryDBContext;
+        }
+
         public IUserRepository User
         {
             get
@@ -54,6 +59,7 @@ namespace UrbanDictionary.DataAccess.Repositories
                 return _tag;
             }
         }
+
 
         public void Save()
         {

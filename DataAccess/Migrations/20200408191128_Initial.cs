@@ -7,6 +7,8 @@ namespace UrbanDictionary.DataAccess.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.Sql("ALTER DATABASE UrbanDictionaryDB COLLATE SQL_Ukrainian_CP1251_CI_AS", suppressTransaction: true);
+
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
