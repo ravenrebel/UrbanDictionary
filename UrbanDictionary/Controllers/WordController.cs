@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.Logging;
+using UrbanDictionary.BussinessLayer.Services.Contracts;
 using UrbanDictionary.DataAccess.Entities;
-using UrbanDictionary.DataAccess.Repositories.Contracts;
-using System.IO;
 
 namespace UrbanDictionary.Controllers
 {
@@ -16,18 +15,18 @@ namespace UrbanDictionary.Controllers
     public class WordController : ControllerBase
     {
         private readonly ILogger<Word> _logger;
-        private readonly IRepositoryWrapper _repoWrapper;
+        private readonly IServiceWrapper _serviceWrapper;
 
-        public WordController(ILogger<Word> logger, IRepositoryWrapper repoWrapper)
+        public WordController(ILogger<Word> logger, IServiceWrapper serviceWrapper)
         {
             _logger = logger;
-            _repoWrapper = repoWrapper;
+            _serviceWrapper = serviceWrapper;
         }
 
         [HttpGet]
         public IEnumerable<Word> Get()
         {
-            return _repoWrapper.Word.FindAll().ToList();
+            return _serviceWrapper.Word.GetAll();
         }
     }
 }

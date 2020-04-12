@@ -11,6 +11,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using UrbanDictionary.BussinessLayer.Services;
+using UrbanDictionary.BussinessLayer.Services.Contracts;
 using UrbanDictionary.DataAccess.Data;
 using UrbanDictionary.DataAccess.Entities;
 using UrbanDictionary.DataAccess.Repositories;
@@ -57,6 +59,7 @@ namespace UrbanDictionary
         public void ConfigureContainer(ContainerBuilder builder)
         {
             builder.RegisterType<RepositoryWrapper>().As<IRepositoryWrapper>();
+            builder.RegisterType<ServiceWrapper>().As<IServiceWrapper>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
