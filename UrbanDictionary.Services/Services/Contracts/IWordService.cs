@@ -1,11 +1,14 @@
 ﻿
 using System.Collections.Generic;
-using UrbanDictionary.DataAccess.Entities;
+using UrbanDictionary.BussinessLayer.DTO;
+
 
 namespace UrbanDictionary.BussinessLayer.Services.Contracts
 {
     public interface IWordService
     {
-        public IEnumerable<Word> GetAll();
+        public IEnumerable<WordDTO> GetAll();
+
+
     }
 }

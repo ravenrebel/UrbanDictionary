@@ -11,12 +11,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using UrbanDictionary.BussinessLayer.DTO;
+using UrbanDictionary.BussinessLayer.DTO.Mapper;
 using UrbanDictionary.BussinessLayer.Services;
 using UrbanDictionary.BussinessLayer.Services.Contracts;
 using UrbanDictionary.DataAccess.Data;
 using UrbanDictionary.DataAccess.Entities;
 using UrbanDictionary.DataAccess.Repositories;
 using UrbanDictionary.DataAccess.Repositories.Contracts;
+
 
 namespace UrbanDictionary
 {
@@ -60,6 +63,8 @@ namespace UrbanDictionary
         {
             builder.RegisterType<RepositoryWrapper>().As<IRepositoryWrapper>();
             builder.RegisterType<ServiceWrapper>().As<IServiceWrapper>();
+            builder.RegisterType<WordServiceMapper>().As<IMapper<Word, WordDTO>>();
+            builder.RegisterType<TagServiceMapper>().As<IMapper<Tag, TagDTO>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

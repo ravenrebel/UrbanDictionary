@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using UrbanDictionary.DataAccess.Entities;
 
-namespace UrbanDictionary.Services
+namespace UrbanDictionary.BussinessLayer.DTO
 {
-    class TagDTO
+    public class TagDTO
     {
         public string Name { get; set; }
 

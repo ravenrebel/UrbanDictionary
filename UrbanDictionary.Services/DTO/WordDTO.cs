@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using UrbanDictionary.DataAccess.Entities;
 
-namespace UrbanDictionary.Services.DTO
+namespace UrbanDictionary.BussinessLayer.DTO
 {
-    class WordDTO
+    public class WordDTO
     {
         public string Name { get; set; }
 
@@ -25,6 +24,6 @@ namespace UrbanDictionary.Services.DTO
 
         public int DislikesCount { get; set; }
 
-        public IList<Tag> Tags { get; set; }
+        public IEnumerable<string> Tags { get; set; }
     }
 }
