@@ -1,3 +1,6 @@
+
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -24,6 +27,8 @@ namespace UrbanDictionary
 
         public IConfiguration Configuration { get; }
 
+        public ILifetimeScope AutofacContainer { get; private set; }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -33,9 +38,9 @@ namespace UrbanDictionary
                     .AddEntityFrameworkStores<UrbanDictionaryDBContext>()
                     .AddDefaultTokenProviders();
 
-            services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
-            services.AddControllersWithViews();
+            //services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
 
+            services.AddControllersWithViews();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -47,6 +52,11 @@ namespace UrbanDictionary
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "UrbanDictionary API", Version = "v1"}); 
             });
+        }
+
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.RegisterType<RepositoryWrapper>().As<IRepositoryWrapper>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

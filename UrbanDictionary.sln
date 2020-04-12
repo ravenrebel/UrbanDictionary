@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29920.165
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrbanDictionary", "UrbanDictionary\UrbanDictionary.csproj", "{3656BFC7-E692-4405-AE3C-B3ABAEAB5E24}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanDictionary", "UrbanDictionary\UrbanDictionary.csproj", "{3656BFC7-E692-4405-AE3C-B3ABAEAB5E24}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrbanDictionary.DataAccess", "DataAccess\UrbanDictionary.DataAccess.csproj", "{835FE28A-C6C2-4A59-9A35-29B6B4E643C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanDictionary.DataAccess", "DataAccess\UrbanDictionary.DataAccess.csproj", "{835FE28A-C6C2-4A59-9A35-29B6B4E643C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrbanDictionary.Services", "UrbanDictionary.Services\UrbanDictionary.Services.csproj", "{05BF8B87-F98A-4085-A662-A83A9405D65E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{835FE28A-C6C2-4A59-9A35-29B6B4E643C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{835FE28A-C6C2-4A59-9A35-29B6B4E643C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{835FE28A-C6C2-4A59-9A35-29B6B4E643C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05BF8B87-F98A-4085-A662-A83A9405D65E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05BF8B87-F98A-4085-A662-A83A9405D65E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05BF8B87-F98A-4085-A662-A83A9405D65E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05BF8B87-F98A-4085-A662-A83A9405D65E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
