@@ -12,6 +12,7 @@ namespace UrbanDictionary.DataAccess.Data
     {
         public UrbanDictionaryDBContext(DbContextOptions<UrbanDictionaryDBContext> options) : base(options)
         {
+            Database.EnsureCreated();
         }
 
         public DbSet<User> Users { get; set; }
@@ -25,6 +26,9 @@ namespace UrbanDictionary.DataAccess.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<WordTag>()
+              .HasKey(wt => new { wt.WordId, wt.TagId });
+
+            modelBuilder.Entity<WordTag>()
                .HasOne<Word>(wt => wt.Word)
                .WithMany(w => w.WordTags)
                .HasForeignKey(wt => wt.WordId);
@@ -34,6 +38,8 @@ namespace UrbanDictionary.DataAccess.Data
                 .WithMany(t => t.WordTags)
                 .HasForeignKey(wt => wt.TagId);
 
+            modelBuilder.Entity<UserSavedWord>()
+              .HasKey(uw => new { uw.UserId, uw.SavedWordId });
 
             modelBuilder.Entity<UserSavedWord>()
                .HasOne<User>(uw => uw.User)
@@ -44,6 +50,46 @@ namespace UrbanDictionary.DataAccess.Data
                 .HasOne<Word>(uw => uw.SavedWord)
                 .WithMany(w => w.UserSavedWords)
                 .HasForeignKey(uw => uw.SavedWordId);
+
+            List<Word> defaultWords = new List<Word>();
+            Random random = new Random();
+
+            for (int i = 0; i < 100; i++)
+            {
+                defaultWords.Add(new Word
+                {
+                    Id = i + 1,
+                    Name = "DefaultWordName" + random.Next(10),
+                    Definition = "Default word definition",
+                    Example = "Default word example",
+                    WordStatus = WordStatus.Сonfirmed,
+                    LikesCount = 100,
+                    DislikesCount = 31,
+                    CreationDate = default,
+                    AuthorId = "default",
+                });
+            }
+
+            modelBuilder.Entity<User>().HasData(
+            new User
+            {
+                Id = "default",
+                UserName = "DefaultUserName",
+                Email = "email@default.com",
+                EmailConfirmed = true,
+                PhoneNumber = "000000000",
+                AccessFailedCount = 0,
+                LockoutEnabled = true,
+                NormalizedEmail = "EMAIL@DEFAULT.COM",
+                LockoutEnd = default,
+                NormalizedUserName = "DEFAULTUSERNAME",
+                ConcurrencyStamp = "default",
+                PhoneNumberConfirmed = true,
+                SecurityStamp = "default",
+                TwoFactorEnabled = false,
+                PasswordHash = "defaultHash"
+            });
+            modelBuilder.Entity<Word>().HasData(defaultWords);
         }
     }
 }

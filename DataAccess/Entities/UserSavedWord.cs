@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace UrbanDictionary.DataAccess.Entities
 {
-    public class UserSavedWord : BaseEntity
+    public class UserSavedWord
     {
         public string UserId { get; set; }
+        [ForeignKey("UserId")]
         public User User { get; set; }
 
-        public long SavedWordId { get; set; }
+        public long SavedWordId { get; set; }  
+        [ForeignKey("SavedWordId")]
         public Word SavedWord { get; set; }
     }
 }
