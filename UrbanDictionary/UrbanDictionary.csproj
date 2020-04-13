@@ -41,8 +41,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BussinessLayer\UrbanDictionary.BussinessLayer.csproj" />
     <ProjectReference Include="..\DataAccess\UrbanDictionary.DataAccess.csproj" />
-    <ProjectReference Include="..\UrbanDictionary.Services\UrbanDictionary.BussinessLayer.csproj" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

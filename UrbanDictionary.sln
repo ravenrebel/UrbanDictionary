@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanDictionary", "UrbanDic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanDictionary.DataAccess", "DataAccess\UrbanDictionary.DataAccess.csproj", "{835FE28A-C6C2-4A59-9A35-29B6B4E643C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrbanDictionary.BussinessLayer", "UrbanDictionary.Services\UrbanDictionary.BussinessLayer.csproj", "{05BF8B87-F98A-4085-A662-A83A9405D65E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanDictionary.BussinessLayer", "BussinessLayer\UrbanDictionary.BussinessLayer.csproj", "{7600C3B8-E36A-49E2-BB9F-504ACD1240EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{835FE28A-C6C2-4A59-9A35-29B6B4E643C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{835FE28A-C6C2-4A59-9A35-29B6B4E643C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{835FE28A-C6C2-4A59-9A35-29B6B4E643C0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{05BF8B87-F98A-4085-A662-A83A9405D65E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{05BF8B87-F98A-4085-A662-A83A9405D65E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{05BF8B87-F98A-4085-A662-A83A9405D65E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{05BF8B87-F98A-4085-A662-A83A9405D65E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7600C3B8-E36A-49E2-BB9F-504ACD1240EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7600C3B8-E36A-49E2-BB9F-504ACD1240EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7600C3B8-E36A-49E2-BB9F-504ACD1240EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7600C3B8-E36A-49E2-BB9F-504ACD1240EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
