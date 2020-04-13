@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UrbanDictionary.DataAccess.Entities;
 using UrbanDictionary.DataAccess.Repositories.Contracts;
-using UrbanDictionary.Services.DTO;
+
 
 namespace UrbanDictionary.BussinessLayer.DTO.Mapper
 {

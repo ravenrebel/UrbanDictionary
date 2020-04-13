@@ -9,6 +9,6 @@ namespace UrbanDictionary.BussinessLayer.Services.Contracts
     {
         public IEnumerable<WordDTO> GetAll();
 
-
+        public WordDTO GetRandom();
     }
 }

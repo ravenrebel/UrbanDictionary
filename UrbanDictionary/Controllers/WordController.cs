@@ -13,7 +13,7 @@ using UrbanDictionary.DataAccess.Entities;
 namespace UrbanDictionary.Controllers
 {
     [ApiController]
-    [Route("api/word")]
+    [Route("api/words")]
     public class WordController : ControllerBase
     {
         private readonly ILogger<Word> _logger;
@@ -29,6 +29,12 @@ namespace UrbanDictionary.Controllers
         public IEnumerable<WordDTO> Get()
         {
             return _serviceWrapper.Word.GetAll();
+        }
+
+        [HttpGet("getRandomWord")]
+        public WordDTO GetRandom()
+        {
+            return _serviceWrapper.Word.GetRandom();
         }
     }
 }

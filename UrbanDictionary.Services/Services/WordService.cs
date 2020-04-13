@@ -27,5 +27,10 @@ namespace UrbanDictionary.BussinessLayer.Services
         {
             return _mapper.MapToDTO(_repoWrapper.Word.FindAll().ToList());
         }
+
+        public WordDTO GetRandom()
+        {
+            return _mapper.MapToDTO(_repoWrapper.Word.GetRandom());
+        }
     }
 }

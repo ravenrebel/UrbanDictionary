@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using UrbanDictionary.DataAccess.Entities;
 using UrbanDictionary.DataAccess.Repositories.Contracts;
-using UrbanDictionary.Services;
+
 
 namespace UrbanDictionary.BussinessLayer.DTO.Mapper
 {
