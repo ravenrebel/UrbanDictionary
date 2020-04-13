@@ -12,9 +12,17 @@ namespace UrbanDictionary.DataAccess.Repositories
 {
     public class WordRepository : RepositoryBase<Word>, IWordRepository
     {
+        private readonly UrbanDictionaryDBContext _context;
+
         public WordRepository(UrbanDictionaryDBContext dbContext)
             : base(dbContext)
         {
+            _context = dbContext;
+        }
+
+        public Word GetRandom()
+        {
+            return _context.Words.OrderBy(w => Guid.NewGuid()).First();
         }
     }
 }
