@@ -1,0 +1,7 @@
+.random-word-back{
+    background-image: url('../../img/fonForWordOnMainPage.jpg');
+    background-repeat: no-repeat;background-size: 100% 100%;
+    width: 100%;height: 100%;
+    background-position: center;padding: 
+    5% 10%;padding-left: 6%;
+}
