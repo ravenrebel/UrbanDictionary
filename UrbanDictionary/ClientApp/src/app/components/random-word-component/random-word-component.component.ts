@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { WordDTO } from 'src/app/model/word-dto';
+import { WordService } from 'src/app/service/word.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-random-word-component',
@@ -7,9 +10,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RandomWordComponentComponent implements OnInit {
 
-  constructor() { }
+  randomWord: WordDTO;
+
+  constructor(
+    private route: ActivatedRoute,
+    private wordService: WordService,
+    private router: Router) { }
 
   ngOnInit(): void {
+    this.wordService.getRandom().subscribe(word =>
+    {
+      this.randomWord = word;
+    });
   }
 
 }
