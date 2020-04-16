@@ -14,6 +14,7 @@ import { TopWordsComponentComponent } from './components/top-words-component/top
 import { RandomWordComponentComponent } from './components/random-word-component/random-word-component.component';
 import { WordComponentComponent } from './components/word-component/word-component.component';
 import { NotFoundPageComponentComponent } from './components/not-found-page-component/not-found-page-component.component';
+import {WordService} from './service/word.service';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,9 @@ import { NotFoundPageComponentComponent } from './components/not-found-page-comp
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    WordService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -7,7 +7,6 @@ using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.Logging;
 using UrbanDictionary.BussinessLayer.DTO;
 using UrbanDictionary.BussinessLayer.Services.Contracts;
-using UrbanDictionary.DataAccess.Entities;
 
 
 namespace UrbanDictionary.Controllers
@@ -16,10 +15,10 @@ namespace UrbanDictionary.Controllers
     [Route("api/words")]
     public class WordController : ControllerBase
     {
-        private readonly ILogger<Word> _logger;
+        private readonly ILogger<WordDTO> _logger;
         private readonly IServiceWrapper _serviceWrapper;
 
-        public WordController(ILogger<Word> logger, IServiceWrapper serviceWrapper)
+        public WordController(ILogger<WordDTO> logger, IServiceWrapper serviceWrapper)
         {
             _logger = logger;
             _serviceWrapper = serviceWrapper;
