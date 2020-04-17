@@ -5,7 +5,7 @@ using UrbanDictionary.DataAccess.Entities;
 using UrbanDictionary.DataAccess.Repositories.Contracts;
 
 
-namespace UrbanDictionary.BussinessLayer.DTO.Mapper
+namespace UrbanDictionary.BusinessLayer.DTO.Mapper
 {
     public class TagServiceMapper : IMapper<Tag, TagDTO>
     {

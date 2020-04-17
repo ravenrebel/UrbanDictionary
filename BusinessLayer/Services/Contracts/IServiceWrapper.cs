@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace UrbanDictionary.BussinessLayer.Services.Contracts
+namespace UrbanDictionary.BusinessLayer.Services.Contracts
 {
     public interface IServiceWrapper
     {

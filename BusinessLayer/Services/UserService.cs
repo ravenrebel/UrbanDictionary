@@ -1,10 +1,10 @@
 ﻿
 using System.Linq;
-using UrbanDictionary.BussinessLayer.Services.Contracts;
+using UrbanDictionary.BusinessLayer.Services.Contracts;
 using UrbanDictionary.DataAccess.Entities;
 using UrbanDictionary.DataAccess.Repositories.Contracts;
 
-namespace UrbanDictionary.BussinessLayer.Services
+namespace UrbanDictionary.BusinessLayer.Services
 {
     public class UserService : IUserService
     {

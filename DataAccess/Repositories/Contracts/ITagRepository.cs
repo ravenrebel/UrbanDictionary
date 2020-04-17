@@ -9,5 +9,6 @@ namespace UrbanDictionary.DataAccess.Repositories.Contracts
 {
     public interface ITagRepository : IRepositoryBase<Tag>
     {
+        IEnumerable<Tag> GetByWordId(long id);
     }
 }

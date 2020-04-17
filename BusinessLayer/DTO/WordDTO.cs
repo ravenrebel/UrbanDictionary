@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UrbanDictionary.DataAccess.Entities;
 
-namespace UrbanDictionary.BussinessLayer.DTO
+namespace UrbanDictionary.BusinessLayer.DTO
 {
     public class WordDTO
     {
+        public long Id { get; set; }
+        
         public string Name { get; set; }
 
         public string Definition { get; set; }

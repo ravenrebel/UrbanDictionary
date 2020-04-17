@@ -6,7 +6,7 @@ using UrbanDictionary.DataAccess.Entities;
 using UrbanDictionary.DataAccess.Repositories.Contracts;
 
 
-namespace UrbanDictionary.BussinessLayer.DTO.Mapper
+namespace UrbanDictionary.BusinessLayer.DTO.Mapper
 {
     public class WordServiceMapper : IMapper<Word, WordDTO>
     {
@@ -20,6 +20,7 @@ namespace UrbanDictionary.BussinessLayer.DTO.Mapper
         public WordDTO MapToDTO(Word entity)
         {
             WordDTO dto = new WordDTO();
+            dto.Id = entity.Id;
             dto.Name = entity.Name;
             dto.Definition = entity.Definition;
             dto.Example = entity.Example;
@@ -28,8 +29,8 @@ namespace UrbanDictionary.BussinessLayer.DTO.Mapper
             dto.DislikesCount = entity.DislikesCount;
             dto.CreationDate = entity.CreationDate;
             dto.WordStatus = entity.WordStatus;
-            dto.AuthorName = _repoWrapper.User.FindByCondition(u => u.Id.Equals(entity.AuthorId)).FirstOrDefault().UserName;
-            IEnumerable<string> tags = new List<string>(); // there will be join, wait for repo
+            dto.AuthorName = _repoWrapper.User.FindByCondition(u => u.Id.Equals(entity.AuthorId)).FirstOrDefault()?.UserName;
+            IEnumerable<string> tags = _repoWrapper.Tag.GetByWordId(entity.Id).Select(t => t.Name);
             dto.Tags = tags;
 
             return dto;
@@ -38,6 +39,7 @@ namespace UrbanDictionary.BussinessLayer.DTO.Mapper
         public Word MapToEntity(WordDTO dto)
         {
             Word entity = new Word();
+            entity.Id = dto.Id;
             entity.Name = dto.Name;
             entity.Definition = dto.Definition;
             entity.Example = dto.Example;
@@ -46,7 +48,7 @@ namespace UrbanDictionary.BussinessLayer.DTO.Mapper
             entity.DislikesCount = dto.DislikesCount;
             entity.CreationDate = dto.CreationDate;
             entity.WordStatus = dto.WordStatus;
-            entity.AuthorId = _repoWrapper.User.FindByCondition(u => u.UserName.Equals(dto.AuthorName)).FirstOrDefault().Id;
+            entity.AuthorId = _repoWrapper.User.FindByCondition(u => u.UserName.Equals(dto.AuthorName)).FirstOrDefault()?.Id;//We do not have authorization
 
             return entity;
         }
