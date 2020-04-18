@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 using UrbanDictionary.BusinessLayer.DTO;
 using UrbanDictionary.BusinessLayer.DTO.Mapper;
 using UrbanDictionary.BusinessLayer.Services.Contracts;
@@ -19,11 +20,6 @@ namespace UrbanDictionary.BusinessLayer.Services
         {
             _repoWrapper = repoWrapper;
             _mapper = mapper;
-        }
-
-        public bool TryCreate(string name)
-        {
-            throw new NotImplementedException();
         }
 
         public bool TryDelete(long id)

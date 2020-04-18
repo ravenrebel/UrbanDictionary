@@ -22,9 +22,9 @@ namespace UrbanDictionary.DataAccess.Repositories
 
         public IEnumerable<Tag> GetByWordId(long id)
         {
-            var tags = from t in _context.Tags
-                join wt in _context.WordTags on t.Id equals wt.TagId
-                join w in _context.Words on wt.WordId equals w.Id
+            var tags = from wt in _context.WordTags
+                where  wt.WordId.Equals(id)
+                join t in _context.Tags on wt.TagId equals t.Id
                 select t;
             return tags.ToList();
         } 

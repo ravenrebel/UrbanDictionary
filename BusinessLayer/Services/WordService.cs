@@ -38,10 +38,26 @@ namespace UrbanDictionary.BusinessLayer.Services
             return _mapper.MapToDTO(_repoWrapper.Word.FindByCondition(w => w.Name.Equals(name)).ToList());
         }
 
-        public bool TryCreate(WordDTO wordDto)//TODO: Tags adding 
+        public bool TryCreate(WordDTO wordDto)
         {
             Word word = _mapper.MapToEntity(wordDto);
             _repoWrapper.Word.Create(word);
+            foreach (string tagName in wordDto.Tags)
+            {
+                Tag tag = _repoWrapper.Tag.FindByCondition(t => t.Name.Equals(tagName)).FirstOrDefault();
+                if (tag == null)
+                {
+                    tag = new Tag();
+                    tag.Name = tagName;
+                    _repoWrapper.Tag.Create(tag);
+                }
+                else
+                {
+                    _repoWrapper.Tag.Attach(tag);
+                }
+                WordTag wordTag = new WordTag { Tag = tag, Word = word, TagId = tag.Id, WordId = word.Id };
+                _repoWrapper.WordTag.Create(wordTag);
+            }
             _repoWrapper.Save();
             return true;
         }
