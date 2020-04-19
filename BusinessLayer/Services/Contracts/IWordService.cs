@@ -8,7 +8,7 @@ namespace UrbanDictionary.BusinessLayer.Services.Contracts
     public interface IWordService
     {
         IEnumerable<WordDTO> GetAll();
-        WordDTO GetRandom();
+        IEnumerable<WordDTO> GetRandom();
         IEnumerable<WordDTO> GetByName(string name);
         bool TryCreate(WordDTO wordDto);
         bool TryDelete(long id);

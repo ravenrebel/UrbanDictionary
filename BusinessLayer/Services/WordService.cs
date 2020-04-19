@@ -28,14 +28,16 @@ namespace UrbanDictionary.BusinessLayer.Services
             return _mapper.MapToDTO(_repoWrapper.Word.FindAll().ToList());
         }
 
-        public WordDTO GetRandom()
+        public IEnumerable<WordDTO> GetRandom()
         {
-            return _mapper.MapToDTO(_repoWrapper.Word.GetRandom());
+            string name = _repoWrapper.Word.FindAll().OrderBy(w => Guid.NewGuid()).First().Name;
+            return _mapper.MapToDTO(_repoWrapper.Word.FindByCondition(w => w.Name.Equals(name)).ToList());
         }
 
         public IEnumerable<WordDTO> GetByName(string name)
         {
-            return _mapper.MapToDTO(_repoWrapper.Word.FindByCondition(w => w.Name.Equals(name)).ToList());
+            return _mapper.MapToDTO(_repoWrapper.Word.FindByCondition(w => w.Name.Equals(name))
+                .OrderByDescending(w => w.LikesCount).ThenBy(w => w.DislikesCount).ToList());
         }
 
         public bool TryCreate(WordDTO wordDto)
@@ -76,12 +78,14 @@ namespace UrbanDictionary.BusinessLayer.Services
 
         public IEnumerable<WordDTO> GetTopTen()
         {
-            throw new NotImplementedException();
+            return _mapper.MapToDTO( _repoWrapper.Word.FindAll().OrderByDescending(w => w.LikesCount)
+                .ThenBy(w => w.DislikesCount)
+                .Take(10).ToList());
         }
 
         public IEnumerable<WordDTO> GetLastTenAdded()
         {
-            throw new NotImplementedException();
+            return _mapper.MapToDTO(_repoWrapper.Word.FindAll().OrderByDescending(w => w.CreationDate).Take(10).ToList());
         }
 
         public bool TryUpdateWordStatus(long id)

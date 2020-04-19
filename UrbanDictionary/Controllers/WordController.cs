@@ -32,14 +32,28 @@ namespace UrbanDictionary.Controllers
             return Ok(_serviceWrapper.Word.GetAll());
         }
 
-        [HttpGet("getRandomWord")]
+        [HttpGet("topTen")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<WordDTO> GetRandom()
+        public ActionResult<IEnumerable<WordDTO>> GetTopTen()
+        {
+            return Ok(_serviceWrapper.Word.GetTopTen());
+        }
+
+        [HttpGet("lastTen")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult<IEnumerable<WordDTO>> GetLastTenAdded()
+        {
+            return Ok(_serviceWrapper.Word.GetLastTenAdded());
+        }
+
+        [HttpGet("randomWord")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult<IEnumerable<WordDTO>> GetRandom()
         {
             return Ok(_serviceWrapper.Word.GetRandom());
         }
         
-        [HttpGet("getWordByName/{name}")]
+        [HttpGet("search/{name}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<IEnumerable<WordDTO>> GetByName(string name)
         {

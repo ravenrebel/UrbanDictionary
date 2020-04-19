@@ -19,10 +19,5 @@ namespace UrbanDictionary.DataAccess.Repositories
         {
             _context = dbContext;
         }
-
-        public Word GetRandom()
-        {
-            return _context.Words.OrderBy(w => Guid.NewGuid()).First();
-        }
     }
 }
