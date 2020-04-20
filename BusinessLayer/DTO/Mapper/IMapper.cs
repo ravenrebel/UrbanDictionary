@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace UrbanDictionary.BussinessLayer.DTO.Mapper
+namespace UrbanDictionary.BusinessLayer.DTO.Mapper
 {
     public interface IMapper<TEntity, TDTO>
     {

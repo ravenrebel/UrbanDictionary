@@ -21,11 +21,5 @@ namespace UrbanDictionary.Controllers
             _logger = logger;
             _repoWrapper = repoWrapper;
         }
-
-        [HttpGet]
-        public string Get()
-        {
-            return "The best dictionary ever";
-        }
     }
 }

@@ -44,5 +44,10 @@ namespace UrbanDictionary.DataAccess.Repositories
         {
             this.UrbanDictionaryDBContext.Set<T>().Remove(entity);
         }
+
+        public void Attach(T entity)
+        {
+            this.UrbanDictionaryDBContext.Set<T>().Attach(entity);
+        }
     }
 }

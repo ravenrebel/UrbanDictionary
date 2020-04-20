@@ -1,12 +1,12 @@
 ﻿
-using UrbanDictionary.BussinessLayer.DTO;
-using UrbanDictionary.BussinessLayer.DTO.Mapper;
-using UrbanDictionary.BussinessLayer.Services.Contracts;
+using UrbanDictionary.BusinessLayer.DTO;
+using UrbanDictionary.BusinessLayer.DTO.Mapper;
+using UrbanDictionary.BusinessLayer.Services.Contracts;
 using UrbanDictionary.DataAccess.Entities;
 using UrbanDictionary.DataAccess.Repositories.Contracts;
 
 
-namespace UrbanDictionary.BussinessLayer.Services
+namespace UrbanDictionary.BusinessLayer.Services
 {
     public class ServiceWrapper : IServiceWrapper
     {

@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using UrbanDictionary.BussinessLayer.DTO;
-using UrbanDictionary.BussinessLayer.DTO.Mapper;
-using UrbanDictionary.BussinessLayer.Services.Contracts;
+using System.Linq;
+using UrbanDictionary.BusinessLayer.DTO;
+using UrbanDictionary.BusinessLayer.DTO.Mapper;
+using UrbanDictionary.BusinessLayer.Services.Contracts;
 using UrbanDictionary.DataAccess.Entities;
 using UrbanDictionary.DataAccess.Repositories.Contracts;
 
 
-namespace UrbanDictionary.BussinessLayer.Services
+namespace UrbanDictionary.BusinessLayer.Services
 {
     public class TagService : ITagService
     {
@@ -19,6 +20,11 @@ namespace UrbanDictionary.BussinessLayer.Services
         {
             _repoWrapper = repoWrapper;
             _mapper = mapper;
+        }
+
+        public bool TryDelete(long id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -12,7 +12,7 @@ export class WordService {
   private url = 'https://localhost:44301/api/words';
   constructor(private http: HttpClient) { }
 
-  getRandom(): Observable<WordDTO>{
-    return this.http.get<WordDTO>( this.url + '/getRandomWord');
+  getRandom(): Observable<WordDTO[]>{
+    return this.http.get<WordDTO[]>( this.url + '/randomWord');
   }
 }

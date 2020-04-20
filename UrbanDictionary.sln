@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanDictionary", "UrbanDic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanDictionary.DataAccess", "DataAccess\UrbanDictionary.DataAccess.csproj", "{835FE28A-C6C2-4A59-9A35-29B6B4E643C0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanDictionary.BussinessLayer", "BussinessLayer\UrbanDictionary.BussinessLayer.csproj", "{7600C3B8-E36A-49E2-BB9F-504ACD1240EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UrbanDictionary.BusinesLayer", "BusinessLayer\UrbanDictionary.BusinessLayer.csproj", "{7600C3B8-E36A-49E2-BB9F-504ACD1240EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

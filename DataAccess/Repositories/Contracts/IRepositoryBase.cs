@@ -17,5 +17,7 @@ namespace UrbanDictionary.DataAccess.Repositories.Contracts
         void Update(T entity);
 
         void Delete(T entity);
+
+        void Attach(T entity);
     }
 }

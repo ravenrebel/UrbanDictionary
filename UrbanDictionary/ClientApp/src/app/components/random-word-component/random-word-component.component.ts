@@ -20,7 +20,7 @@ export class RandomWordComponentComponent implements OnInit {
   ngOnInit(): void {
     this.wordService.getRandom().subscribe(word =>
     {
-      this.randomWord = word;
+      this.randomWord = word[0];
     });
   }
 

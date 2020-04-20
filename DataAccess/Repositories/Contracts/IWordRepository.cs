@@ -9,6 +9,5 @@ namespace UrbanDictionary.DataAccess.Repositories.Contracts
 {
     public interface IWordRepository : IRepositoryBase<Word>
     {
-        Word GetRandom();
     }
 }
