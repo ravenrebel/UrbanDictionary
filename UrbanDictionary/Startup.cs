@@ -11,6 +11,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using UrbanDictionary.BusinessLayer.DTO;
 using UrbanDictionary.BusinessLayer.DTO.Mapper;
 using UrbanDictionary.BusinessLayer.Services;
@@ -43,6 +47,15 @@ namespace UrbanDictionary
                     .AddEntityFrameworkStores<UrbanDictionaryDBContext>()
                     .AddDefaultTokenProviders();
 
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Admin",
+                    authBuilder =>
+                    {
+                        authBuilder.RequireRole("Admin");
+                    });
+            });
+
             //services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
 
             services.AddControllersWithViews();
@@ -57,7 +70,77 @@ namespace UrbanDictionary
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "UrbanDictionary API", Version = "v1"}); 
             });
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.SignIn.RequireConfirmedEmail = false;
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequireUppercase = false;
+                options.User.RequireUniqueEmail = true;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
+            });
+
+            services.AddAuthentication();
+            //.AddGoogle(options =>
+            //{
+            //    options.ClientId = Configuration.GetSection("GoogleAuthentication:GoogleClientId").Value;
+            //    options.ClientSecret = Configuration.GetSection("GoogleAuthentication:GoogleClientSecret").Value;
+            //});
+
+            services.Configure<DataProtectionTokenProviderOptions>(options =>
+                options.TokenLifespan = TimeSpan.FromHours(3));
+
+            //services.ConfigureApplicationCookie(options =>
+            //{
+            //    options.Cookie.HttpOnly = true;
+            //    options.Cookie.Expiration = TimeSpan.FromDays(5);
+            //    options.LoginPath = "/api/account/login";//??
+            //    options.LogoutPath = "/api/account/logout";//??
+            //});
         }
+
+        private async Task CreateRoles(IServiceProvider serviceProvider)
+        {
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
+
+            List<string> roles = new List<string>() { "Admin", "Moderator", "User" };
+            foreach (string role in roles)
+            {
+                if (!(await roleManager.RoleExistsAsync(role)))
+                {
+                    IdentityRole idRole = new IdentityRole
+                    {
+                        Name = role
+                    };
+
+                    var res = await roleManager.CreateAsync(idRole);
+                }
+            }
+
+            IConfigurationSection admin = Configuration.GetSection("Admin");
+            User profile = new User
+            {
+                Email = admin["Email"],
+                UserName = admin["Email"],
+                EmailConfirmed = true
+            };
+            if (await userManager.FindByEmailAsync(admin["Email"]) == null)
+            {
+                var res = await userManager.CreateAsync(profile, admin["Password"]);
+                if (res.Succeeded)
+                    await userManager.AddToRoleAsync(profile, "Admin");
+            }
+            else if (!await userManager.IsInRoleAsync(userManager.Users.First(item => item.Email == profile.Email), "Admin"))
+            {
+                var user = userManager.Users.First(item => item.Email == profile.Email);
+                await userManager.AddToRoleAsync(user, "Admin");
+            }
+        }
+
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
@@ -84,6 +167,8 @@ namespace UrbanDictionary
             app.UseHttpsRedirection();
             app.UseDefaultFiles();
             app.UseStaticFiles();
+            app.UseCookiePolicy();
+            app.UseAuthentication();
 
             if (!env.IsDevelopment())
             {
