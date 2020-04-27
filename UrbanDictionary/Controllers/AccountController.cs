@@ -56,7 +56,7 @@ namespace UrbanDictionary.Controllers
             else return BadRequest();
         }
 
-        [HttpPost("logOut")]
+        [HttpPost("signOut")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Logout()
         {
