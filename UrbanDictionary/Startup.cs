@@ -1,6 +1,7 @@
 
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -39,9 +40,17 @@ namespace UrbanDictionary
         {
             services.AddDbContextPool<UrbanDictionaryDBContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddIdentity<User, IdentityRole>()
                     .AddEntityFrameworkStores<UrbanDictionaryDBContext>()
                     .AddDefaultTokenProviders();
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                   .AddCookie(options =>
+                   {
+                       options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+                       options.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+                   });
 
             //services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
 
@@ -53,9 +62,9 @@ namespace UrbanDictionary
                 configuration.RootPath = "ClientApp/dist";
             });
 
-            services.AddSwaggerGen(c => 
+            services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "UrbanDictionary API", Version = "v1"}); 
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "UrbanDictionary API", Version = "v1" });
             });
         }
 
@@ -63,6 +72,7 @@ namespace UrbanDictionary
         {
             builder.RegisterType<RepositoryWrapper>().As<IRepositoryWrapper>();
             builder.RegisterType<ServiceWrapper>().As<IServiceWrapper>();
+            builder.RegisterType<IdentityService>().As<IIdentityService>();
             builder.RegisterType<WordServiceMapper>().As<IMapper<Word, WordDTO>>();
             builder.RegisterType<TagServiceMapper>().As<IMapper<Tag, TagDTO>>();
         }
@@ -91,6 +101,9 @@ namespace UrbanDictionary
             }
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

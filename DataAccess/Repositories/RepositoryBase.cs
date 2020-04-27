@@ -32,7 +32,7 @@ namespace UrbanDictionary.DataAccess.Repositories
 
         public void Create(T entity)
         {
-            this.UrbanDictionaryDBContext.Set<T>().Add(entity);
+            return this.UrbanDictionaryDBContext.Set<T>().Add(entity);
         }
 
         public void Update(T entity)
