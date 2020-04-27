@@ -70,7 +70,9 @@ namespace UrbanDictionary.BusinessLayer.Services
             if (word != null)
             {
                 _repoWrapper.Word.Delete(word);
+                IEnumerable<Tag> tags = _repoWrapper.Tag.GetByWordId(word.Id);
                 _repoWrapper.Save();
+
                 return true;
             }
             return false;
