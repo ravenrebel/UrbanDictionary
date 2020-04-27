@@ -9,7 +9,7 @@ import { WordDTO } from '../model/word-dto';
   providedIn: 'root'
 })
 export class WordService {
-  private url = 'https://localhost:44301/api/words';
+  private url = 'https://urbandictionary20200425161210.azurewebsites.net/api/words';
   constructor(private http: HttpClient) { }
 
   getRandom(): Observable<WordDTO[]>{
