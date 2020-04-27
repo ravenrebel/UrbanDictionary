@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -27,22 +28,32 @@ namespace UrbanDictionary.Controllers
         }
 
         [HttpPost("signUp")]
+        [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> SignUp(SignUpFormDTO signUpForm)
         {
+            User registeredUser = await _userManager.FindByEmailAsync(signUpForm.Email);
+            if (registeredUser != null)
+            {
+                return BadRequest("User is registered.");
+            }
+
             User user = new User { Email = signUpForm.Email, UserName = signUpForm.UserName };
             var result = await _userManager.CreateAsync(user, signUpForm.Password);
+
             if (result.Succeeded)
             {
-                _serviceWrapper.User.Create();
+                _serviceWrapper.User.Save();
                 await _signInManager.SignInAsync(user, false);
-                return Ok();
+                return Ok("Account created");
             }
-            else return BadRequest();
+           
+            else return BadRequest("Incorrect login or password");
         }
 
         [HttpPost("signIn")]
+        [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> SignIn(SignInFormDTO signInForm)
@@ -52,8 +63,14 @@ namespace UrbanDictionary.Controllers
             if (result.Succeeded)
             {
                 return Ok();
-            } 
-            else return BadRequest();
+            }
+
+            if (result.IsLockedOut)
+            {
+                return BadRequest("Account is locked");
+            }
+
+            else return BadRequest("Incorrect email or passwords");
         }
 
         [HttpPost("signOut")]
