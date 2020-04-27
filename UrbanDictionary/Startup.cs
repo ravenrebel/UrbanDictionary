@@ -1,6 +1,5 @@
 
 using Autofac;
-using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -68,7 +67,7 @@ namespace UrbanDictionary
 
             services.AddSwaggerGen(c => 
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "UrbanDictionary API", Version = "v1"}); 
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "UrbanDictionary API", Version = "v1" }); 
             });
 
             services.Configure<IdentityOptions>(options =>
@@ -93,13 +92,13 @@ namespace UrbanDictionary
             services.Configure<DataProtectionTokenProviderOptions>(options =>
                 options.TokenLifespan = TimeSpan.FromHours(3));
 
-            //services.ConfigureApplicationCookie(options =>
-            //{
-            //    options.Cookie.HttpOnly = true;
-            //    options.Cookie.Expiration = TimeSpan.FromDays(5);
-            //    options.LoginPath = "/api/account/login";//??
-            //    options.LogoutPath = "/api/account/logout";//??
-            //});
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromDays(5);
+                options.LoginPath = "/api/account/login";//??
+                options.LogoutPath = "/api/account/logout";//??
+            });
         }
 
         private async Task CreateRoles(IServiceProvider serviceProvider)
@@ -110,7 +109,7 @@ namespace UrbanDictionary
             List<string> roles = new List<string>() { "Admin", "Moderator", "User" };
             foreach (string role in roles)
             {
-                if (!(await roleManager.RoleExistsAsync(role)))
+                if (!await roleManager.RoleExistsAsync(role))
                 {
                     IdentityRole idRole = new IdentityRole
                     {
@@ -151,7 +150,7 @@ namespace UrbanDictionary
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider services)
         {
             if (env.IsDevelopment())
             {
@@ -183,6 +182,7 @@ namespace UrbanDictionary
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
             });
+            CreateRoles(services).Wait();
 
             // Enable middleware to serve generated Swagger as a JSON endpoint
             app.UseSwagger();
