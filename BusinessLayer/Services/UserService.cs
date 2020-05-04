@@ -43,5 +43,25 @@ namespace UrbanDictionary.BusinessLayer.Services
             }
             return null;
         }
+
+        public bool TryAddToSavedWords(long id)
+        {
+            Word word = _repoWrapper.Word.FindByCondition(w => w.Id.Equals(id)).FirstOrDefault();
+            User currentUser = _repoWrapper.User.FindByCondition(u => u.UserName.Equals(_httpContextAccessor.HttpContext.User.Identity.Name))
+                    .FirstOrDefault(); 
+            UserSavedWord savedWord = _repoWrapper
+                    .UserSavedWords.FindByCondition(sw => sw.UserId.Equals(currentUser.Id) && sw.SavedWordId.Equals(word.Id))
+                    .FirstOrDefault();
+            if (word != null && currentUser != null && savedWord == null)
+            {
+                _repoWrapper.User.Attach(currentUser);
+                _repoWrapper.Word.Attach(word);
+                UserSavedWord newSavedWord = new UserSavedWord { SavedWord = word, SavedWordId = word.Id, User = currentUser, UserId = currentUser.Id};
+                _repoWrapper.UserSavedWords.Create(newSavedWord);
+                _repoWrapper.Save();
+                return true;
+            }
+            return false;
+        }
     }
 }

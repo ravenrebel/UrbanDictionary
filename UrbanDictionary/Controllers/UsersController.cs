@@ -32,5 +32,17 @@ namespace UrbanDictionary.Controllers
             }
             return NotFound();
         }
+
+        [HttpPost("saveWord")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult SaveWord(long id)
+        {
+            if (_serviceWrapper.User.TryAddToSavedWords(id))
+            {
+                return Ok();
+            }
+            return BadRequest();
+        }
     }
 }

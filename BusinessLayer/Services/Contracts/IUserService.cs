@@ -8,6 +8,7 @@ namespace UrbanDictionary.BusinessLayer.Services.Contracts
     public interface IUserService
     {
         public IEnumerable<WordDTO> GetSavedWords();
+        public bool TryAddToSavedWords(long id);
         public void Save();
     }
 }
