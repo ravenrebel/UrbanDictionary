@@ -45,7 +45,7 @@ namespace UrbanDictionary.Controllers
             return BadRequest();
         }
 
-        [HttpDelete("deleteSavedWord")]
+        [HttpDelete("deleteSavedWord/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult DeleteSavedWords(long id)
@@ -72,9 +72,22 @@ namespace UrbanDictionary.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<IEnumerable<WordDTO>> GetUsers()
+        public ActionResult<IEnumerable<WordDTO>> Get()
         {
             return Ok(_serviceWrapper.User.GetUsers());
+        }
+
+
+        [HttpDelete("delete/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult Delete(string id)
+        {
+            if (_serviceWrapper.User.TryDeleteUser(id))
+            {
+                return Ok();
+            }
+            return NotFound();
         }
     }
 }

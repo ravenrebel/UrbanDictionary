@@ -14,6 +14,7 @@ namespace UrbanDictionary.BusinessLayer.Services.Contracts
         public IEnumerable<WordDTO> GetCreatedWords();
 
         public IEnumerable<UserDTO> GetUsers();
+        public bool TryDeleteUser(string id);
 
         public void Save();
     }
