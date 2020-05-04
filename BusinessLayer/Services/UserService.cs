@@ -14,14 +14,15 @@ namespace UrbanDictionary.BusinessLayer.Services
     public class UserService : IUserService
     {
         private readonly IRepositoryWrapper _repoWrapper;
-        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IMapper<Word, WordDTO> _wordMapper;
+        private readonly User _currentUser;
 
         public UserService(IRepositoryWrapper repoWrapper, IHttpContextAccessor httpContextAccessor, IMapper<Word, WordDTO> wordMapper)
         {
             _repoWrapper = repoWrapper;
-            _httpContextAccessor = httpContextAccessor;
             _wordMapper = wordMapper;
+            _currentUser = _repoWrapper.User.FindByCondition(u => u.UserName.Equals(httpContextAccessor.HttpContext.User.Identity.Name))
+                   .FirstOrDefault();
         }
 
         public void Save()
@@ -31,15 +32,13 @@ namespace UrbanDictionary.BusinessLayer.Services
 
         public IEnumerable<WordDTO> GetSavedWords()
         {
-            User currentUser = _repoWrapper.User.FindByCondition(u =>u.UserName.Equals(_httpContextAccessor.HttpContext.User.Identity.Name))
-                .FirstOrDefault();
-            if (currentUser != null)
+            if (_currentUser != null)
             {
                 var savedWords = from sw in _repoWrapper.UserSavedWords.FindAll()
-                       where sw.UserId.Equals(currentUser.Id)
+                       where sw.UserId.Equals(_currentUser.Id)
                        join w in _repoWrapper.Word.FindAll() on sw.SavedWordId equals w.Id
                        select w;
-                return _wordMapper.MapToDTO(savedWords.ToList());
+                return _wordMapper.MapToDTO(savedWords);
             }
             return null;
         }
@@ -47,21 +46,43 @@ namespace UrbanDictionary.BusinessLayer.Services
         public bool TryAddToSavedWords(long id)
         {
             Word word = _repoWrapper.Word.FindByCondition(w => w.Id.Equals(id)).FirstOrDefault();
-            User currentUser = _repoWrapper.User.FindByCondition(u => u.UserName.Equals(_httpContextAccessor.HttpContext.User.Identity.Name))
-                    .FirstOrDefault(); 
             UserSavedWord savedWord = _repoWrapper
-                    .UserSavedWords.FindByCondition(sw => sw.UserId.Equals(currentUser.Id) && sw.SavedWordId.Equals(word.Id))
+                    .UserSavedWords.FindByCondition(sw => sw.UserId.Equals(_currentUser.Id) && sw.SavedWordId.Equals(word.Id))
                     .FirstOrDefault();
-            if (word != null && currentUser != null && savedWord == null)
+            if (word != null && _currentUser != null && savedWord == null)
             {
-                _repoWrapper.User.Attach(currentUser);
+                _repoWrapper.User.Attach(_currentUser);
                 _repoWrapper.Word.Attach(word);
-                UserSavedWord newSavedWord = new UserSavedWord { SavedWord = word, SavedWordId = word.Id, User = currentUser, UserId = currentUser.Id};
+                UserSavedWord newSavedWord = new UserSavedWord { SavedWord = word, SavedWordId = word.Id, User = _currentUser, UserId = _currentUser.Id};
                 _repoWrapper.UserSavedWords.Create(newSavedWord);
                 _repoWrapper.Save();
                 return true;
             }
             return false;
+        }
+
+        public bool TryDeleteSavedWord(long id)
+        {
+            UserSavedWord savedWord = _repoWrapper
+                    .UserSavedWords.FindByCondition(sw => sw.UserId.Equals(_currentUser.Id) && sw.SavedWordId.Equals(id))
+                    .FirstOrDefault();
+            if (savedWord != null)
+            {
+                _repoWrapper.UserSavedWords.Delete(savedWord);
+                _repoWrapper.Save();
+                return true;
+            }
+            return false;
+        }
+
+        public IEnumerable<WordDTO> GetCreatedWords()
+        {
+            if (_currentUser != null)
+            {
+                var createdWords = _repoWrapper.Word.FindByCondition(w => w.AuthorId.Equals(_currentUser.Id));
+                return _wordMapper.MapToDTO(createdWords);
+            }
+            return null;
         }
     }
 }

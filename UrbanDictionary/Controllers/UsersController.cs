@@ -44,5 +44,30 @@ namespace UrbanDictionary.Controllers
             }
             return BadRequest();
         }
+
+        [HttpDelete("deleteSavedWord")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult DeleteSavedWords(long id)
+        {
+            if (_serviceWrapper.User.TryDeleteSavedWord(id))
+            {
+                return Ok();
+            }
+            return NotFound();
+        }
+
+        [HttpGet("createdWords")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<IEnumerable<WordDTO>> GetCreatedWords()
+        {
+            var createdWords = _serviceWrapper.User.GetCreatedWords();
+            if (createdWords != null)
+            {
+                return Ok(createdWords);
+            }
+            return NotFound();
+        }
     }
 }
