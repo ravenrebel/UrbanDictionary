@@ -42,7 +42,7 @@ namespace UrbanDictionary.DataAccess.Repositories
             {
                 if (_userSavedWords == null)
                 {
-                    _user = new UserRepository(_dbContext);
+                    _userSavedWords = new UserSavedWordsRepository(_dbContext);
                 }
 
                 return _userSavedWords;

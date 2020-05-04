@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Http;
 using UrbanDictionary.BusinessLayer.DTO;
 using UrbanDictionary.BusinessLayer.DTO.Mapper;
 using UrbanDictionary.BusinessLayer.Services.Contracts;
@@ -16,12 +17,14 @@ namespace UrbanDictionary.BusinessLayer.Services
         private IRepositoryWrapper _repoWrapper;
         private IMapper<Word, WordDTO> _wordMapper;
         private IMapper<Tag, TagDTO> _tagMapper;
+        private IHttpContextAccessor _httpContext;
 
-        public ServiceWrapper(IRepositoryWrapper repoWrapper, IMapper<Word, WordDTO> wordMapper, IMapper<Tag, TagDTO> tagMapper)
+        public ServiceWrapper(IRepositoryWrapper repoWrapper, IMapper<Word, WordDTO> wordMapper, IMapper<Tag, TagDTO> tagMapper, IHttpContextAccessor httpContext)
         {
             _repoWrapper = repoWrapper;
             _wordMapper = wordMapper;
             _tagMapper = tagMapper;
+            _httpContext = httpContext;
         }
 
         public IUserService User
@@ -30,7 +33,7 @@ namespace UrbanDictionary.BusinessLayer.Services
             {
                 if (_user == null)
                 {
-                    _user = new UserService(_repoWrapper);
+                    _user = new UserService(_repoWrapper, _httpContext, _wordMapper);
                 }
 
                 return _user;
