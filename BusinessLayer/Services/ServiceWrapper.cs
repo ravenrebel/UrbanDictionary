@@ -17,13 +17,16 @@ namespace UrbanDictionary.BusinessLayer.Services
         private IRepositoryWrapper _repoWrapper;
         private IMapper<Word, WordDTO> _wordMapper;
         private IMapper<Tag, TagDTO> _tagMapper;
+        private IMapper<User, UserDTO> _userMapper;
         private IHttpContextAccessor _httpContext;
 
-        public ServiceWrapper(IRepositoryWrapper repoWrapper, IMapper<Word, WordDTO> wordMapper, IMapper<Tag, TagDTO> tagMapper, IHttpContextAccessor httpContext)
+        public ServiceWrapper(IRepositoryWrapper repoWrapper, IMapper<Word, WordDTO> wordMapper, IMapper<Tag, TagDTO> tagMapper, 
+            IHttpContextAccessor httpContext, IMapper<User, UserDTO> userMapper)
         {
             _repoWrapper = repoWrapper;
             _wordMapper = wordMapper;
             _tagMapper = tagMapper;
+            _userMapper = userMapper;
             _httpContext = httpContext;
         }
 
@@ -33,7 +36,7 @@ namespace UrbanDictionary.BusinessLayer.Services
             {
                 if (_user == null)
                 {
-                    _user = new UserService(_repoWrapper, _httpContext, _wordMapper);
+                    _user = new UserService(_repoWrapper, _httpContext, _wordMapper, _userMapper);
                 }
 
                 return _user;

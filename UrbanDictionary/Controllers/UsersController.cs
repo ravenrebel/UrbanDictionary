@@ -69,5 +69,12 @@ namespace UrbanDictionary.Controllers
             }
             return NotFound();
         }
+
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult<IEnumerable<WordDTO>> GetUsers()
+        {
+            return Ok(_serviceWrapper.User.GetUsers());
+        }
     }
 }

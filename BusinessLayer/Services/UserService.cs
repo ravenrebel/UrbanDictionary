@@ -15,12 +15,14 @@ namespace UrbanDictionary.BusinessLayer.Services
     {
         private readonly IRepositoryWrapper _repoWrapper;
         private readonly IMapper<Word, WordDTO> _wordMapper;
+        private readonly IMapper<User, UserDTO> _userMapper;
         private readonly User _currentUser;
 
-        public UserService(IRepositoryWrapper repoWrapper, IHttpContextAccessor httpContextAccessor, IMapper<Word, WordDTO> wordMapper)
+        public UserService(IRepositoryWrapper repoWrapper, IHttpContextAccessor httpContextAccessor, IMapper<Word, WordDTO> wordMapper, IMapper<User, UserDTO> userMapper)
         {
             _repoWrapper = repoWrapper;
             _wordMapper = wordMapper;
+            _userMapper = userMapper;
             _currentUser = _repoWrapper.User.FindByCondition(u => u.UserName.Equals(httpContextAccessor.HttpContext.User.Identity.Name))
                    .FirstOrDefault();
         }
@@ -83,6 +85,11 @@ namespace UrbanDictionary.BusinessLayer.Services
                 return _wordMapper.MapToDTO(createdWords);
             }
             return null;
+        }
+
+        public IEnumerable<UserDTO> GetUsers()
+        {
+            return _userMapper.MapToDTO(_repoWrapper.User.FindAll());
         }
     }
 }

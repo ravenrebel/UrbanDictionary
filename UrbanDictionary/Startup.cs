@@ -148,6 +148,7 @@ namespace UrbanDictionary
             builder.RegisterType<ServiceWrapper>().As<IServiceWrapper>();
             builder.RegisterType<WordServiceMapper>().As<IMapper<Word, WordDTO>>();
             builder.RegisterType<TagServiceMapper>().As<IMapper<Tag, TagDTO>>();
+            builder.RegisterType<UserServiceMapper>().As<IMapper<User, UserDTO>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

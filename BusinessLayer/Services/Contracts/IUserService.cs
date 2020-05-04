@@ -13,6 +13,8 @@ namespace UrbanDictionary.BusinessLayer.Services.Contracts
 
         public IEnumerable<WordDTO> GetCreatedWords();
 
+        public IEnumerable<UserDTO> GetUsers();
+
         public void Save();
     }
 }
