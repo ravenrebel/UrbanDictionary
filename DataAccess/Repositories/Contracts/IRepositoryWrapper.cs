@@ -12,6 +12,7 @@ namespace UrbanDictionary.DataAccess.Repositories.Contracts
         IUserRepository User { get; }
         ITagRepository Tag { get; }
         IWordTagRepository WordTag { get; }
+        IUserSavedWordsRepository UserSavedWords { get; }
         void Save();
     }
 }

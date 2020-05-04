@@ -15,6 +15,7 @@ namespace UrbanDictionary.DataAccess.Repositories
         private ITagRepository _tag;
         private IWordRepository _word;
         private IWordTagRepository _wordTag;
+        private IUserSavedWordsRepository _userSavedWords;
         private UrbanDictionaryDBContext _dbContext;
 
         public RepositoryWrapper(UrbanDictionaryDBContext urbanDictionaryDBContext)
@@ -32,6 +33,19 @@ namespace UrbanDictionary.DataAccess.Repositories
                 }
 
                 return _user;
+            }
+        }
+
+        public IUserSavedWordsRepository UserSavedWords
+        {
+            get
+            {
+                if (_userSavedWords == null)
+                {
+                    _user = new UserRepository(_dbContext);
+                }
+
+                return _userSavedWords;
             }
         }
 

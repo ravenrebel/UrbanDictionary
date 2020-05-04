@@ -14,11 +14,11 @@ namespace UrbanDictionary.Controllers
 {
     [ApiController]
     [Route("api/words")]
-    public class WordController : ControllerBase
+    public class WordsController : ControllerBase
     {
         private readonly IServiceWrapper _serviceWrapper;
 
-        public WordController(IServiceWrapper serviceWrapper)
+        public WordsController(IServiceWrapper serviceWrapper)
         {
             _serviceWrapper = serviceWrapper;
         }

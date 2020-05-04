@@ -56,6 +56,7 @@ namespace UrbanDictionary
             });
 
             //services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
+            services.AddHttpContextAccessor();
 
             services.AddControllersWithViews();
 
