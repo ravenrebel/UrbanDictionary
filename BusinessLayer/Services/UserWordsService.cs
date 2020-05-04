@@ -107,7 +107,7 @@ namespace UrbanDictionary.BusinessLayer.Services
                 word.AuthorId = _currentUser.Id;
                 _repoWrapper.Word.Create(word);
 
-                foreach (string tagName in wordDto.Tags)
+                foreach (string tagName in wordDto.Tags.Distinct())
                 {
                     Tag tag = _repoWrapper.Tag.FindByCondition(t => t.Name.Equals(tagName)).FirstOrDefault();
                     if (tag == null)

@@ -118,19 +118,37 @@ namespace UrbanDictionary.BusinessLayer.Services
                 word.CreationDate = DateTime.Now;
                 word.WordStatus = WordStatus.OnModeration;
 
-                _repoWrapper.Word.Update(word); 
+                _repoWrapper.Word.Update(word);
 
-                foreach (string tagName in wordDto.Tags)
+                Dictionary<string, Tag> oldTags = _repoWrapper.Tag.GetByWordId(word.Id).ToDictionary(t => t.Name, t => t);
+
+                foreach (string tagName in wordDto.Tags.Distinct())
                 {
-                    Tag tag = _repoWrapper.Tag.FindByCondition(t => t.Name.Equals(tagName)).FirstOrDefault();
-                    if (tag == null)
+                    if (!oldTags.Keys.Contains(tagName))
                     {
-                        tag = new Tag();
-                        tag.Name = tagName;
-                        _repoWrapper.Tag.Create(tag);
+                        Tag tag = _repoWrapper.Tag.FindByCondition(t => t.Name.Equals(tagName)).FirstOrDefault();
+                        if (tag == null)
+                        {
+                            tag = new Tag();
+                            tag.Name = tagName;
+                            _repoWrapper.Tag.Create(tag);
+                        }
+                        else
+                        {
+                            _repoWrapper.Tag.Attach(tag);
+                        }
                         WordTag wordTag = new WordTag { Tag = tag, Word = word, TagId = tag.Id, WordId = word.Id };
                         _repoWrapper.WordTag.Create(wordTag);
                     }
+                    else
+                    {
+                        oldTags.Remove(tagName);
+                    }
+                }
+                foreach(Tag tag in oldTags.Values)
+                {
+                    WordTag wordTag = _repoWrapper.WordTag.FindByCondition(wt => wt.TagId.Equals(tag.Id) && wt.WordId.Equals(word.Id)).FirstOrDefault();
+                    _repoWrapper.WordTag.Delete(wordTag);
                 }
 
                 _repoWrapper.Save();
