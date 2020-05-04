@@ -52,9 +52,9 @@ namespace UrbanDictionary.Controllers
         {
             if (_serviceWrapper.UserWords.TryDeleteSavedWord(id))
             {
-                return Ok();
+                return Ok(id);
             }
-            return NotFound();
+            return NotFound(id);
         }
 
         [HttpGet("createdWords")]
@@ -68,6 +68,15 @@ namespace UrbanDictionary.Controllers
                 return Ok(createdWords);
             }
             return NotFound();
+        }
+
+        [HttpPost("createWord")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult<WordDTO> Create(WordDTO wordDto)
+        {
+            if (_serviceWrapper.UserWords.TryCreateWord(wordDto)) return Created("", wordDto);
+            return BadRequest();
         }
     }
 }

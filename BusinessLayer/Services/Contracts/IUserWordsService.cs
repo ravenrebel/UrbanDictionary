@@ -12,6 +12,7 @@ namespace UrbanDictionary.BusinessLayer.Services.Contracts
         public bool TryDeleteSavedWord(long id);
 
         public IEnumerable<WordDTO> GetCreatedWords();
+        bool TryCreateWord(WordDTO wordDto);
 
         public void Save();
     }

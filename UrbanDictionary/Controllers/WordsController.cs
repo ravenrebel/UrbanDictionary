@@ -59,15 +59,6 @@ namespace UrbanDictionary.Controllers
             return Ok(words);
         }
 
-        [HttpPost("create")]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<WordDTO> Create(WordDTO wordDto)
-        {
-            if (_serviceWrapper.Word.TryCreate(wordDto)) return Created("", wordDto);
-            return BadRequest();
-        }
-
         [HttpDelete("delete/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -75,6 +66,44 @@ namespace UrbanDictionary.Controllers
         {
             if (_serviceWrapper.Word.TryDelete(id)) return Ok(id);
             return NotFound(id);
+        }
+
+        [HttpPut("approve/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult Approve(long id)
+        {
+            if (_serviceWrapper.Word.TryApproveWord(id)) return Ok(id);
+            return BadRequest(id);
+        }
+
+        [HttpPut("disapprove/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult Disapprove(long id)
+        {
+            if (_serviceWrapper.Word.TryDisapproveWord(id)) return Ok(id);
+            return BadRequest(id);
+        }
+
+        [HttpGet("getByTag/{tag}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult<IEnumerable<WordDTO>> GetByTag(string tag)
+        {
+            IEnumerable<WordDTO> words = _serviceWrapper.Word.GetByTagName(tag);
+            return Ok(words);
+        }
+
+        [HttpPut("edit")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult<IEnumerable<WordDTO>> Edit(WordDTO word)
+        {
+            if (_serviceWrapper.Word.TryEdit(word))
+            {
+                return Ok();
+            }
+            return BadRequest();
         }
     }
 }

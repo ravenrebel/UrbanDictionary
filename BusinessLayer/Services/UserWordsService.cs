@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UrbanDictionary.BusinessLayer.DTO;
@@ -89,6 +90,44 @@ namespace UrbanDictionary.BusinessLayer.Services
                 return _wordMapper.MapToDTO(createdWords);
             }
             return null;
+        }
+
+        public bool TryCreateWord(WordDTO wordDto)
+        {
+            if (_currentUser != null)
+            { 
+                if (wordDto.Name == null || wordDto.Definition == null) return false;
+                Word word = new Word { Definition = wordDto.Definition, Image = wordDto.Image, Example = wordDto.Example, Name = wordDto.Name };
+
+                word.Id = 0;
+                word.DislikesCount = 0;
+                word.LikesCount = 0;
+                word.CreationDate = DateTime.Now;
+                word.WordStatus = WordStatus.OnModeration;
+                word.AuthorId = _currentUser.Id;
+                _repoWrapper.Word.Create(word);
+
+                foreach (string tagName in wordDto.Tags)
+                {
+                    Tag tag = _repoWrapper.Tag.FindByCondition(t => t.Name.Equals(tagName)).FirstOrDefault();
+                    if (tag == null)
+                    {
+                        tag = new Tag();
+                        tag.Name = tagName;
+                        _repoWrapper.Tag.Create(tag);
+                    }
+                    else
+                    {
+                        _repoWrapper.Tag.Attach(tag);
+                    }
+                    WordTag wordTag = new WordTag { Tag = tag, Word = word, TagId = tag.Id, WordId = word.Id };
+                    _repoWrapper.WordTag.Create(wordTag);
+                }
+
+                _repoWrapper.Save();
+                return true;
+            }
+            return false;
         }
     }
 }

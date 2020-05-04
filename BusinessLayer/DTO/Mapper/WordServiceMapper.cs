@@ -48,7 +48,7 @@ namespace UrbanDictionary.BusinessLayer.DTO.Mapper
             entity.DislikesCount = dto.DislikesCount;
             entity.CreationDate = dto.CreationDate;
             entity.WordStatus = dto.WordStatus;
-            entity.AuthorId = _repoWrapper.User.FindByCondition(u => u.UserName.Equals(dto.AuthorName)).FirstOrDefault()?.Id;//We do not have authorization
+            entity.AuthorId = _repoWrapper.User.FindByCondition(u => u.UserName.Equals(dto.AuthorName)).FirstOrDefault()?.Id;
 
             return entity;
         }
