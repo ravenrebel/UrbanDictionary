@@ -16,12 +16,10 @@ namespace UrbanDictionary.Controllers
     [Route("api/words")]
     public class WordController : ControllerBase
     {
-        private readonly ILogger<WordDTO> _logger;
         private readonly IServiceWrapper _serviceWrapper;
 
-        public WordController(ILogger<WordDTO> logger, IServiceWrapper serviceWrapper)
+        public WordController(IServiceWrapper serviceWrapper)
         {
-            _logger = logger;
             _serviceWrapper = serviceWrapper;
         }
 
@@ -63,6 +61,7 @@ namespace UrbanDictionary.Controllers
 
         [HttpPost("create")]
         [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<WordDTO> Create(WordDTO wordDto)
         {
             if (_serviceWrapper.Word.TryCreate(wordDto)) return Created("", wordDto);

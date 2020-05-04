@@ -14,5 +14,10 @@ namespace UrbanDictionary.BusinessLayer.Services
         {
             _repoWrapper = repoWrapper;
         }
+
+        public void Save()
+        {
+            _repoWrapper.Save();
+        }
     }
 }
