@@ -11,9 +11,10 @@ namespace UrbanDictionary.BusinessLayer.Services
 {
     public class ServiceWrapper : IServiceWrapper
     {
-        private IUserService _user;
+        private IUserWordsService _userWords;
         private ITagService _tag;
         private IWordService _word;
+        private IUserService _user;
         private IRepositoryWrapper _repoWrapper;
         private IMapper<Word, WordDTO> _wordMapper;
         private IMapper<Tag, TagDTO> _tagMapper;
@@ -30,13 +31,26 @@ namespace UrbanDictionary.BusinessLayer.Services
             _httpContext = httpContext;
         }
 
+        public IUserWordsService UserWords
+        {
+            get
+            {
+                if (_userWords == null)
+                {
+                    _userWords = new UserWordsService(_repoWrapper, _httpContext, _wordMapper);
+                }
+
+                return _userWords;
+            }
+        }
+
         public IUserService User
         {
             get
             {
                 if (_user == null)
                 {
-                    _user = new UserService(_repoWrapper, _httpContext, _wordMapper, _userMapper);
+                    _user = new UserService(_repoWrapper, _userMapper);
                 }
 
                 return _user;

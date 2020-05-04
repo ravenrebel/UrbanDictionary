@@ -1,5 +1,4 @@
-﻿
-
+﻿using System;
 using System.Collections.Generic;
 using UrbanDictionary.BusinessLayer.DTO;
 
@@ -7,15 +6,7 @@ namespace UrbanDictionary.BusinessLayer.Services.Contracts
 {
     public interface IUserService
     {
-        public IEnumerable<WordDTO> GetSavedWords();
-        public bool TryAddToSavedWords(long id);
-        public bool TryDeleteSavedWord(long id);
-
-        public IEnumerable<WordDTO> GetCreatedWords();
-
-        public IEnumerable<UserDTO> GetUsers();
-        public bool TryDeleteUser(string id);
-
-        public void Save();
+        public IEnumerable<UserDTO> GetAll();
+        public bool TryDelete(string id);
     }
 }

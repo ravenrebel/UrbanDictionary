@@ -44,7 +44,7 @@ namespace UrbanDictionary.Controllers
 
             if (result.Succeeded)
             {
-                _serviceWrapper.User.Save();
+                _serviceWrapper.UserWords.Save();
                 await _signInManager.SignInAsync(user, false);
                 return Ok("Account created");
             }
