@@ -15,7 +15,6 @@ namespace UrbanDictionary.BusinessLayer.Services.Contracts
         IEnumerable<WordDTO> GetLastTenAdded();
         bool TryApproveWord(long id);
         bool TryDisapproveWord(long id);
-        bool TryEdit(WordDTO wordDTO);
         IEnumerable<WordDTO> GetByTagName(string tag);
     }
 }

@@ -92,7 +92,7 @@ namespace UrbanDictionary.BusinessLayer.Services
             return null;
         }
 
-        public bool TryCreateWord(WordDTO wordDto)
+        public bool TryCreateWord(CreateEditFormWordDTO wordDto)
         {
             if (_currentUser != null)
             { 
@@ -126,6 +126,62 @@ namespace UrbanDictionary.BusinessLayer.Services
 
                 _repoWrapper.Save();
                 return true;
+            }
+            return false;
+        }
+
+        public bool TryEditWord(CreateEditFormWordDTO wordDto)
+        {
+            if (_currentUser != null)
+            { 
+                if (wordDto.Name == null || wordDto.Definition == null) return false;
+
+                Word word = _repoWrapper.Word.FindByCondition(w => w.Id.Equals(wordDto.Id) && w.AuthorId.Equals(_currentUser.Id)).FirstOrDefault();
+                if (word != null)
+                {
+                    word.Image = wordDto.Image;
+                    word.Name = wordDto.Name;
+                    word.Definition = wordDto.Definition;
+                    word.Example = wordDto.Example;
+                    word.CreationDate = DateTime.Now;
+                    word.WordStatus = WordStatus.OnModeration;
+
+                    _repoWrapper.Word.Update(word);
+
+                    Dictionary<string, Tag> oldTags = _repoWrapper.Tag.GetByWordId(word.Id).ToDictionary(t => t.Name, t => t);
+
+                    foreach (string tagName in wordDto.Tags.Distinct())
+                    {
+                        if (!oldTags.Keys.Contains(tagName))
+                        {
+                            Tag tag = _repoWrapper.Tag.FindByCondition(t => t.Name.Equals(tagName)).FirstOrDefault();
+                            if (tag == null)
+                            {
+                                tag = new Tag();
+                                tag.Name = tagName;
+                                _repoWrapper.Tag.Create(tag);
+                            }
+                            else
+                            {
+                                _repoWrapper.Tag.Attach(tag);
+                            }
+                            WordTag wordTag = new WordTag { Tag = tag, Word = word, TagId = tag.Id, WordId = word.Id };
+                            _repoWrapper.WordTag.Create(wordTag);
+                        }
+                        else
+                        {
+                            oldTags.Remove(tagName);
+                        }
+                    }
+                    foreach (Tag tag in oldTags.Values)
+                    {
+                        WordTag wordTag = _repoWrapper.WordTag.FindByCondition(wt => wt.TagId.Equals(tag.Id) && wt.WordId.Equals(word.Id)).FirstOrDefault();
+                        _repoWrapper.WordTag.Delete(wordTag);
+                    }
+
+                    _repoWrapper.Save();
+                    return true;
+                }
             }
             return false;
         }

@@ -93,17 +93,5 @@ namespace UrbanDictionary.Controllers
             IEnumerable<WordDTO> words = _serviceWrapper.Word.GetByTagName(tag);
             return Ok(words);
         }
-
-        [HttpPut("edit")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<IEnumerable<WordDTO>> Edit(WordDTO word)
-        {
-            if (_serviceWrapper.Word.TryEdit(word))
-            {
-                return Ok();
-            }
-            return BadRequest();
-        }
     }
 }

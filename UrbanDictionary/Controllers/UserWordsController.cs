@@ -33,16 +33,16 @@ namespace UrbanDictionary.Controllers
             return NotFound();
         }
 
-        [HttpPost("saveWord")]
+        [HttpPost("saveWord/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult SaveWord(long id)
         {
             if (_serviceWrapper.UserWords.TryAddToSavedWords(id))
             {
-                return Ok();
+                return Ok(id);
             }
-            return BadRequest();
+            return BadRequest(id);
         }
 
         [HttpDelete("deleteSavedWord/{id}")]
@@ -73,10 +73,22 @@ namespace UrbanDictionary.Controllers
         [HttpPost("createWord")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<WordDTO> Create(WordDTO wordDto)
+        public ActionResult<CreateEditFormWordDTO> Create(CreateEditFormWordDTO word)
         {
-            if (_serviceWrapper.UserWords.TryCreateWord(wordDto)) return Created("", wordDto);
-            return BadRequest();
+            if (_serviceWrapper.UserWords.TryCreateWord(word)) return Created("", word);
+            return BadRequest(word);
+        }
+
+        [HttpPut("editWord")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult<CreateEditFormWordDTO> Edit(CreateEditFormWordDTO word)
+        {
+            if (_serviceWrapper.UserWords.TryEditWord(word))
+            {
+                return Ok(word);
+            }
+            return BadRequest(word);
         }
     }
 }
