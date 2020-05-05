@@ -10,5 +10,7 @@ namespace UrbanDictionary.BusinessLayer.Services.Contracts
         IUserWordsService UserWords { get; }
         ITagService Tag { get; }
         IUserService User { get; }
+
+        void Save();
     }
 }

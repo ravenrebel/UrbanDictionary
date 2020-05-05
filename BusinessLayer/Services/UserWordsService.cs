@@ -26,11 +26,6 @@ namespace UrbanDictionary.BusinessLayer.Services
                    .FirstOrDefault();
         }
 
-        public void Save()
-        {
-            _repoWrapper.Save();
-        }
-
         public IEnumerable<WordDTO> GetSavedWords()
         {
             if (_currentUser != null)

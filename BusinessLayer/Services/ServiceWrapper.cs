@@ -82,5 +82,10 @@ namespace UrbanDictionary.BusinessLayer.Services
                 return _tag;
             }
         }
+
+        public void Save()
+        {
+            _repoWrapper.Save();
+        }
     }
 }

@@ -26,6 +26,11 @@ namespace UrbanDictionary.BusinessLayer.Services
             return _userMapper.MapToDTO(_repoWrapper.User.FindAll());
         }
 
+        public IEnumerable<UserDTO> GetByUserName(string name)
+        {
+            return _userMapper.MapToDTO(_repoWrapper.User.FindByCondition(u => u.UserName.Equals(name)));
+        }
+
         public bool TryDelete(string id)
         {
             User user = _repoWrapper.User.FindByCondition(u => u.Id.Equals(id)).FirstOrDefault();

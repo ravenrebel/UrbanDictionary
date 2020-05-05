@@ -7,6 +7,6 @@ namespace UrbanDictionary.BusinessLayer.Services.Contracts
     public interface IUserService
     {
         public IEnumerable<UserDTO> GetAll();
-        public bool TryDelete(string id);
+        public IEnumerable<UserDTO> GetByUserName(string name);
     }
 }

@@ -14,7 +14,5 @@ namespace UrbanDictionary.BusinessLayer.Services.Contracts
         public IEnumerable<WordDTO> GetCreatedWords();
         bool TryCreateWord(CreateEditFormWordDTO wordDto);
         bool TryEditWord(CreateEditFormWordDTO wordDTO);
-
-        public void Save();
     }
 }
