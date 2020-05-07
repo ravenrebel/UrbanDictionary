@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Http;
 using UrbanDictionary.BusinessLayer.DTO;
 using UrbanDictionary.BusinessLayer.DTO.Mapper;
 using UrbanDictionary.BusinessLayer.Services.Contracts;
@@ -10,18 +11,37 @@ namespace UrbanDictionary.BusinessLayer.Services
 {
     public class ServiceWrapper : IServiceWrapper
     {
-        private IUserService _user;
+        private IUserWordsService _userWords;
         private ITagService _tag;
         private IWordService _word;
+        private IUserService _user;
         private IRepositoryWrapper _repoWrapper;
         private IMapper<Word, WordDTO> _wordMapper;
         private IMapper<Tag, TagDTO> _tagMapper;
+        private IMapper<User, UserDTO> _userMapper;
+        private IHttpContextAccessor _httpContext;
 
-        public ServiceWrapper(IRepositoryWrapper repoWrapper, IMapper<Word, WordDTO> wordMapper, IMapper<Tag, TagDTO> tagMapper)
+        public ServiceWrapper(IRepositoryWrapper repoWrapper, IMapper<Word, WordDTO> wordMapper, IMapper<Tag, TagDTO> tagMapper, 
+            IHttpContextAccessor httpContext, IMapper<User, UserDTO> userMapper)
         {
             _repoWrapper = repoWrapper;
             _wordMapper = wordMapper;
             _tagMapper = tagMapper;
+            _userMapper = userMapper;
+            _httpContext = httpContext;
+        }
+
+        public IUserWordsService UserWords
+        {
+            get
+            {
+                if (_userWords == null)
+                {
+                    _userWords = new UserWordsService(_repoWrapper, _httpContext, _wordMapper);
+                }
+
+                return _userWords;
+            }
         }
 
         public IUserService User
@@ -30,7 +50,7 @@ namespace UrbanDictionary.BusinessLayer.Services
             {
                 if (_user == null)
                 {
-                    _user = new UserService(_repoWrapper);
+                    _user = new UserService(_repoWrapper, _userMapper);
                 }
 
                 return _user;
@@ -61,6 +81,11 @@ namespace UrbanDictionary.BusinessLayer.Services
 
                 return _tag;
             }
+        }
+
+        public void Save()
+        {
+            _repoWrapper.Save();
         }
     }
 }

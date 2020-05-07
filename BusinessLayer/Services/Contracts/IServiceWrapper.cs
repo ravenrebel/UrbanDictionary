@@ -7,7 +7,10 @@ namespace UrbanDictionary.BusinessLayer.Services.Contracts
     public interface IServiceWrapper
     {
         IWordService Word { get; }
-        IUserService User { get; }
+        IUserWordsService UserWords { get; }
         ITagService Tag { get; }
+        IUserService User { get; }
+
+        void Save();
     }
 }

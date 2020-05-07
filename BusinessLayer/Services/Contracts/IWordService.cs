@@ -10,11 +10,11 @@ namespace UrbanDictionary.BusinessLayer.Services.Contracts
         IEnumerable<WordDTO> GetAll();
         IEnumerable<WordDTO> GetRandom();
         IEnumerable<WordDTO> GetByName(string name);
-        bool TryCreate(WordDTO wordDto);
         bool TryDelete(long id);
         IEnumerable<WordDTO> GetTopTen();
         IEnumerable<WordDTO> GetLastTenAdded();
-        bool TryUpdateWordStatus(long id);
-        IEnumerable<WordDTO> GetByTagName();
+        bool TryApproveWord(long id);
+        bool TryDisapproveWord(long id);
+        IEnumerable<WordDTO> GetByTagName(string tag);
     }
 }

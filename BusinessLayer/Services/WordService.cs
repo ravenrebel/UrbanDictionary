@@ -36,32 +36,8 @@ namespace UrbanDictionary.BusinessLayer.Services
 
         public IEnumerable<WordDTO> GetByName(string name)
         {
-            return _mapper.MapToDTO(_repoWrapper.Word.FindByCondition(w => w.Name.Equals(name))
+            return _mapper.MapToDTO(_repoWrapper.Word.FindByCondition(w => w.Name.Equals(name) && w.WordStatus.Equals(WordStatus.Сonfirmed))
                 .OrderByDescending(w => w.LikesCount).ThenBy(w => w.DislikesCount).ToList());
-        }
-
-        public bool TryCreate(WordDTO wordDto)
-        {
-            Word word = _mapper.MapToEntity(wordDto);
-            _repoWrapper.Word.Create(word);
-            foreach (string tagName in wordDto.Tags)
-            {
-                Tag tag = _repoWrapper.Tag.FindByCondition(t => t.Name.Equals(tagName)).FirstOrDefault();
-                if (tag == null)
-                {
-                    tag = new Tag();
-                    tag.Name = tagName;
-                    _repoWrapper.Tag.Create(tag);
-                }
-                else
-                {
-                    _repoWrapper.Tag.Attach(tag);
-                }
-                WordTag wordTag = new WordTag { Tag = tag, Word = word, TagId = tag.Id, WordId = word.Id };
-                _repoWrapper.WordTag.Create(wordTag);
-            }
-            _repoWrapper.Save();
-            return true;
         }
 
         public bool TryDelete(long id)
@@ -90,14 +66,42 @@ namespace UrbanDictionary.BusinessLayer.Services
             return _mapper.MapToDTO(_repoWrapper.Word.FindAll().OrderByDescending(w => w.CreationDate).Take(10).ToList());
         }
 
-        public bool TryUpdateWordStatus(long id)
+        public bool TryApproveWord(long id)
         {
-            throw new NotImplementedException();
+            if (ChangeWordStatus(id, WordStatus.Сonfirmed)) return true;
+            else return false;
         }
 
-        public IEnumerable<WordDTO> GetByTagName()
+        public bool TryDisapproveWord(long id)
         {
-            throw new NotImplementedException();
+            if (ChangeWordStatus(id, WordStatus.Unconfirmed)) return true;
+            else return false;
+        }
+
+        private bool ChangeWordStatus(long id, WordStatus status)
+        {
+            Word word = _repoWrapper.Word.FindByCondition(w => w.Id.Equals(id)).FirstOrDefault();
+            if (word != null)
+            {
+                if (word.WordStatus.Equals(WordStatus.OnModeration))
+                {
+                    word.WordStatus = status;
+                    _repoWrapper.Word.Update(word);
+                    _repoWrapper.Save();
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public IEnumerable<WordDTO> GetByTagName(string tag)
+        {
+            var words = from t in _repoWrapper.Tag.FindAll()
+                   where t.Name.Equals(tag)
+                   join wt in _repoWrapper.WordTag.FindAll() on t.Id equals wt.TagId
+                   join w in _repoWrapper.Word.FindAll() on wt.WordId equals w.Id
+                   select w;
+            return _mapper.MapToDTO(words);
         }
     }
 }

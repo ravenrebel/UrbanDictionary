@@ -1,5 +1,9 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using UrbanDictionary.BusinessLayer.DTO;
+using UrbanDictionary.BusinessLayer.DTO.Mapper;
 using UrbanDictionary.BusinessLayer.Services.Contracts;
 using UrbanDictionary.DataAccess.Entities;
 using UrbanDictionary.DataAccess.Repositories.Contracts;
@@ -9,15 +13,34 @@ namespace UrbanDictionary.BusinessLayer.Services
     public class UserService : IUserService
     {
         private readonly IRepositoryWrapper _repoWrapper;
+        private readonly IMapper<User, UserDTO> _userMapper;
 
-        public UserService(IRepositoryWrapper repoWrapper)
+        public UserService(IRepositoryWrapper repoWrapper, IMapper<User, UserDTO> userMapper)
         {
             _repoWrapper = repoWrapper;
+            _userMapper = userMapper;
         }
 
-        public void Save()
+        public IEnumerable<UserDTO> GetAll()
         {
-            _repoWrapper.Save();
+            return _userMapper.MapToDTO(_repoWrapper.User.FindAll());
+        }
+
+        public IEnumerable<UserDTO> GetByUserName(string name)
+        {
+            return _userMapper.MapToDTO(_repoWrapper.User.FindByCondition(u => u.UserName.Equals(name)));
+        }
+
+        public bool TryDelete(string id)
+        {
+            User user = _repoWrapper.User.FindByCondition(u => u.Id.Equals(id)).FirstOrDefault();
+            if (user != null)
+            {
+                _repoWrapper.User.Delete(user);
+                _repoWrapper.Save();
+                return true;
+            }
+            return false;
         }
     }
 }
