@@ -46,7 +46,6 @@ namespace UrbanDictionary.BusinessLayer.Services
             if (word != null)
             {
                 _repoWrapper.Word.Delete(word);
-                IEnumerable<Tag> tags = _repoWrapper.Tag.GetByWordId(word.Id);
                 _repoWrapper.Save();
 
                 return true;
@@ -68,14 +67,12 @@ namespace UrbanDictionary.BusinessLayer.Services
 
         public bool TryApproveWord(long id)
         {
-            if (ChangeWordStatus(id, WordStatus.Сonfirmed)) return true;
-            else return false;
+            return ChangeWordStatus(id, WordStatus.Сonfirmed);
         }
 
         public bool TryDisapproveWord(long id)
         {
-            if (ChangeWordStatus(id, WordStatus.Unconfirmed)) return true;
-            else return false;
+            return ChangeWordStatus(id, WordStatus.Unconfirmed);
         }
 
         private bool ChangeWordStatus(long id, WordStatus status)

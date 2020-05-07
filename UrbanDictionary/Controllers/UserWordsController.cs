@@ -21,8 +21,6 @@ namespace UrbanDictionary.Controllers
         }
 
         [HttpGet("savedWords")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<IEnumerable<WordDTO>> GetSavedWords()
         {
             var savedWords = _serviceWrapper.UserWords.GetSavedWords();
@@ -34,20 +32,16 @@ namespace UrbanDictionary.Controllers
         }
 
         [HttpPost("saveWord/{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult SaveWord(long id)
         {
             if (_serviceWrapper.UserWords.TryAddToSavedWords(id))
             {
                 return Ok(id);
             }
-            return BadRequest(id);
+            return NotFound(id);
         }
 
         [HttpDelete("deleteSavedWord/{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult DeleteSavedWords(long id)
         {
             if (_serviceWrapper.UserWords.TryDeleteSavedWord(id))
@@ -58,8 +52,6 @@ namespace UrbanDictionary.Controllers
         }
 
         [HttpGet("createdWords")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<IEnumerable<WordDTO>> GetCreatedWords()
         {
             var createdWords = _serviceWrapper.UserWords.GetCreatedWords();
@@ -71,8 +63,6 @@ namespace UrbanDictionary.Controllers
         }
 
         [HttpPost("createWord")]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<CreateEditFormWordDTO> Create(CreateEditFormWordDTO word)
         {
             if (_serviceWrapper.UserWords.TryCreateWord(word)) return Created("", word);
@@ -80,8 +70,6 @@ namespace UrbanDictionary.Controllers
         }
 
         [HttpPut("editWord")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<CreateEditFormWordDTO> Edit(CreateEditFormWordDTO word)
         {
             if (_serviceWrapper.UserWords.TryEditWord(word))

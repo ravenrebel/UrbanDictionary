@@ -29,8 +29,6 @@ namespace UrbanDictionary.Controllers
 
         [HttpPost("signUp")]
         [AllowAnonymous]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> SignUp(SignUpFormDTO signUpForm)
         {
             User registeredUser = await _userManager.FindByEmailAsync(signUpForm.Email);
@@ -55,8 +53,6 @@ namespace UrbanDictionary.Controllers
 
         [HttpPost("signIn")]
         [AllowAnonymous]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> SignIn(SignInFormDTO signInForm)
         {
             var result =

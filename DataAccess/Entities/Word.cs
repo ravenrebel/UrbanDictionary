@@ -17,17 +17,17 @@ namespace UrbanDictionary.DataAccess.Entities
         public string AuthorId { get; set; }
         public User Author { get; set; }
 
-        public DateTime CreationDate { get; set; }
+        public DateTime CreationDate { get; set; } = DateTime.Now;
 
         public string Example { get; set; }
 
         public string Image { get; set; }
 
-        public WordStatus WordStatus { get; set; }
+        public WordStatus WordStatus { get; set; } = WordStatus.OnModeration;
 
-        public int LikesCount { get; set; }
+        public int LikesCount { get; set; } = 0;
 
-        public int DislikesCount { get; set; }
+        public int DislikesCount { get; set; } = 0;
 
         public IList<WordTag> WordTags { get; set; }
 

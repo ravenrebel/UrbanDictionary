@@ -25,22 +25,18 @@ namespace UrbanDictionary.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<IEnumerable<WordDTO>> Get()
         {
             return Ok(_serviceWrapper.User.GetAll());
         }
 
         [HttpGet("search/{name}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<IEnumerable<WordDTO>> GetByName(string name)
         {
             return Ok(_serviceWrapper.User.GetByUserName(name));
         }
 
         [HttpPut("changeRole/{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> ChangRole(string id, string role)
         {
             User user = await _userManager.FindByIdAsync(id);
@@ -61,8 +57,6 @@ namespace UrbanDictionary.Controllers
         }
 
         [HttpGet("getRoles/{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<string>> getRoles(string id)
         {
             User user = await _userManager.FindByIdAsync(id);
