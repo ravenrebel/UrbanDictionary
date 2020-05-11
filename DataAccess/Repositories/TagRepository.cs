@@ -10,10 +10,15 @@ using UrbanDictionary.DataAccess.Entities;
 
 namespace UrbanDictionary.DataAccess.Repositories
 {
+    /// <inheritdoc cref="ITagRepository"/>
     public class TagRepository : RepositoryBase<Tag>, ITagRepository
     {
         private readonly UrbanDictionaryDBContext _context;
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dbContext">Database context</param>
         public TagRepository(UrbanDictionaryDBContext dbContext)
             : base(dbContext)
         {

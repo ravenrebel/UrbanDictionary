@@ -10,8 +10,13 @@ using UrbanDictionary.DataAccess.Entities;
 
 namespace UrbanDictionary.DataAccess.Repositories
 {
+    /// <inheritdoc cref="IUserRepository"/>
     public class UserRepository : RepositoryBase<User>, IUserRepository
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dbContext">Database context</param>
         public UserRepository(UrbanDictionaryDBContext dbContext)
             : base(dbContext)
         {

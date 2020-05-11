@@ -11,10 +11,18 @@ using Microsoft.EntityFrameworkCore.Query;
 
 namespace UrbanDictionary.DataAccess.Repositories
 {
+    /// <inheritdoc cref="IRepositoryBase{T}"/>
     public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
+        /// <summary>
+        /// Database context.
+        /// </summary>
         protected UrbanDictionaryDBContext UrbanDictionaryDBContext { get; set; }
 
+        /// <summary>
+        /// Contractor for <see cref="RepositoryBase{T}"/>.
+        /// </summary>
+        /// <param name="urbanDictionaryDBContext"> Database context.</param>
         public RepositoryBase(UrbanDictionaryDBContext urbanDictionaryDBContext)
         {
             this.UrbanDictionaryDBContext = urbanDictionaryDBContext;

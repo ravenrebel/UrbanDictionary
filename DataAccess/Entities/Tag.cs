@@ -6,8 +6,14 @@ using System.Text;
 
 namespace UrbanDictionary.DataAccess.Entities
 {
+    /// <summary>
+    /// Identifier for categorization, description, <see cref="Word"/> retrieval.
+    /// </summary>
     public class Tag : BaseEntity
     {
+        /// <summary>
+        /// <see cref="Tag"/> Name property.
+        /// </summary>
         [Required]
         public string Name { get; set; }
 

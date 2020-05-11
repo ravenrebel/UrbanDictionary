@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UrbanDictionary.DataAccess.Repositories
 {
+   /// <inheritdoc cref="IRepositoryWrapper"/>
     public class RepositoryWrapper : IRepositoryWrapper
     {
         private IUserRepository _user;
@@ -18,6 +19,10 @@ namespace UrbanDictionary.DataAccess.Repositories
         private IUserSavedWordsRepository _userSavedWords;
         private UrbanDictionaryDBContext _dbContext;
 
+        /// <summary>
+        /// <see cref="RepositoryWrapper"/> contractor.
+        /// </summary>
+        /// <param name="urbanDictionaryDBContext"></param>
         public RepositoryWrapper(UrbanDictionaryDBContext urbanDictionaryDBContext)
         {
             _dbContext = urbanDictionaryDBContext;
