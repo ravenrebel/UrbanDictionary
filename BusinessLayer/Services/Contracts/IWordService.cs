@@ -32,18 +32,18 @@ namespace UrbanDictionary.BusinessLayer.Services.Contracts
         /// <returns>Collection of words with certain name.</returns>
         IEnumerable<WordDTO> GetByName(string name);
         /// <summary>
-        ///  Deletes word if exists.
+        ///  Deletes word and return true if exists.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Word Id</param>
+        /// <returns>Returns true if word is successfully deleted.</returns>
         bool TryDelete(long id);
         IEnumerable<WordDTO> GetTopTen();
         IEnumerable<WordDTO> GetLastTenAdded();
         /// <summary>
-        /// Approves word if exists and its status is OnModeration.
+        /// Approves word and return true if exists and its status is OnModeration.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>        
+        /// <param name="id">Word Id</param>
+        /// <returns>Returns true if word is successfully approved.</returns>        
         bool TryApproveWord(long id);
         bool TryDisapproveWord(long id);
         IEnumerable<WordDTO> GetByTagName(string tag);
