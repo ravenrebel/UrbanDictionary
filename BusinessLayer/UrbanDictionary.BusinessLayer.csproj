@@ -5,6 +5,10 @@
     <RootNamespace>UrbanDictionary.BusinessLayer</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\Users\nasty\Projects\UrbanDictionary\BusinessLayer\UrbanDictionary.BusinessLayer.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\DataAccess\UrbanDictionary.DataAccess.csproj" />
   </ItemGroup>

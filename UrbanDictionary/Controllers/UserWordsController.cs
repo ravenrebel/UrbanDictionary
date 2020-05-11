@@ -72,7 +72,7 @@ namespace UrbanDictionary.Controllers
         [HttpPut("editWord")]
         public ActionResult<CreateEditFormWordDTO> Edit(CreateEditFormWordDTO word)
         {
-            if (_serviceWrapper.UserWords.TryEditWord(word))
+            if (_serviceWrapper.UserWords.TryEditCreatedWord(word))
             {
                 return Ok(word);
             }

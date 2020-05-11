@@ -12,6 +12,7 @@ using UrbanDictionary.DataAccess.Repositories.Contracts;
 
 namespace UrbanDictionary.BusinessLayer.Services
 {
+    /// <inheritdoc cref="IWordService"/>
     public class WordService : IWordService
     {
         private readonly IRepositoryWrapper _repoWrapper;

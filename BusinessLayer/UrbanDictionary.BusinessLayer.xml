@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>UrbanDictionary.BusinessLayer</name>
+    </assembly>
+    <members>
+        <member name="T:UrbanDictionary.BusinessLayer.Services.Contracts.IServiceWrapper">
+            <summary>
+            Contains all services for performing actions with <c>Word</c>, <c>User</c>, <c>Tag</c> entities.
+            </summary>
+        </member>
+        <member name="P:UrbanDictionary.BusinessLayer.Services.Contracts.IServiceWrapper.Word">
+            <inheritdoc cref="T:UrbanDictionary.BusinessLayer.Services.Contracts.IWordService"/>
+        </member>
+        <member name="P:UrbanDictionary.BusinessLayer.Services.Contracts.IServiceWrapper.UserWords">
+            <inheritdoc cref="T:UrbanDictionary.BusinessLayer.Services.Contracts.IUserWordsService"/>
+        </member>
+        <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IServiceWrapper.Save">
+            <summary>
+            Save changes to database.
+            </summary>
+        </member>
+        <member name="T:UrbanDictionary.BusinessLayer.Services.Contracts.IUserWordsService">
+            <summary>
+            Contains methods for performing actions with words for current <c>User</c>.
+            </summary>
+            <remarks>
+            This class can get saved and created words, delete  words from saved ones and edit created ones.
+            </remarks>
+        </member>
+        <member name="T:UrbanDictionary.BusinessLayer.Services.Contracts.IWordService">
+            <summary>
+            Contains methods for performing actions with words.
+            </summary>
+            <remarks>
+            This class can get words in different ways, delete them and change their <c>WordStatus</c>.
+            </remarks>
+        </member>
+        <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IWordService.GetAll">
+            <summary>
+            Gets all words.
+            </summary>
+            <returns>
+            Collection of all words.
+            </returns>
+        </member>
+        <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IWordService.GetRandom">
+            <summary>
+            Get words with certain random name.
+            </summary>
+            <returns>Collection of words with the same random name.</returns>
+        </member>
+        <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IWordService.GetByName(System.String)">
+            <summary>
+            Get words with certain name.
+            </summary>
+            <param name="name">Word Name.</param>
+            <returns>Collection of words with certain name.</returns>
+        </member>
+        <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IWordService.TryDelete(System.Int64)">
+            <summary>
+             Deletes word if exists.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IWordService.TryApproveWord(System.Int64)">
+            <summary>
+            Approves word if exists and its status is OnModeration.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>        
+        </member>
+        <member name="T:UrbanDictionary.BusinessLayer.Services.UserWordsService">
+            <inheritdoc cref="T:UrbanDictionary.BusinessLayer.Services.Contracts.IUserWordsService"/>
+        </member>
+        <member name="M:UrbanDictionary.BusinessLayer.Services.UserWordsService.#ctor(UrbanDictionary.DataAccess.Repositories.Contracts.IRepositoryWrapper,Microsoft.AspNetCore.Http.IHttpContextAccessor,UrbanDictionary.BusinessLayer.DTO.Mapper.IMapper{UrbanDictionary.DataAccess.Entities.Word,UrbanDictionary.BusinessLayer.DTO.WordDTO})">
+            <summary>
+            
+            </summary>
+            <param name="repoWrapper"></param>
+            <param name="httpContextAccessor"></param>
+            <param name="wordMapper"></param>
+        </member>
+        <member name="T:UrbanDictionary.BusinessLayer.Services.WordService">
+            <inheritdoc cref="T:UrbanDictionary.BusinessLayer.Services.Contracts.IWordService"/>
+        </member>
+    </members>
+</doc>

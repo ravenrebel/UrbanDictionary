@@ -11,13 +11,20 @@ using UrbanDictionary.DataAccess.Repositories.Contracts;
 
 
 namespace UrbanDictionary.BusinessLayer.Services
-{
+{  
+    /// <inheritdoc cref="IUserWordsService"/>
     public class UserWordsService : IUserWordsService
     {
         private readonly IRepositoryWrapper _repoWrapper;
         private readonly IMapper<Word, WordDTO> _wordMapper;
         private readonly User _currentUser;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="repoWrapper"></param>
+        /// <param name="httpContextAccessor"></param>
+        /// <param name="wordMapper"></param>
         public UserWordsService(IRepositoryWrapper repoWrapper, IHttpContextAccessor httpContextAccessor, IMapper<Word, WordDTO> wordMapper)
         {
             _repoWrapper = repoWrapper;
@@ -118,7 +125,7 @@ namespace UrbanDictionary.BusinessLayer.Services
             return false;
         }
 
-        public bool TryEditWord(CreateEditFormWordDTO wordDto)
+        public bool TryEditCreatedWord(CreateEditFormWordDTO wordDto)
         {
             if (_currentUser != null)
             { 
@@ -173,5 +180,6 @@ namespace UrbanDictionary.BusinessLayer.Services
             }
             return false;
         }
+        //TODO:TryDeleteCreatedWord
     }
 }
