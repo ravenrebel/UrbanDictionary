@@ -44,17 +44,22 @@ namespace UrbanDictionary.BusinessLayer.Services
 
         public bool TryAddToSavedWords(long id)
         {
-            Word word = _repoWrapper.Word.FindByCondition(w => w.Id.Equals(id)).FirstOrDefault();
-            if (_currentUser != null && word != null)
+            return TryAddToSavedWords(id, _currentUser);
+        }
+
+        public bool TryAddToSavedWords(long wordId, User user)
+        {
+            Word word = _repoWrapper.Word.FindByCondition(w => w.Id.Equals(wordId)).FirstOrDefault();
+            if (user != null && word != null)
             {
                 UserSavedWord savedWord = _repoWrapper
-                        .UserSavedWords.FindByCondition(sw => sw.UserId.Equals(_currentUser.Id) && sw.SavedWordId.Equals(word.Id))
+                        .UserSavedWords.FindByCondition(sw => sw.UserId.Equals(user.Id) && sw.SavedWordId.Equals(word.Id))
                         .FirstOrDefault();
                 if (savedWord == null)
                 {
-                    _repoWrapper.User.Attach(_currentUser);
+                    _repoWrapper.User.Attach(user);
                     _repoWrapper.Word.Attach(word);
-                    UserSavedWord newSavedWord = new UserSavedWord { SavedWord = word, SavedWordId = word.Id, User = _currentUser, UserId = _currentUser.Id };
+                    UserSavedWord newSavedWord = new UserSavedWord { SavedWord = word, SavedWordId = word.Id, User = user, UserId = user.Id };
                     _repoWrapper.UserSavedWords.Create(newSavedWord);
                     _repoWrapper.Save();
                     return true;
