@@ -27,11 +27,13 @@ namespace UrbanDictionary.BusinessLayer.Services.Contracts
         /// <returns>Collection of <see cref="WordDTO"/>s with the same random name.</returns>
         IEnumerable<WordDTO> GetRandom();
         /// <summary>
-        /// Gets <see cref="WordDTO"/>s with certain name.
+        /// Gets <see cref="WordDTO"/>s with certain name on certain page.
         /// </summary>
         /// <param name="name"><see cref="Word.Name"/>.</param>
+        /// <param name="pageNumber"></param>
+        /// <param name="recordsPerPage"></param>
         /// <returns>Collection of words with certain name.</returns>
-        IEnumerable<WordDTO> GetByName(string name);
+        IEnumerable<WordDTO> GetByName(string name, int pageNumber, int recordsPerPage);
         /// <summary>
         ///  Deletes word and return true if exists.
         /// </summary>

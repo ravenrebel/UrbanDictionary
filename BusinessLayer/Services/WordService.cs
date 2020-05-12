@@ -40,10 +40,16 @@ namespace UrbanDictionary.BusinessLayer.Services
             return _mapper.MapToDTO(_repoWrapper.Word.FindByCondition(w => w.Name.Equals(name)).ToList());
         }
 
-        public IEnumerable<WordDTO> GetByName(string name)
+        public IEnumerable<WordDTO> GetByName(string name, int pageNumber, int recordsPerPage)
         {
-            return _mapper.MapToDTO(_repoWrapper.Word.FindByCondition(w => w.Name.Equals(name) && w.WordStatus.Equals(WordStatus.Сonfirmed))
-                .OrderByDescending(w => w.LikesCount).ThenBy(w => w.DislikesCount).ToList());
+            if (pageNumber > 0 && recordsPerPage > 0)
+                return _mapper.MapToDTO(_repoWrapper.Word
+                    .FindByCondition(w => w.Name.Equals(name) && w.WordStatus.Equals(WordStatus.Сonfirmed))
+                    .OrderByDescending(w => w.LikesCount)
+                    .ThenBy(w => w.DislikesCount)
+                    .Skip(pageNumber * recordsPerPage)
+                    .Take(recordsPerPage).ToList());
+            else return null;
         }
 
         public bool TryDelete(long id)

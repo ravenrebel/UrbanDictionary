@@ -229,6 +229,53 @@
             This class can get saved and created words, delete  words from saved ones and edit created ones.
             </remarks>
         </member>
+        <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IUserWordsService.GetSavedWords">
+            <summary>
+            Gets current <see cref="T:UrbanDictionary.DataAccess.Entities.User"/> saved words.
+            </summary>
+            <returns>Returns null when operation did not succeed.</returns>
+        </member>
+        <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IUserWordsService.TryAddToSavedWords(System.Int64)">
+            <summary>
+            Saves the <see cref="T:UrbanDictionary.DataAccess.Entities.Word"/> for current <see cref="T:UrbanDictionary.DataAccess.Entities.User"/> and return true if succeeded.
+            </summary>
+            <param name="id"><see cref="P:UrbanDictionary.BusinessLayer.DTO.WordDTO.Id"/></param>
+            <returns>Returns false when operation did not succeed.</returns>
+        </member>
+        <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IUserWordsService.TryDeleteSavedWord(System.Int64)">
+            <summary>
+            Saves the <see cref="T:UrbanDictionary.DataAccess.Entities.Word"/> for current <see cref="T:UrbanDictionary.DataAccess.Entities.User"/> and returns true if succeeded.
+            </summary>
+            <param name="id"><see cref="P:UrbanDictionary.BusinessLayer.DTO.WordDTO.Id"/></param>
+            <returns>Returns false when operation did not succeed.</returns>
+        </member>
+        <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IUserWordsService.GetCreatedWords">
+            <summary>
+            Gets current <see cref="T:UrbanDictionary.DataAccess.Entities.User"/> created words.
+            </summary>
+            <returns>Returns null when operation did not succeed.</returns>
+        </member>
+        <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IUserWordsService.TryCreateWord(UrbanDictionary.BusinessLayer.DTO.CreateEditFormWordDTO)">
+            <summary>
+            Creates the new <see cref="T:UrbanDictionary.DataAccess.Entities.Word"/> and make the current <see cref="T:UrbanDictionary.DataAccess.Entities.User"/> its author.,  and returns true if succeeded.
+            </summary>
+            <param name="wordDto"></param>
+            <returns>Returns false when operation did not succeed.</returns>
+        </member>
+        <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IUserWordsService.TryEditCreatedWord(UrbanDictionary.BusinessLayer.DTO.CreateEditFormWordDTO)">
+            <summary>
+            Edits <see cref="T:UrbanDictionary.DataAccess.Entities.Word"/> if current <see cref="T:UrbanDictionary.DataAccess.Entities.User"/> is its author and returns true if succeeded.
+            </summary>
+            <param name="wordDTO"></param>
+            <returns>Returns false when operation did not succeed.</returns>
+        </member>
+        <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IUserWordsService.TryDeleteCreatedWord(System.Int64)">
+            <summary>
+            Deletes <see cref="T:UrbanDictionary.DataAccess.Entities.Word"/> if current <see cref="T:UrbanDictionary.DataAccess.Entities.User"/> is its author and returns true if succeeded.
+            </summary>
+            <param name="id"><see cref="P:UrbanDictionary.BusinessLayer.DTO.WordDTO.Id"/></param>
+            <returns>Returns false when operation did not succeed.</returns>
+        </member>
         <member name="T:UrbanDictionary.BusinessLayer.Services.Contracts.IWordService">
             <summary>
             Contains methods for performing actions with <see cref="T:UrbanDictionary.DataAccess.Entities.Word"/>s.
@@ -251,11 +298,13 @@
             </summary>
             <returns>Collection of <see cref="T:UrbanDictionary.BusinessLayer.DTO.WordDTO"/>s with the same random name.</returns>
         </member>
-        <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IWordService.GetByName(System.String)">
+        <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IWordService.GetByName(System.String,System.Int32,System.Int32)">
             <summary>
-            Gets <see cref="T:UrbanDictionary.BusinessLayer.DTO.WordDTO"/>s with certain name.
+            Gets <see cref="T:UrbanDictionary.BusinessLayer.DTO.WordDTO"/>s with certain name on certain page.
             </summary>
             <param name="name"><see cref="P:UrbanDictionary.DataAccess.Entities.Word.Name"/>.</param>
+            <param name="pageNumber"></param>
+            <param name="recordsPerPage"></param>
             <returns>Collection of words with certain name.</returns>
         </member>
         <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IWordService.TryDelete(System.Int64)">

@@ -48,9 +48,12 @@ namespace UrbanDictionary.Controllers
         }
         
         [HttpGet("search/{name}")]
-        public ActionResult<IEnumerable<WordDTO>> GetByName(string name)
+        public ActionResult<IEnumerable<WordDTO>> GetByName(string name, int pageNumber, int recordsPerPage)
         {
-            return Ok(_serviceWrapper.Word.GetByName(name));
+            var words = _serviceWrapper.Word.GetByName(name, pageNumber, recordsPerPage);
+            if (words != null)
+                return Ok(words);
+            else return BadRequest(name);
         }
 
         [HttpDelete("delete/{id}")]

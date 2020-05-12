@@ -78,5 +78,15 @@ namespace UrbanDictionary.Controllers
             }
             return BadRequest(word);
         }
+
+        [HttpDelete("deleteCreatedWord/{id}")]
+        public ActionResult DeleteCreatedWords(long id)
+        {
+            if (_serviceWrapper.UserWords.TryDeleteCreatedWord(id))
+            {
+                return Ok(id);
+            }
+            return NotFound(id);
+        }
     }
 }

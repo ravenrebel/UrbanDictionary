@@ -177,6 +177,21 @@ namespace UrbanDictionary.BusinessLayer.Services
             }
             return false;
         }
-        //TODO:TryDeleteCreatedWord
+
+        public bool TryDeleteCreatedWord(long id)
+        {
+            if (_currentUser != null)
+            {
+                Word word = _repoWrapper.Word.FindByCondition(w => w.Id.Equals(id) && w.AuthorId.Equals(_currentUser.Id)).FirstOrDefault();
+                if (word != null)
+                {
+                    _repoWrapper.Word.Delete(word);
+                    _repoWrapper.Save();
+
+                    return true;
+                }
+            } 
+            return false;
+        }
     }
 }
