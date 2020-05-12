@@ -7,6 +7,7 @@ using UrbanDictionary.DataAccess.Repositories.Contracts;
 
 namespace UrbanDictionary.BusinessLayer.DTO.Mapper
 {
+    /// <inheritdoc cref="IMapper{TEntity, TDTO}"/>
     public class TagServiceMapper : IMapper<Tag, TagDTO>
     {
         private IRepositoryWrapper _repoWrapper;

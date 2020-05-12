@@ -12,11 +12,17 @@ using UrbanDictionary.DataAccess.Repositories.Contracts;
 
 namespace UrbanDictionary.BusinessLayer.Services
 {
+    /// <inheritdoc cref="IWordService"/>
     public class WordService : IWordService
     {
         private readonly IRepositoryWrapper _repoWrapper;
         private readonly IMapper<Word, WordDTO> _mapper;
 
+        /// <summary>
+        /// <see cref="WordService"/> contractor.
+        /// </summary>
+        /// <param name="repoWrapper">Repository</param>
+        /// <param name="mapper">Mapper</param>
         public WordService(IRepositoryWrapper repoWrapper, IMapper<Word, WordDTO> mapper)
         {
             _repoWrapper = repoWrapper;
@@ -34,10 +40,16 @@ namespace UrbanDictionary.BusinessLayer.Services
             return _mapper.MapToDTO(_repoWrapper.Word.FindByCondition(w => w.Name.Equals(name)).ToList());
         }
 
-        public IEnumerable<WordDTO> GetByName(string name)
+        public IEnumerable<WordDTO> GetByName(string name, int pageNumber, int recordsPerPage)
         {
-            return _mapper.MapToDTO(_repoWrapper.Word.FindByCondition(w => w.Name.Equals(name) && w.WordStatus.Equals(WordStatus.Сonfirmed))
-                .OrderByDescending(w => w.LikesCount).ThenBy(w => w.DislikesCount).ToList());
+            if (pageNumber > 0 && recordsPerPage > 0)
+                return _mapper.MapToDTO(_repoWrapper.Word
+                    .FindByCondition(w => w.Name.Equals(name) && w.WordStatus.Equals(WordStatus.Сonfirmed))
+                    .OrderByDescending(w => w.LikesCount)
+                    .ThenBy(w => w.DislikesCount)
+                    .Skip(pageNumber * recordsPerPage)
+                    .Take(recordsPerPage).ToList());
+            else return null;
         }
 
         public bool TryDelete(long id)
@@ -46,7 +58,6 @@ namespace UrbanDictionary.BusinessLayer.Services
             if (word != null)
             {
                 _repoWrapper.Word.Delete(word);
-                IEnumerable<Tag> tags = _repoWrapper.Tag.GetByWordId(word.Id);
                 _repoWrapper.Save();
 
                 return true;
@@ -68,14 +79,12 @@ namespace UrbanDictionary.BusinessLayer.Services
 
         public bool TryApproveWord(long id)
         {
-            if (ChangeWordStatus(id, WordStatus.Сonfirmed)) return true;
-            else return false;
+            return ChangeWordStatus(id, WordStatus.Сonfirmed);
         }
 
         public bool TryDisapproveWord(long id)
         {
-            if (ChangeWordStatus(id, WordStatus.Unconfirmed)) return true;
-            else return false;
+            return ChangeWordStatus(id, WordStatus.Unconfirmed);
         }
 
         private bool ChangeWordStatus(long id, WordStatus status)
@@ -96,12 +105,7 @@ namespace UrbanDictionary.BusinessLayer.Services
 
         public IEnumerable<WordDTO> GetByTagName(string tag)
         {
-            var words = from t in _repoWrapper.Tag.FindAll()
-                   where t.Name.Equals(tag)
-                   join wt in _repoWrapper.WordTag.FindAll() on t.Id equals wt.TagId
-                   join w in _repoWrapper.Word.FindAll() on wt.WordId equals w.Id
-                   select w;
-            return _mapper.MapToDTO(words);
+            return _mapper.MapToDTO( _repoWrapper.Word.FindByCondition(w => w.WordTags.Any(wt => wt.Tag.Name.Equals(tag))));
         }
     }
 }

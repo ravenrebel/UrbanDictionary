@@ -10,10 +10,15 @@ using UrbanDictionary.DataAccess.Entities;
 
 namespace UrbanDictionary.DataAccess.Repositories
 {
+    /// <inheritdoc cref="IWordRepository"/>
     public class WordRepository : RepositoryBase<Word>, IWordRepository
     {
         private readonly UrbanDictionaryDBContext _context;
 
+        /// <summary>
+        /// <see cref="WordRepository"/> constructor.
+        /// </summary>
+        /// <param name="dbContext">Database context</param>
         public WordRepository(UrbanDictionaryDBContext dbContext)
             : base(dbContext)
         {

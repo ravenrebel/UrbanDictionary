@@ -11,6 +11,7 @@ using UrbanDictionary.DataAccess.Repositories.Contracts;
 
 namespace UrbanDictionary.BusinessLayer.Services
 {
+    /// <inheritdoc cref="ITagService"/>
     public class TagService : ITagService
     {
         private readonly IRepositoryWrapper _repoWrapper;

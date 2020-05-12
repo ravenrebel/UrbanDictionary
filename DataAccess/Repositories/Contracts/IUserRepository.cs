@@ -7,6 +7,9 @@ using UrbanDictionary.DataAccess.Entities;
 
 namespace UrbanDictionary.DataAccess.Repositories.Contracts
 {
+    /// <summary>
+    /// Contains basic queries for <see cref="User"/>.
+    /// </summary>
     public interface IUserRepository : IRepositoryBase<User>
     {
     }

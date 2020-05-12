@@ -29,8 +29,6 @@ namespace UrbanDictionary.Controllers
 
         [HttpPost("signUp")]
         [AllowAnonymous]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> SignUp(SignUpFormDTO signUpForm)
         {
             User registeredUser = await _userManager.FindByEmailAsync(signUpForm.Email);
@@ -40,8 +38,9 @@ namespace UrbanDictionary.Controllers
             }
 
             User user = new User { Email = signUpForm.Email, UserName = signUpForm.UserName };
-            await _userManager.AddToRoleAsync(user, "User");
+           
             var result = await _userManager.CreateAsync(user, signUpForm.Password);
+            await _userManager.AddToRoleAsync(user, "User");
 
             if (result.Succeeded)
             {
@@ -55,8 +54,6 @@ namespace UrbanDictionary.Controllers
 
         [HttpPost("signIn")]
         [AllowAnonymous]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> SignIn(SignInFormDTO signInForm)
         {
             var result =

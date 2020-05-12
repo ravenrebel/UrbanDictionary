@@ -1,0 +1,351 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>UrbanDictionary.DataAccess</name>
+    </assembly>
+    <members>
+        <member name="T:UrbanDictionary.DataAccess.Data.UrbanDictionaryDBContext">
+            <inheritdoc cref="T:Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityDbContext"/>
+        </member>
+        <member name="M:UrbanDictionary.DataAccess.Data.UrbanDictionaryDBContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{UrbanDictionary.DataAccess.Data.UrbanDictionaryDBContext})">
+            <summary>
+            
+            </summary>
+            <param name="options"></param>
+        </member>
+        <member name="P:UrbanDictionary.DataAccess.Data.UrbanDictionaryDBContext.Users">
+            <summary>
+            Returns the <see cref="T:Microsoft.EntityFrameworkCore.DbSet`1"/> of <see cref="P:UrbanDictionary.DataAccess.Data.UrbanDictionaryDBContext.Users"/>s.
+            </summary> 
+        </member>
+        <member name="P:UrbanDictionary.DataAccess.Data.UrbanDictionaryDBContext.Words">
+            <summary>
+            Returns the <see cref="T:Microsoft.EntityFrameworkCore.DbSet`1"/> of <see cref="T:UrbanDictionary.DataAccess.Entities.Word"/>s.
+            </summary>
+        </member>
+        <member name="P:UrbanDictionary.DataAccess.Data.UrbanDictionaryDBContext.Tags">
+            <summary>
+            Returns the <see cref="T:Microsoft.EntityFrameworkCore.DbSet`1"/> of <see cref="T:UrbanDictionary.DataAccess.Entities.Tag"/>s.
+            </summary>
+        </member>
+        <member name="P:UrbanDictionary.DataAccess.Data.UrbanDictionaryDBContext.WordTags">
+            <summary>
+            Returns the <see cref="T:Microsoft.EntityFrameworkCore.DbSet`1"/> of <see cref="T:UrbanDictionary.DataAccess.Entities.WordTag"/>s.
+            </summary>
+        </member>
+        <member name="P:UrbanDictionary.DataAccess.Data.UrbanDictionaryDBContext.UserSavedWords">
+            <summary>
+            Returns the <see cref="T:Microsoft.EntityFrameworkCore.DbSet`1"/> of <see cref="T:UrbanDictionary.DataAccess.Entities.UserSavedWord"/>s.
+            </summary>
+        </member>
+        <member name="T:UrbanDictionary.DataAccess.Entities.BaseEntity">
+            <summary>
+            Contains basic properties for other entities.
+            </summary>
+        </member>
+        <member name="P:UrbanDictionary.DataAccess.Entities.BaseEntity.Id">
+            <summary>
+            Unique reference to the specific entity. PK.
+            </summary>
+        </member>
+        <member name="T:UrbanDictionary.DataAccess.Entities.Tag">
+            <summary>
+            Identifier for categorization, description, <see cref="T:UrbanDictionary.DataAccess.Entities.Word"/> retrieval.
+            </summary>
+        </member>
+        <member name="P:UrbanDictionary.DataAccess.Entities.Tag.Name">
+            <summary>
+            <see cref="T:UrbanDictionary.DataAccess.Entities.Tag"/> Name property.
+            </summary>
+        </member>
+        <member name="T:UrbanDictionary.DataAccess.Entities.User">
+            <inheritdoc cref="T:Microsoft.AspNetCore.Identity.IdentityUser"/>
+        </member>
+        <member name="P:UrbanDictionary.DataAccess.Entities.User.CreatedWords">
+            <summary>
+            Created words of <see cref="T:UrbanDictionary.DataAccess.Entities.User"/>, that can be edit and deleted.
+            </summary>
+        </member>
+        <member name="P:UrbanDictionary.DataAccess.Entities.User.UserSavedWords">
+            <summary>
+            Words that <see cref="T:UrbanDictionary.DataAccess.Entities.User" /> saved.
+            </summary>
+        </member>
+        <member name="T:UrbanDictionary.DataAccess.Entities.UserSavedWord">
+            <summary>
+            Implement the many-to-many relationship with  <see cref="T:UrbanDictionary.DataAccess.Entities.User"/> and its saved <see cref="T:UrbanDictionary.DataAccess.Entities.Word"/>.
+            </summary>
+        </member>
+        <member name="P:UrbanDictionary.DataAccess.Entities.UserSavedWord.UserId">
+            <summary>
+            Id of specific <see cref="P:UrbanDictionary.DataAccess.Entities.UserSavedWord.User"/>
+            </summary>
+        </member>
+        <member name="P:UrbanDictionary.DataAccess.Entities.UserSavedWord.SavedWordId">
+            <summary>
+            <see cref="P:UrbanDictionary.DataAccess.Entities.UserSavedWord.User"/>s saved <see cref="T:UrbanDictionary.DataAccess.Entities.Word"/> Id.
+            </summary>
+        </member>
+        <member name="T:UrbanDictionary.DataAccess.Entities.Word">
+            <summary>
+            Word of specific language.
+            </summary>
+        </member>
+        <member name="P:UrbanDictionary.DataAccess.Entities.Word.Name">
+            <summary>
+            <see cref="T:UrbanDictionary.DataAccess.Entities.Word"/> Name.
+            </summary>
+        </member>
+        <member name="P:UrbanDictionary.DataAccess.Entities.Word.Definition">
+            <summary>
+            <see cref="T:UrbanDictionary.DataAccess.Entities.Word"/> meaning.
+            </summary>
+        </member>
+        <member name="P:UrbanDictionary.DataAccess.Entities.Word.AuthorId">
+            <summary>
+            FK of <see cref="T:UrbanDictionary.DataAccess.Entities.User"/> that create it.
+            </summary>
+        </member>
+        <member name="P:UrbanDictionary.DataAccess.Entities.Word.Author">
+            <summary>
+            <see cref="T:UrbanDictionary.DataAccess.Entities.User"/> that create it.
+            </summary>
+        </member>
+        <member name="P:UrbanDictionary.DataAccess.Entities.Word.CreationDate">
+            <summary>
+            Time when <see cref="T:UrbanDictionary.DataAccess.Entities.Word"/> was created or its last modification time.
+            </summary>
+        </member>
+        <member name="P:UrbanDictionary.DataAccess.Entities.Word.Example">
+            <summary>
+            Example of <see cref="T:UrbanDictionary.DataAccess.Entities.Word"/> usage.
+            </summary>
+        </member>
+        <member name="P:UrbanDictionary.DataAccess.Entities.Word.Image">
+            <summary>
+            The reference to the image that explain the <see cref="T:UrbanDictionary.DataAccess.Entities.Word"/> somehow.
+            </summary>
+        </member>
+        <member name="P:UrbanDictionary.DataAccess.Entities.Word.WordStatus">
+            <summary>
+            Shows the current <see cref="P:UrbanDictionary.DataAccess.Entities.Word.WordStatus"/>.
+            </summary>
+        </member>
+        <member name="P:UrbanDictionary.DataAccess.Entities.Word.LikesCount">
+            <summary>
+            How many users liked it.
+            </summary>
+        </member>
+        <member name="P:UrbanDictionary.DataAccess.Entities.Word.DislikesCount">
+            <summary>
+            How many users dislike it.
+            </summary>
+        </member>
+        <member name="P:UrbanDictionary.DataAccess.Entities.Word.WordTags">
+            <summary>
+            Collection of <see cref="T:UrbanDictionary.DataAccess.Entities.WordTag"/>s.
+            </summary>
+        </member>
+        <member name="P:UrbanDictionary.DataAccess.Entities.Word.UserSavedWords">
+            <summary>
+            Collection of <see cref="T:UrbanDictionary.DataAccess.Entities.UserSavedWord"/>s.
+            </summary>
+        </member>
+        <member name="T:UrbanDictionary.DataAccess.Entities.WordStatus">
+            <summary>
+            Enumeration of different <see cref="T:UrbanDictionary.DataAccess.Entities.Word"/> statuses.
+            </summary>
+        </member>
+        <member name="F:UrbanDictionary.DataAccess.Entities.WordStatus.Сonfirmed">
+            <summary>
+            All users can search the <see cref="T:UrbanDictionary.DataAccess.Entities.Word"/>
+            </summary>
+        </member>
+        <member name="F:UrbanDictionary.DataAccess.Entities.WordStatus.Unconfirmed">
+            <summary>
+            The <see cref="T:UrbanDictionary.DataAccess.Entities.Word"/> was disapproved by moderator and other users cannot search it.
+            </summary>
+        </member>
+        <member name="F:UrbanDictionary.DataAccess.Entities.WordStatus.OnModeration">
+            <summary>
+            The <see cref="T:UrbanDictionary.DataAccess.Entities.Word"/> is considered by moderator.
+            </summary>
+        </member>
+        <member name="T:UrbanDictionary.DataAccess.Entities.WordTag">
+            <summary>
+            Implement the many-to-many relationship with  <see cref="T:UrbanDictionary.DataAccess.Entities.Tag"/> and its saved <see cref="T:UrbanDictionary.DataAccess.Entities.Word"/>.
+            </summary>
+        </member>
+        <member name="P:UrbanDictionary.DataAccess.Entities.WordTag.WordId">
+            <summary>
+            <see cref="T:UrbanDictionary.DataAccess.Entities.Word"/> Id of words with particular <see cref="P:UrbanDictionary.DataAccess.Entities.WordTag.Tag"/>.
+            </summary>
+        </member>
+        <member name="P:UrbanDictionary.DataAccess.Entities.WordTag.TagId">
+            <summary>
+            <see cref="T:UrbanDictionary.DataAccess.Entities.Tag"/> Id of words with particular <see cref="P:UrbanDictionary.DataAccess.Entities.WordTag.Word"/>.
+            </summary>
+        </member>
+        <member name="T:UrbanDictionary.DataAccess.Repositories.Contracts.IRepositoryBase`1">
+            <summary>
+            Contains basic queries for <typeparamref name="T"/>. 
+            </summary>
+            <typeparam name="T">Entity</typeparam>
+        </member>
+        <member name="M:UrbanDictionary.DataAccess.Repositories.Contracts.IRepositoryBase`1.FindAll">
+            <summary>
+            Gets all data of specific type <typeparamref name="T"/>.
+            </summary>
+            <returns>Return a query that get all data according to specific type <typeparamref name="T"/>.</returns>
+        </member>
+        <member name="M:UrbanDictionary.DataAccess.Repositories.Contracts.IRepositoryBase`1.FindByCondition(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            Finds data according to specific condition and have type <typeparamref name="T"/>.
+            </summary>
+            <param name="expression">Lambda expression</param>
+            <returns>Returns a query that get all data according to specific condition.</returns>
+        </member>
+        <member name="M:UrbanDictionary.DataAccess.Repositories.Contracts.IRepositoryBase`1.Create(`0)">
+            <summary>
+            Adds new entity to data source.
+            </summary>
+            <param name="entity">Entity</param>
+        </member>
+        <member name="M:UrbanDictionary.DataAccess.Repositories.Contracts.IRepositoryBase`1.Update(`0)">
+            <summary>
+            Updates existed entity in data source.
+            </summary>
+            <param name="entity">Entity</param>
+        </member>
+        <member name="M:UrbanDictionary.DataAccess.Repositories.Contracts.IRepositoryBase`1.Delete(`0)">
+            <summary>
+            Deletes existed entity in data source.
+            </summary>
+            <param name="entity">Entity</param>
+        </member>
+        <member name="M:UrbanDictionary.DataAccess.Repositories.Contracts.IRepositoryBase`1.Attach(`0)">
+            <summary>
+            Makes entity unchanged in data source.
+            </summary>
+            <param name="entity">Entity</param>
+        </member>
+        <member name="T:UrbanDictionary.DataAccess.Repositories.Contracts.IRepositoryWrapper">
+            <summary>
+            Contains all repositories of basic entities.
+            </summary>
+        </member>
+        <member name="P:UrbanDictionary.DataAccess.Repositories.Contracts.IRepositoryWrapper.Word">
+            <inheritdoc cref="T:UrbanDictionary.DataAccess.Repositories.Contracts.IWordRepository"/>
+        </member>
+        <member name="P:UrbanDictionary.DataAccess.Repositories.Contracts.IRepositoryWrapper.User">
+            <inheritdoc cref="T:UrbanDictionary.DataAccess.Repositories.Contracts.IUserRepository"/>
+        </member>
+        <member name="P:UrbanDictionary.DataAccess.Repositories.Contracts.IRepositoryWrapper.Tag">
+            <inheritdoc cref="T:UrbanDictionary.DataAccess.Repositories.Contracts.ITagRepository"/>
+        </member>
+        <member name="P:UrbanDictionary.DataAccess.Repositories.Contracts.IRepositoryWrapper.WordTag">
+            <inheritdoc cref="T:UrbanDictionary.DataAccess.Repositories.Contracts.IWordTagRepository"/>
+        </member>
+        <member name="P:UrbanDictionary.DataAccess.Repositories.Contracts.IRepositoryWrapper.UserSavedWords">
+            <inheritdoc cref="T:UrbanDictionary.DataAccess.Repositories.Contracts.IUserSavedWordsRepository"/>
+        </member>
+        <member name="M:UrbanDictionary.DataAccess.Repositories.Contracts.IRepositoryWrapper.Save">
+            <summary>
+            Saves all changes to database.
+            </summary>
+        </member>
+        <member name="T:UrbanDictionary.DataAccess.Repositories.Contracts.ITagRepository">
+            <summary>
+            Contains basic queries for <see cref="T:UrbanDictionary.DataAccess.Entities.Tag"/>.
+            </summary>
+        </member>
+        <member name="T:UrbanDictionary.DataAccess.Repositories.Contracts.IUserRepository">
+            <summary>
+            Contains basic queries for <see cref="T:UrbanDictionary.DataAccess.Entities.User"/>.
+            </summary>
+        </member>
+        <member name="T:UrbanDictionary.DataAccess.Repositories.Contracts.IUserSavedWordsRepository">
+            <summary>
+            Contains basic queries for <see cref="T:UrbanDictionary.DataAccess.Entities.UserSavedWord"/>.
+            </summary>
+        </member>
+        <member name="T:UrbanDictionary.DataAccess.Repositories.Contracts.IWordRepository">
+            <summary>
+            Contains basic queries for <see cref="T:UrbanDictionary.DataAccess.Entities.Word"/>.
+            </summary>
+        </member>
+        <member name="T:UrbanDictionary.DataAccess.Repositories.Contracts.IWordTagRepository">
+            <summary>
+            Contains basic queries for <see cref="T:UrbanDictionary.DataAccess.Entities.WordTag"/>.
+            </summary>
+        </member>
+        <member name="T:UrbanDictionary.DataAccess.Repositories.RepositoryBase`1">
+            <inheritdoc cref="T:UrbanDictionary.DataAccess.Repositories.Contracts.IRepositoryBase`1"/>
+        </member>
+        <member name="P:UrbanDictionary.DataAccess.Repositories.RepositoryBase`1.UrbanDictionaryDBContext">
+            <summary>
+            Database context.
+            </summary>
+        </member>
+        <member name="M:UrbanDictionary.DataAccess.Repositories.RepositoryBase`1.#ctor(UrbanDictionary.DataAccess.Data.UrbanDictionaryDBContext)">
+            <summary>
+            Constructor for <see cref="T:UrbanDictionary.DataAccess.Repositories.RepositoryBase`1"/>.
+            </summary>
+            <param name="urbanDictionaryDBContext"> Database context.</param>
+        </member>
+        <member name="T:UrbanDictionary.DataAccess.Repositories.RepositoryWrapper">
+            <inheritdoc cref="T:UrbanDictionary.DataAccess.Repositories.Contracts.IRepositoryWrapper"/>
+        </member>
+        <member name="M:UrbanDictionary.DataAccess.Repositories.RepositoryWrapper.#ctor(UrbanDictionary.DataAccess.Data.UrbanDictionaryDBContext)">
+            <summary>
+            <see cref="T:UrbanDictionary.DataAccess.Repositories.RepositoryWrapper"/> constructor.
+            </summary>
+            <param name="urbanDictionaryDBContext"></param>
+        </member>
+        <member name="T:UrbanDictionary.DataAccess.Repositories.TagRepository">
+            <inheritdoc cref="T:UrbanDictionary.DataAccess.Repositories.Contracts.ITagRepository"/>
+        </member>
+        <member name="M:UrbanDictionary.DataAccess.Repositories.TagRepository.#ctor(UrbanDictionary.DataAccess.Data.UrbanDictionaryDBContext)">
+            <summary>
+            <see cref="T:UrbanDictionary.DataAccess.Repositories.TagRepository"/> constructor.
+            </summary>
+            <param name="dbContext">Database context</param>
+        </member>
+        <member name="T:UrbanDictionary.DataAccess.Repositories.UserRepository">
+            <inheritdoc cref="T:UrbanDictionary.DataAccess.Repositories.Contracts.IUserRepository"/>
+        </member>
+        <member name="M:UrbanDictionary.DataAccess.Repositories.UserRepository.#ctor(UrbanDictionary.DataAccess.Data.UrbanDictionaryDBContext)">
+            <summary>
+            <see cref="T:UrbanDictionary.DataAccess.Repositories.UserRepository"/> constructor.
+            </summary>
+            <param name="dbContext">Database context</param>
+        </member>
+        <member name="T:UrbanDictionary.DataAccess.Repositories.UserSavedWordsRepository">
+            <inheritdoc cref="T:UrbanDictionary.DataAccess.Repositories.Contracts.IUserSavedWordsRepository"/>
+        </member>
+        <member name="M:UrbanDictionary.DataAccess.Repositories.UserSavedWordsRepository.#ctor(UrbanDictionary.DataAccess.Data.UrbanDictionaryDBContext)">
+            <summary>
+            <see cref="T:UrbanDictionary.DataAccess.Repositories.UserSavedWordsRepository"/> constructor.
+            </summary>
+            <param name="dbContext">Database context</param>
+        </member>
+        <member name="T:UrbanDictionary.DataAccess.Repositories.WordRepository">
+            <inheritdoc cref="T:UrbanDictionary.DataAccess.Repositories.Contracts.IWordRepository"/>
+        </member>
+        <member name="M:UrbanDictionary.DataAccess.Repositories.WordRepository.#ctor(UrbanDictionary.DataAccess.Data.UrbanDictionaryDBContext)">
+            <summary>
+            <see cref="T:UrbanDictionary.DataAccess.Repositories.WordRepository"/> constructor.
+            </summary>
+            <param name="dbContext">Database context</param>
+        </member>
+        <member name="T:UrbanDictionary.DataAccess.Repositories.WordTagRepository">
+            <inheritdoc cref="T:UrbanDictionary.DataAccess.Repositories.Contracts.IWordTagRepository"/>
+        </member>
+        <member name="M:UrbanDictionary.DataAccess.Repositories.WordTagRepository.#ctor(UrbanDictionary.DataAccess.Data.UrbanDictionaryDBContext)">
+            <summary>
+            <see cref="T:UrbanDictionary.DataAccess.Repositories.WordTagRepository"/> constructor.
+            </summary>
+            <param name="dbContext">Database context</param>
+        </member>
+    </members>
+</doc>

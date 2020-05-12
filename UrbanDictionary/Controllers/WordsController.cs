@@ -24,44 +24,39 @@ namespace UrbanDictionary.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<IEnumerable<WordDTO>> Get()
         {
             return Ok(_serviceWrapper.Word.GetAll());
         }
 
         [HttpGet("topTen")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<IEnumerable<WordDTO>> GetTopTen()
         {
             return Ok(_serviceWrapper.Word.GetTopTen());
         }
 
         [HttpGet("lastTen")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<IEnumerable<WordDTO>> GetLastTenAdded()
         {
             return Ok(_serviceWrapper.Word.GetLastTenAdded());
         }
 
         [HttpGet("randomWord")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<IEnumerable<WordDTO>> GetRandom()
         {
             return Ok(_serviceWrapper.Word.GetRandom());
         }
         
         [HttpGet("search/{name}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<IEnumerable<WordDTO>> GetByName(string name)
+        public ActionResult<IEnumerable<WordDTO>> GetByName(string name, int pageNumber, int recordsPerPage)
         {
-            IEnumerable<WordDTO> words = _serviceWrapper.Word.GetByName(name);
-            return Ok(words);
+            var words = _serviceWrapper.Word.GetByName(name, pageNumber, recordsPerPage);
+            if (words != null)
+                return Ok(words);
+            else return BadRequest(name);
         }
 
         [HttpDelete("delete/{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult Delete(long id)
         {
             if (_serviceWrapper.Word.TryDelete(id)) return Ok(id);
@@ -69,8 +64,6 @@ namespace UrbanDictionary.Controllers
         }
 
         [HttpPut("approve/{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult Approve(long id)
         {
             if (_serviceWrapper.Word.TryApproveWord(id)) return Ok(id);
@@ -78,8 +71,6 @@ namespace UrbanDictionary.Controllers
         }
 
         [HttpPut("disapprove/{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult Disapprove(long id)
         {
             if (_serviceWrapper.Word.TryDisapproveWord(id)) return Ok(id);
@@ -87,11 +78,9 @@ namespace UrbanDictionary.Controllers
         }
 
         [HttpGet("getByTag/{tag}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<IEnumerable<WordDTO>> GetByTag(string tag)
         {
-            IEnumerable<WordDTO> words = _serviceWrapper.Word.GetByTagName(tag);
-            return Ok(words);
+            return Ok(_serviceWrapper.Word.GetByTagName(tag));
         }
     }
 }

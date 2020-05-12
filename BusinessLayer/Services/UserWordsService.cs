@@ -11,13 +11,20 @@ using UrbanDictionary.DataAccess.Repositories.Contracts;
 
 
 namespace UrbanDictionary.BusinessLayer.Services
-{
+{  
+    /// <inheritdoc cref="IUserWordsService"/>
     public class UserWordsService : IUserWordsService
     {
         private readonly IRepositoryWrapper _repoWrapper;
         private readonly IMapper<Word, WordDTO> _wordMapper;
         private readonly User _currentUser;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="repoWrapper">Repository</param>
+        /// <param name="httpContextAccessor">HttpContext</param>
+        /// <param name="wordMapper">Mapper</param>
         public UserWordsService(IRepositoryWrapper repoWrapper, IHttpContextAccessor httpContextAccessor, IMapper<Word, WordDTO> wordMapper)
         {
             _repoWrapper = repoWrapper;
@@ -30,11 +37,7 @@ namespace UrbanDictionary.BusinessLayer.Services
         {
             if (_currentUser != null)
             {
-                var savedWords = from sw in _repoWrapper.UserSavedWords.FindAll()
-                       where sw.UserId.Equals(_currentUser.Id)
-                       join w in _repoWrapper.Word.FindAll() on sw.SavedWordId equals w.Id
-                       select w;
-                return _wordMapper.MapToDTO(savedWords);
+                return _wordMapper.MapToDTO(_repoWrapper.Word.FindByCondition(w => w.UserSavedWords.Any(uw => uw.UserId.Equals(_currentUser.Id))));
             }
             return null;
         }
@@ -42,12 +45,12 @@ namespace UrbanDictionary.BusinessLayer.Services
         public bool TryAddToSavedWords(long id)
         {
             Word word = _repoWrapper.Word.FindByCondition(w => w.Id.Equals(id)).FirstOrDefault();
-            if (_currentUser != null)
+            if (_currentUser != null && word != null)
             {
                 UserSavedWord savedWord = _repoWrapper
                         .UserSavedWords.FindByCondition(sw => sw.UserId.Equals(_currentUser.Id) && sw.SavedWordId.Equals(word.Id))
                         .FirstOrDefault();
-                if (word != null && _currentUser != null && savedWord == null)
+                if (savedWord == null)
                 {
                     _repoWrapper.User.Attach(_currentUser);
                     _repoWrapper.Word.Attach(word);
@@ -92,14 +95,7 @@ namespace UrbanDictionary.BusinessLayer.Services
             if (_currentUser != null)
             { 
                 if (wordDto.Name == null || wordDto.Definition == null) return false;
-                Word word = new Word { Definition = wordDto.Definition, Image = wordDto.Image, Example = wordDto.Example, Name = wordDto.Name };
-
-                word.Id = 0;
-                word.DislikesCount = 0;
-                word.LikesCount = 0;
-                word.CreationDate = DateTime.Now;
-                word.WordStatus = WordStatus.OnModeration;
-                word.AuthorId = _currentUser.Id;
+                Word word = new Word { Definition = wordDto.Definition, Image = wordDto.Image, Example = wordDto.Example, Name = wordDto.Name,  AuthorId = _currentUser.Id };
                 _repoWrapper.Word.Create(word);
 
                 foreach (string tagName in wordDto.Tags.Distinct())
@@ -125,7 +121,7 @@ namespace UrbanDictionary.BusinessLayer.Services
             return false;
         }
 
-        public bool TryEditWord(CreateEditFormWordDTO wordDto)
+        public bool TryEditCreatedWord(CreateEditFormWordDTO wordDto)
         {
             if (_currentUser != null)
             { 
@@ -143,7 +139,8 @@ namespace UrbanDictionary.BusinessLayer.Services
 
                     _repoWrapper.Word.Update(word);
 
-                    Dictionary<string, Tag> oldTags = _repoWrapper.Tag.GetByWordId(word.Id).ToDictionary(t => t.Name, t => t);
+                    Dictionary<string, Tag> oldTags = _repoWrapper.Tag.FindByCondition(t => t.WordTags.Any(w => w.WordId.Equals(word.Id)))
+                        .ToDictionary(t => t.Name, t => t);
 
                     foreach (string tagName in wordDto.Tags.Distinct())
                     {
@@ -178,6 +175,22 @@ namespace UrbanDictionary.BusinessLayer.Services
                     return true;
                 }
             }
+            return false;
+        }
+
+        public bool TryDeleteCreatedWord(long id)
+        {
+            if (_currentUser != null)
+            {
+                Word word = _repoWrapper.Word.FindByCondition(w => w.Id.Equals(id) && w.AuthorId.Equals(_currentUser.Id)).FirstOrDefault();
+                if (word != null)
+                {
+                    _repoWrapper.Word.Delete(word);
+                    _repoWrapper.Save();
+
+                    return true;
+                }
+            } 
             return false;
         }
     }

@@ -8,6 +8,7 @@ using UrbanDictionary.DataAccess.Repositories.Contracts;
 
 namespace UrbanDictionary.BusinessLayer.DTO.Mapper
 {
+    /// <inheritdoc cref="IMapper{TEntity, TDTO}"/>
     public class WordServiceMapper : IMapper<Word, WordDTO>
     {
         private IRepositoryWrapper _repoWrapper;
@@ -30,7 +31,7 @@ namespace UrbanDictionary.BusinessLayer.DTO.Mapper
             dto.CreationDate = entity.CreationDate;
             dto.WordStatus = entity.WordStatus;
             dto.AuthorName = _repoWrapper.User.FindByCondition(u => u.Id.Equals(entity.AuthorId)).FirstOrDefault()?.UserName;
-            IEnumerable<string> tags = _repoWrapper.Tag.GetByWordId(entity.Id).Select(t => t.Name);
+            IEnumerable<string> tags = _repoWrapper.Tag.FindByCondition(t => t.WordTags.Any(w => w.WordId.Equals(entity.Id))).Select(t => t.Name);
             dto.Tags = tags;
 
             return dto;

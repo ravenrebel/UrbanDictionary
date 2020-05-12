@@ -7,8 +7,10 @@ using UrbanDictionary.DataAccess.Entities;
 
 namespace UrbanDictionary.DataAccess.Repositories.Contracts
 {
+    /// <summary>
+    /// Contains basic queries for <see cref="Tag"/>.
+    /// </summary>
     public interface ITagRepository : IRepositoryBase<Tag>
     {
-        IEnumerable<Tag> GetByWordId(long id);
     }
 }
