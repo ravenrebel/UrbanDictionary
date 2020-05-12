@@ -18,6 +18,11 @@ namespace UrbanDictionary.BusinessLayer.Services
         private readonly IRepositoryWrapper _repoWrapper;
         private readonly IMapper<Word, WordDTO> _mapper;
 
+        /// <summary>
+        /// <see cref="WordService"/> contractor.
+        /// </summary>
+        /// <param name="repoWrapper">Repository</param>
+        /// <param name="mapper">Mapper</param>
         public WordService(IRepositoryWrapper repoWrapper, IMapper<Word, WordDTO> mapper)
         {
             _repoWrapper = repoWrapper;
@@ -94,12 +99,7 @@ namespace UrbanDictionary.BusinessLayer.Services
 
         public IEnumerable<WordDTO> GetByTagName(string tag)
         {
-            var words = from t in _repoWrapper.Tag.FindAll()
-                   where t.Name.Equals(tag)
-                   join wt in _repoWrapper.WordTag.FindAll() on t.Id equals wt.TagId
-                   join w in _repoWrapper.Word.FindAll() on wt.WordId equals w.Id
-                   select w;
-            return _mapper.MapToDTO(words);
+            return _mapper.MapToDTO( _repoWrapper.Word.FindByCondition(w => w.WordTags.Any(wt => wt.Tag.Name.Equals(tag))));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace UrbanDictionary.DataAccess.Repositories
         private readonly UrbanDictionaryDBContext _context;
         
         /// <summary>
-        /// 
+        /// <see cref="TagRepository"/> constructor.
         /// </summary>
         /// <param name="dbContext">Database context</param>
         public TagRepository(UrbanDictionaryDBContext dbContext)
@@ -24,14 +24,5 @@ namespace UrbanDictionary.DataAccess.Repositories
         {
             _context = dbContext;
         }
-
-        public IEnumerable<Tag> GetByWordId(long id)
-        {
-            var tags = from wt in _context.WordTags
-                where  wt.WordId.Equals(id)
-                join t in _context.Tags on wt.TagId equals t.Id
-                select t;
-            return tags.ToList();
-        } 
     }
 }

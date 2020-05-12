@@ -20,7 +20,7 @@ namespace UrbanDictionary.DataAccess.Repositories
         private UrbanDictionaryDBContext _dbContext;
 
         /// <summary>
-        /// <see cref="RepositoryWrapper"/> contractor.
+        /// <see cref="RepositoryWrapper"/> constructor.
         /// </summary>
         /// <param name="urbanDictionaryDBContext"></param>
         public RepositoryWrapper(UrbanDictionaryDBContext urbanDictionaryDBContext)

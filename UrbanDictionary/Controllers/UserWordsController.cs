@@ -38,7 +38,7 @@ namespace UrbanDictionary.Controllers
             {
                 return Ok(id);
             }
-            return NotFound(id);
+            return BadRequest(id);
         }
 
         [HttpDelete("deleteSavedWord/{id}")]

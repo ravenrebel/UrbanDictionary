@@ -1,11 +1,12 @@
 ﻿
 using System.Collections.Generic;
 using UrbanDictionary.BusinessLayer.DTO;
+using UrbanDictionary.DataAccess.Entities;
 
 namespace UrbanDictionary.BusinessLayer.Services.Contracts
 {
     /// <summary>
-    /// Contains methods for performing actions with words for current <c>User</c>.
+    /// Contains methods for performing actions with words for current <see cref="User"/>.
     /// </summary>
     /// <remarks>
     /// This class can get saved and created words, delete  words from saved ones and edit created ones.

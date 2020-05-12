@@ -22,9 +22,9 @@ namespace UrbanDictionary.BusinessLayer.Services
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="repoWrapper"></param>
-        /// <param name="httpContextAccessor"></param>
-        /// <param name="wordMapper"></param>
+        /// <param name="repoWrapper">Repository</param>
+        /// <param name="httpContextAccessor">HttpContext</param>
+        /// <param name="wordMapper">Mapper</param>
         public UserWordsService(IRepositoryWrapper repoWrapper, IHttpContextAccessor httpContextAccessor, IMapper<Word, WordDTO> wordMapper)
         {
             _repoWrapper = repoWrapper;
@@ -37,11 +37,7 @@ namespace UrbanDictionary.BusinessLayer.Services
         {
             if (_currentUser != null)
             {
-                var savedWords = from sw in _repoWrapper.UserSavedWords.FindAll()
-                       where sw.UserId.Equals(_currentUser.Id)
-                       join w in _repoWrapper.Word.FindAll() on sw.SavedWordId equals w.Id
-                       select w;
-                return _wordMapper.MapToDTO(savedWords);
+                return _wordMapper.MapToDTO(_repoWrapper.Word.FindByCondition(w => w.UserSavedWords.Any(uw => uw.UserId.Equals(_currentUser.Id))));
             }
             return null;
         }
@@ -143,7 +139,8 @@ namespace UrbanDictionary.BusinessLayer.Services
 
                     _repoWrapper.Word.Update(word);
 
-                    Dictionary<string, Tag> oldTags = _repoWrapper.Tag.GetByWordId(word.Id).ToDictionary(t => t.Name, t => t);
+                    Dictionary<string, Tag> oldTags = _repoWrapper.Tag.FindByCondition(t => t.WordTags.Any(w => w.WordId.Equals(word.Id)))
+                        .ToDictionary(t => t.Name, t => t);
 
                     foreach (string tagName in wordDto.Tags.Distinct())
                     {

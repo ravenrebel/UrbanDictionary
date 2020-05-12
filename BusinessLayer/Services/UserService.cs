@@ -10,6 +10,7 @@ using UrbanDictionary.DataAccess.Repositories.Contracts;
 
 namespace UrbanDictionary.BusinessLayer.Services
 {
+    /// <inheritdoc cref="IUserService"/>
     public class UserService : IUserService
     {
         private readonly IRepositoryWrapper _repoWrapper;

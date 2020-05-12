@@ -16,7 +16,7 @@ namespace UrbanDictionary.DataAccess.Repositories
         private readonly UrbanDictionaryDBContext _context;
 
         /// <summary>
-        /// <see cref="WordRepository"/> contractor.
+        /// <see cref="WordRepository"/> constructor.
         /// </summary>
         /// <param name="dbContext">Database context</param>
         public WordRepository(UrbanDictionaryDBContext dbContext)

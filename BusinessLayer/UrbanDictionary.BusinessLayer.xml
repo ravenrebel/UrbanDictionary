@@ -4,9 +4,181 @@
         <name>UrbanDictionary.BusinessLayer</name>
     </assembly>
     <members>
+        <member name="T:UrbanDictionary.BusinessLayer.DTO.CreateEditFormWordDTO">
+            <summary>
+            Contains information about <see cref="T:UrbanDictionary.DataAccess.Entities.Word"/>  that <see cref="T:UrbanDictionary.DataAccess.Entities.User"/> can create and edit.
+            Also contains its primary key.
+            </summary>
+        </member>
+        <member name="P:UrbanDictionary.BusinessLayer.DTO.CreateEditFormWordDTO.Id">
+            <inheritdoc cref="P:UrbanDictionary.DataAccess.Entities.BaseEntity.Id"/>     
+        </member>
+        <member name="P:UrbanDictionary.BusinessLayer.DTO.CreateEditFormWordDTO.Name">
+            <inheritdoc cref="P:UrbanDictionary.DataAccess.Entities.Word.Name"/>  
+        </member>
+        <member name="P:UrbanDictionary.BusinessLayer.DTO.CreateEditFormWordDTO.Definition">
+            <inheritdoc cref="P:UrbanDictionary.DataAccess.Entities.Word.Definition"/> 
+        </member>
+        <member name="P:UrbanDictionary.BusinessLayer.DTO.CreateEditFormWordDTO.Example">
+            <inheritdoc cref="P:UrbanDictionary.DataAccess.Entities.Word.Example"/> 
+        </member>
+        <member name="P:UrbanDictionary.BusinessLayer.DTO.CreateEditFormWordDTO.Image">
+            <inheritdoc cref="P:UrbanDictionary.DataAccess.Entities.Word.Image"/> 
+        </member>
+        <member name="P:UrbanDictionary.BusinessLayer.DTO.CreateEditFormWordDTO.Tags">
+            <summary>
+            Returns <see cref="P:UrbanDictionary.DataAccess.Entities.Tag.Name"/> of each <see cref="T:UrbanDictionary.DataAccess.Entities.Tag"/> from <see cref="T:UrbanDictionary.DataAccess.Entities.Word"/>'s <see cref="T:UrbanDictionary.DataAccess.Entities.Tag"/> collection.
+            </summary>
+        </member>
+        <member name="T:UrbanDictionary.BusinessLayer.DTO.Mapper.IMapper`2">
+            <summary>
+            Contains methods that convert entities to data transfer object and vise versa.
+            </summary>
+            <typeparam name="TEntity">Entity</typeparam>
+            <typeparam name="TDTO">Data transfer object</typeparam>
+        </member>
+        <member name="M:UrbanDictionary.BusinessLayer.DTO.Mapper.IMapper`2.MapToDTO(`0)">
+            <summary>
+            Converts entity to data transfer object.
+            </summary>
+            <param name="entity">Entity</param>
+            <returns></returns>
+        </member>
+        <member name="M:UrbanDictionary.BusinessLayer.DTO.Mapper.IMapper`2.MapToEntity(`1)">
+            <summary>
+            Converts data transfer object to certain entity.
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UrbanDictionary.BusinessLayer.DTO.Mapper.IMapper`2.MapToEntity(System.Collections.Generic.IEnumerable{`1})">
+            <summary>
+            Converts the collection of data transfer objects to collection of entities.
+            </summary>
+            <param name="dtos">Collection of data transfer objects.</param>
+            <returns></returns>
+        </member>
+        <member name="M:UrbanDictionary.BusinessLayer.DTO.Mapper.IMapper`2.MapToDTO(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Converts the collection of entities to collection of data transfer objects.
+            </summary>
+            <param name="entities">Collection of entities</param>
+            <returns></returns>
+        </member>
+        <member name="T:UrbanDictionary.BusinessLayer.DTO.Mapper.TagServiceMapper">
+            <inheritdoc cref="T:UrbanDictionary.BusinessLayer.DTO.Mapper.IMapper`2"/>
+        </member>
+        <member name="T:UrbanDictionary.BusinessLayer.DTO.Mapper.UserServiceMapper">
+            <inheritdoc cref="T:UrbanDictionary.BusinessLayer.DTO.Mapper.IMapper`2"/>
+        </member>
+        <member name="T:UrbanDictionary.BusinessLayer.DTO.Mapper.WordServiceMapper">
+            <inheritdoc cref="T:UrbanDictionary.BusinessLayer.DTO.Mapper.IMapper`2"/>
+        </member>
+        <member name="T:UrbanDictionary.BusinessLayer.DTO.SignInFormDTO">
+            <summary>
+            Contains needed information for <see cref="T:UrbanDictionary.DataAccess.Entities.User"/> to login.
+            </summary>
+        </member>
+        <member name="P:UrbanDictionary.BusinessLayer.DTO.SignInFormDTO.UserName">
+            <inheritdoc cref="P:UrbanDictionary.BusinessLayer.DTO.UserDTO.UserName"/>
+        </member>
+        <member name="P:UrbanDictionary.BusinessLayer.DTO.SignInFormDTO.Password">
+            <summary>
+            <see cref="T:UrbanDictionary.DataAccess.Entities.User"/> password.
+            </summary>
+        </member>
+        <member name="P:UrbanDictionary.BusinessLayer.DTO.SignInFormDTO.RememberMe">
+            <summary>
+            Determines whether <see cref="T:UrbanDictionary.DataAccess.Entities.User"/> will have access from same machine to all its data even after session expired. 
+            This access will be possible until user does a logout.
+            </summary>
+        </member>
+        <member name="T:UrbanDictionary.BusinessLayer.DTO.SignUpFormDTO">
+            <summary>
+            Contains needed information for <see cref="T:UrbanDictionary.DataAccess.Entities.User"/> to register.
+            </summary>
+        </member>
+        <member name="P:UrbanDictionary.BusinessLayer.DTO.SignUpFormDTO.UserName">
+            <inheritdoc cref="P:UrbanDictionary.BusinessLayer.DTO.UserDTO.UserName"/>
+        </member>
+        <member name="P:UrbanDictionary.BusinessLayer.DTO.SignUpFormDTO.Email">
+            <inheritdoc cref="P:UrbanDictionary.BusinessLayer.DTO.UserDTO.Email"/>
+        </member>
+        <member name="P:UrbanDictionary.BusinessLayer.DTO.SignUpFormDTO.Password">
+            <inheritdoc cref="P:UrbanDictionary.BusinessLayer.DTO.SignInFormDTO.Password"/>
+        </member>
+        <member name="T:UrbanDictionary.BusinessLayer.DTO.TagDTO">
+            <summary>
+            Contains information about <see cref="T:UrbanDictionary.DataAccess.Entities.Tag"/> that is accessible for users. 
+            </summary>
+        </member>
+        <member name="P:UrbanDictionary.BusinessLayer.DTO.TagDTO.Id">
+            <inheritdoc cref="P:UrbanDictionary.DataAccess.Entities.BaseEntity.Id"/>
+        </member>
+        <member name="P:UrbanDictionary.BusinessLayer.DTO.TagDTO.Name">
+            <inheritdoc cref="P:UrbanDictionary.DataAccess.Entities.Tag.Name"/>
+        </member>
+        <member name="T:UrbanDictionary.BusinessLayer.DTO.UserDTO">
+            <summary>
+            Contains information about <see cref="T:UrbanDictionary.DataAccess.Entities.User"/> that is accessible for users.
+            </summary>
+        </member>
+        <member name="P:UrbanDictionary.BusinessLayer.DTO.UserDTO.Id">
+            <inheritdoc cref="P:UrbanDictionary.DataAccess.Entities.BaseEntity.Id"/>
+        </member>
+        <member name="P:UrbanDictionary.BusinessLayer.DTO.UserDTO.UserName">
+            <summary>
+            Unique name, that should be used  for login and mark the author of the <see cref="T:UrbanDictionary.DataAccess.Entities.Word"/>
+            </summary>
+        </member>
+        <member name="P:UrbanDictionary.BusinessLayer.DTO.UserDTO.Email">
+            <summary>
+            Unique <see cref="T:UrbanDictionary.DataAccess.Entities.User"/>'s email.
+            </summary>
+        </member>
+        <member name="T:UrbanDictionary.BusinessLayer.DTO.WordDTO">
+            <summary>
+            Contains information about <see cref="T:UrbanDictionary.DataAccess.Entities.Word"/> that is accessible for users.
+            </summary>
+        </member>
+        <member name="P:UrbanDictionary.BusinessLayer.DTO.WordDTO.Id">
+            <inheritdoc cref="P:UrbanDictionary.DataAccess.Entities.BaseEntity.Id"/>
+        </member>
+        <member name="P:UrbanDictionary.BusinessLayer.DTO.WordDTO.Name">
+            <inheritdoc cref="P:UrbanDictionary.DataAccess.Entities.Word.Name"/>
+        </member>
+        <member name="P:UrbanDictionary.BusinessLayer.DTO.WordDTO.Definition">
+            <inheritdoc cref="P:UrbanDictionary.DataAccess.Entities.Word.Definition"/>
+        </member>
+        <member name="P:UrbanDictionary.BusinessLayer.DTO.WordDTO.AuthorName">
+            <summary>
+            Name or the <see cref="T:UrbanDictionary.DataAccess.Entities.User"/> the <see cref="T:UrbanDictionary.DataAccess.Entities.Word"/> is created by.
+            </summary>
+        </member>
+        <member name="P:UrbanDictionary.BusinessLayer.DTO.WordDTO.CreationDate">
+            <inheritdoc cref="P:UrbanDictionary.DataAccess.Entities.Word.CreationDate"/>
+        </member>
+        <member name="P:UrbanDictionary.BusinessLayer.DTO.WordDTO.Example">
+            <inheritdoc cref="P:UrbanDictionary.DataAccess.Entities.Word.Example"/>
+        </member>
+        <member name="P:UrbanDictionary.BusinessLayer.DTO.WordDTO.Image">
+            <inheritdoc cref="P:UrbanDictionary.DataAccess.Entities.Word.Image"/>
+        </member>
+        <member name="P:UrbanDictionary.BusinessLayer.DTO.WordDTO.WordStatus">
+            <inheritdoc cref="P:UrbanDictionary.DataAccess.Entities.Word.WordStatus"/>
+        </member>
+        <member name="P:UrbanDictionary.BusinessLayer.DTO.WordDTO.LikesCount">
+            <inheritdoc cref="P:UrbanDictionary.DataAccess.Entities.Word.LikesCount"/>
+        </member>
+        <member name="P:UrbanDictionary.BusinessLayer.DTO.WordDTO.DislikesCount">
+            <inheritdoc cref="P:UrbanDictionary.DataAccess.Entities.Word.DislikesCount"/>
+        </member>
+        <member name="P:UrbanDictionary.BusinessLayer.DTO.WordDTO.Tags">
+            <inheritdoc cref="P:UrbanDictionary.BusinessLayer.DTO.CreateEditFormWordDTO.Tags"/>
+        </member>
         <member name="T:UrbanDictionary.BusinessLayer.Services.Contracts.IServiceWrapper">
             <summary>
-            Contains all services for performing actions with <c>Word</c>, <c>User</c>, <c>Tag</c> entities.
+            Contains all services for performing actions with <see cref="T:UrbanDictionary.DataAccess.Entities.Word"/>, <see cref="T:UrbanDictionary.DataAccess.Entities.User"/>, <see cref="T:UrbanDictionary.DataAccess.Entities.Tag"/> entities.
             </summary>
         </member>
         <member name="P:UrbanDictionary.BusinessLayer.Services.Contracts.IServiceWrapper.Word">
@@ -15,14 +187,43 @@
         <member name="P:UrbanDictionary.BusinessLayer.Services.Contracts.IServiceWrapper.UserWords">
             <inheritdoc cref="T:UrbanDictionary.BusinessLayer.Services.Contracts.IUserWordsService"/>
         </member>
+        <member name="P:UrbanDictionary.BusinessLayer.Services.Contracts.IServiceWrapper.Tag">
+            <inheritdoc cref="T:UrbanDictionary.BusinessLayer.Services.Contracts.ITagService"/>
+        </member>
+        <member name="P:UrbanDictionary.BusinessLayer.Services.Contracts.IServiceWrapper.User">
+            <inheritdoc cref="T:UrbanDictionary.BusinessLayer.Services.Contracts.IUserService"/>
+        </member>
         <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IServiceWrapper.Save">
             <summary>
             Save changes to database.
             </summary>
         </member>
+        <member name="T:UrbanDictionary.BusinessLayer.Services.Contracts.ITagService">
+            <summary>
+            Contains methods for performing actions with <see cref="T:UrbanDictionary.DataAccess.Entities.Tag"/>s.
+            </summary>
+        </member>
+        <member name="T:UrbanDictionary.BusinessLayer.Services.Contracts.IUserService">
+            <summary>
+            Contains methods for performing actions with users.
+            </summary>
+        </member>
+        <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IUserService.GetAll">
+            <summary>
+            Gets all users.
+            </summary>
+            <returns><see cref="T:UrbanDictionary.BusinessLayer.DTO.UserDTO"/> collection</returns>
+        </member>
+        <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IUserService.GetByUserName(System.String)">
+            <summary>
+            Gets users by <see cref="P:UrbanDictionary.BusinessLayer.DTO.UserDTO.UserName"/>
+            </summary>
+            <param name="name"><see cref="P:UrbanDictionary.BusinessLayer.DTO.UserDTO.UserName"/></param>
+            <returns><see cref="T:UrbanDictionary.BusinessLayer.DTO.UserDTO"/> collection</returns>
+        </member>
         <member name="T:UrbanDictionary.BusinessLayer.Services.Contracts.IUserWordsService">
             <summary>
-            Contains methods for performing actions with words for current <c>User</c>.
+            Contains methods for performing actions with words for current <see cref="T:UrbanDictionary.DataAccess.Entities.User"/>.
             </summary>
             <remarks>
             This class can get saved and created words, delete  words from saved ones and edit created ones.
@@ -30,10 +231,10 @@
         </member>
         <member name="T:UrbanDictionary.BusinessLayer.Services.Contracts.IWordService">
             <summary>
-            Contains methods for performing actions with words.
+            Contains methods for performing actions with <see cref="T:UrbanDictionary.DataAccess.Entities.Word"/>s.
             </summary>
             <remarks>
-            This class can get words in different ways, delete them and change their <c>WordStatus</c>.
+            This class can get words in different ways, delete them and change their .
             </remarks>
         </member>
         <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IWordService.GetAll">
@@ -41,35 +242,70 @@
             Gets all words.
             </summary>
             <returns>
-            Collection of all words.
+            Collection of all <see cref="T:UrbanDictionary.BusinessLayer.DTO.WordDTO"/>s.
             </returns>
         </member>
         <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IWordService.GetRandom">
             <summary>
-            Get words with certain random name.
+            Gets words with certain random name.
             </summary>
-            <returns>Collection of words with the same random name.</returns>
+            <returns>Collection of <see cref="T:UrbanDictionary.BusinessLayer.DTO.WordDTO"/>s with the same random name.</returns>
         </member>
         <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IWordService.GetByName(System.String)">
             <summary>
-            Get words with certain name.
+            Gets <see cref="T:UrbanDictionary.BusinessLayer.DTO.WordDTO"/>s with certain name.
             </summary>
-            <param name="name">Word Name.</param>
+            <param name="name"><see cref="P:UrbanDictionary.DataAccess.Entities.Word.Name"/>.</param>
             <returns>Collection of words with certain name.</returns>
         </member>
         <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IWordService.TryDelete(System.Int64)">
             <summary>
-             Deletes word if exists.
+             Deletes word and return true if exists.
             </summary>
-            <param name="id"></param>
-            <returns></returns>
+            <param name="id"><see cref="P:UrbanDictionary.BusinessLayer.DTO.WordDTO.Id"/></param>
+            <returns>Returns true if word is successfully deleted.</returns>
+        </member>
+        <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IWordService.GetTopTen">
+            <summary>
+            Gets top 10 words with the greatest <see cref="P:UrbanDictionary.DataAccess.Entities.Word.LikesCount"/> and the smallest <see cref="P:UrbanDictionary.DataAccess.Entities.Word.DislikesCount"/>. 
+            </summary>
+            <returns><see cref="T:UrbanDictionary.BusinessLayer.DTO.WordDTO"/> collection</returns>
+        </member>
+        <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IWordService.GetLastTenAdded">
+            <summary>
+            Gets last 10 words added to database. 
+            </summary>
+            <returns><see cref="T:UrbanDictionary.BusinessLayer.DTO.WordDTO"/> collection</returns>
         </member>
         <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IWordService.TryApproveWord(System.Int64)">
             <summary>
-            Approves word if exists and its status is OnModeration.
+            Approves <see cref="T:UrbanDictionary.DataAccess.Entities.Word"/> and return true if exists and its status is <see cref="F:UrbanDictionary.DataAccess.Entities.WordStatus.OnModeration"/>.
             </summary>
-            <param name="id"></param>
-            <returns></returns>        
+            <param name="id"><see cref="P:UrbanDictionary.BusinessLayer.DTO.WordDTO.Id"/></param>
+            <returns>Returns true if word is successfully approved.</returns>        
+        </member>
+        <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IWordService.TryDisapproveWord(System.Int64)">
+            <summary>
+            Disapproves <see cref="T:UrbanDictionary.DataAccess.Entities.Word"/> and return true if exists and its status is <see cref="F:UrbanDictionary.DataAccess.Entities.WordStatus.OnModeration"/>.
+            </summary>
+            <param name="id"><see cref="P:UrbanDictionary.BusinessLayer.DTO.WordDTO.Id"/></param>
+            <returns>Returns true if <see cref="T:UrbanDictionary.DataAccess.Entities.Word"/> is successfully disapproved.</returns>        
+        </member>
+        <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IWordService.GetByTagName(System.String)">
+            <summary>
+             Gets words by certain <see cref="P:UrbanDictionary.DataAccess.Entities.Tag.Name"/>.
+            </summary>
+            <param name="tag"><see cref="P:UrbanDictionary.BusinessLayer.DTO.TagDTO.Name"/></param>
+            <returns><see cref="T:UrbanDictionary.BusinessLayer.DTO.WordDTO"/> collection</returns>
+        </member>
+        <member name="T:UrbanDictionary.BusinessLayer.Services.ServiceWrapper">
+            <inheritdoc cref="T:UrbanDictionary.BusinessLayer.Services.Contracts.IServiceWrapper"/>
+        </member>
+        <member name="T:UrbanDictionary.BusinessLayer.Services.TagService">
+            <inheritdoc cref="T:UrbanDictionary.BusinessLayer.Services.Contracts.ITagService"/>
+        </member>
+        <member name="T:UrbanDictionary.BusinessLayer.Services.UserService">
+            <inheritdoc cref="T:UrbanDictionary.BusinessLayer.Services.Contracts.IUserService"/>
         </member>
         <member name="T:UrbanDictionary.BusinessLayer.Services.UserWordsService">
             <inheritdoc cref="T:UrbanDictionary.BusinessLayer.Services.Contracts.IUserWordsService"/>
@@ -78,12 +314,19 @@
             <summary>
             
             </summary>
-            <param name="repoWrapper"></param>
-            <param name="httpContextAccessor"></param>
-            <param name="wordMapper"></param>
+            <param name="repoWrapper">Repository</param>
+            <param name="httpContextAccessor">HttpContext</param>
+            <param name="wordMapper">Mapper</param>
         </member>
         <member name="T:UrbanDictionary.BusinessLayer.Services.WordService">
             <inheritdoc cref="T:UrbanDictionary.BusinessLayer.Services.Contracts.IWordService"/>
+        </member>
+        <member name="M:UrbanDictionary.BusinessLayer.Services.WordService.#ctor(UrbanDictionary.DataAccess.Repositories.Contracts.IRepositoryWrapper,UrbanDictionary.BusinessLayer.DTO.Mapper.IMapper{UrbanDictionary.DataAccess.Entities.Word,UrbanDictionary.BusinessLayer.DTO.WordDTO})">
+            <summary>
+            <see cref="T:UrbanDictionary.BusinessLayer.Services.WordService"/> contractor.
+            </summary>
+            <param name="repoWrapper">Repository</param>
+            <param name="mapper">Mapper</param>
         </member>
     </members>
 </doc>

@@ -14,7 +14,7 @@ namespace UrbanDictionary.DataAccess.Repositories
     public class UserRepository : RepositoryBase<User>, IUserRepository
     {
         /// <summary>
-        /// 
+        /// <see cref="UserRepository"/> constructor.
         /// </summary>
         /// <param name="dbContext">Database context</param>
         public UserRepository(UrbanDictionaryDBContext dbContext)

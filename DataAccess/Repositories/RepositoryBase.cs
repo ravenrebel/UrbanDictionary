@@ -20,7 +20,7 @@ namespace UrbanDictionary.DataAccess.Repositories
         protected UrbanDictionaryDBContext UrbanDictionaryDBContext { get; set; }
 
         /// <summary>
-        /// Contractor for <see cref="RepositoryBase{T}"/>.
+        /// Constructor for <see cref="RepositoryBase{T}"/>.
         /// </summary>
         /// <param name="urbanDictionaryDBContext"> Database context.</param>
         public RepositoryBase(UrbanDictionaryDBContext urbanDictionaryDBContext)

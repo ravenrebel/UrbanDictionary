@@ -11,7 +11,7 @@ namespace UrbanDictionary.DataAccess.Entities
     public class BaseEntity
     {
         /// <summary>
-        /// Unique reference to specific entity. PK.
+        /// Unique reference to the specific entity. PK.
         /// </summary>
         [Key]
         public long Id { get; set; } = 0;

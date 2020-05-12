@@ -6,6 +6,7 @@ using UrbanDictionary.DataAccess.Repositories.Contracts;
 
 namespace UrbanDictionary.BusinessLayer.DTO.Mapper
 {
+    /// <inheritdoc cref="IMapper{TEntity, TDTO}"/>
     public class UserServiceMapper : IMapper<User, UserDTO>
     {
         private IRepositoryWrapper _repoWrapper;
@@ -17,8 +18,7 @@ namespace UrbanDictionary.BusinessLayer.DTO.Mapper
 
         public UserDTO MapToDTO(User entity)
         {
-            UserDTO dto = new UserDTO { Id = entity.Id, Email = entity.Email, UserName = entity.UserName };
-            return dto;
+            return new UserDTO { Id = entity.Id, Email = entity.Email, UserName = entity.UserName };
         }
 
         public User MapToEntity(UserDTO dto)

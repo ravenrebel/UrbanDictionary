@@ -48,7 +48,7 @@ namespace UrbanDictionary.DataAccess.Entities
         public string Image { get; set; }
 
         /// <summary>
-        /// Show the current <see cref="WordStatus"/>.
+        /// Shows the current <see cref="WordStatus"/>.
         /// </summary>
         public WordStatus WordStatus { get; set; } = WordStatus.OnModeration;
 

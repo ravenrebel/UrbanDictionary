@@ -45,7 +45,7 @@
         </member>
         <member name="P:UrbanDictionary.DataAccess.Entities.BaseEntity.Id">
             <summary>
-            Unique reference to specific entity. PK.
+            Unique reference to the specific entity. PK.
             </summary>
         </member>
         <member name="T:UrbanDictionary.DataAccess.Entities.Tag">
@@ -128,7 +128,7 @@
         </member>
         <member name="P:UrbanDictionary.DataAccess.Entities.Word.WordStatus">
             <summary>
-            Show the current <see cref="P:UrbanDictionary.DataAccess.Entities.Word.WordStatus"/>.
+            Shows the current <see cref="P:UrbanDictionary.DataAccess.Entities.Word.WordStatus"/>.
             </summary>
         </member>
         <member name="P:UrbanDictionary.DataAccess.Entities.Word.LikesCount">
@@ -289,7 +289,7 @@
         </member>
         <member name="M:UrbanDictionary.DataAccess.Repositories.RepositoryBase`1.#ctor(UrbanDictionary.DataAccess.Data.UrbanDictionaryDBContext)">
             <summary>
-            Contractor for <see cref="T:UrbanDictionary.DataAccess.Repositories.RepositoryBase`1"/>.
+            Constructor for <see cref="T:UrbanDictionary.DataAccess.Repositories.RepositoryBase`1"/>.
             </summary>
             <param name="urbanDictionaryDBContext"> Database context.</param>
         </member>
@@ -298,7 +298,7 @@
         </member>
         <member name="M:UrbanDictionary.DataAccess.Repositories.RepositoryWrapper.#ctor(UrbanDictionary.DataAccess.Data.UrbanDictionaryDBContext)">
             <summary>
-            <see cref="T:UrbanDictionary.DataAccess.Repositories.RepositoryWrapper"/> contractor.
+            <see cref="T:UrbanDictionary.DataAccess.Repositories.RepositoryWrapper"/> constructor.
             </summary>
             <param name="urbanDictionaryDBContext"></param>
         </member>
@@ -307,7 +307,7 @@
         </member>
         <member name="M:UrbanDictionary.DataAccess.Repositories.TagRepository.#ctor(UrbanDictionary.DataAccess.Data.UrbanDictionaryDBContext)">
             <summary>
-            
+            <see cref="T:UrbanDictionary.DataAccess.Repositories.TagRepository"/> constructor.
             </summary>
             <param name="dbContext">Database context</param>
         </member>
@@ -316,7 +316,7 @@
         </member>
         <member name="M:UrbanDictionary.DataAccess.Repositories.UserRepository.#ctor(UrbanDictionary.DataAccess.Data.UrbanDictionaryDBContext)">
             <summary>
-            
+            <see cref="T:UrbanDictionary.DataAccess.Repositories.UserRepository"/> constructor.
             </summary>
             <param name="dbContext">Database context</param>
         </member>
@@ -325,7 +325,7 @@
         </member>
         <member name="M:UrbanDictionary.DataAccess.Repositories.UserSavedWordsRepository.#ctor(UrbanDictionary.DataAccess.Data.UrbanDictionaryDBContext)">
             <summary>
-            
+            <see cref="T:UrbanDictionary.DataAccess.Repositories.UserSavedWordsRepository"/> constructor.
             </summary>
             <param name="dbContext">Database context</param>
         </member>
@@ -334,7 +334,7 @@
         </member>
         <member name="M:UrbanDictionary.DataAccess.Repositories.WordRepository.#ctor(UrbanDictionary.DataAccess.Data.UrbanDictionaryDBContext)">
             <summary>
-            <see cref="T:UrbanDictionary.DataAccess.Repositories.WordRepository"/> contractor.
+            <see cref="T:UrbanDictionary.DataAccess.Repositories.WordRepository"/> constructor.
             </summary>
             <param name="dbContext">Database context</param>
         </member>
@@ -343,7 +343,7 @@
         </member>
         <member name="M:UrbanDictionary.DataAccess.Repositories.WordTagRepository.#ctor(UrbanDictionary.DataAccess.Data.UrbanDictionaryDBContext)">
             <summary>
-            
+            <see cref="T:UrbanDictionary.DataAccess.Repositories.WordTagRepository"/> constructor.
             </summary>
             <param name="dbContext">Database context</param>
         </member>

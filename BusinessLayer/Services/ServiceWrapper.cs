@@ -9,6 +9,7 @@ using UrbanDictionary.DataAccess.Repositories.Contracts;
 
 namespace UrbanDictionary.BusinessLayer.Services
 {
+    /// <inheritdoc cref="IServiceWrapper"/>
     public class ServiceWrapper : IServiceWrapper
     {
         private IUserWordsService _userWords;

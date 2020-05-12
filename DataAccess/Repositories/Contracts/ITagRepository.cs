@@ -12,6 +12,5 @@ namespace UrbanDictionary.DataAccess.Repositories.Contracts
     /// </summary>
     public interface ITagRepository : IRepositoryBase<Tag>
     {
-        IEnumerable<Tag> GetByWordId(long id);
     }
 }
