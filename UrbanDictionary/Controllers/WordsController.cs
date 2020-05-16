@@ -57,10 +57,10 @@ namespace UrbanDictionary.Controllers
             else return BadRequest(name);
         }
 
-        [HttpGet("searchCount/{name}/{skipNumber}")]
-        public ActionResult<long> GetCountByName(string name, int skipNumber)
+        [HttpGet("searchCount/{name}")]
+        public ActionResult<long> GetCountByName(string name)
         {
-            return _serviceWrapper.Word.GetCountByName(name, skipNumber);
+            return _serviceWrapper.Word.GetCountByName(name);
         }
 
         [HttpDelete("delete/{id}")]

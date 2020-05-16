@@ -105,13 +105,13 @@ namespace UrbanDictionary.BusinessLayer.Services
             return _mapper.MapToDTO( _repoWrapper.Word.FindByCondition(w => w.WordTags.Any(wt => wt.Tag.Name.Equals(tag))));
         }
 
-        public long GetCountByName(string name, int skipNumber)
+        public long GetCountByName(string name)
         {
             return _repoWrapper.Word
                 .FindByCondition(w => w.Name.Contains(name) && w.WordStatus.Equals(WordStatus.Сonfirmed))
                 .OrderByDescending(w => w.LikesCount)
                 .ThenBy(w => w.DislikesCount)
-                .Skip(skipNumber).Count();
+                .Count();
         }
     }
 }
