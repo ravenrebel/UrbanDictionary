@@ -52,14 +52,11 @@ namespace UrbanDictionary.BusinessLayer.Services
             Word word = _repoWrapper.Word.FindByCondition(w => w.Id.Equals(wordId)).FirstOrDefault();
             if (user != null && word != null)
             {
-                UserSavedWord savedWord = _repoWrapper
-                        .UserSavedWords.FindByCondition(sw => sw.UserId.Equals(user.Id) && sw.SavedWordId.Equals(word.Id))
-                        .FirstOrDefault();
-                if (savedWord == null)
+                UserSavedWord newSavedWord = new UserSavedWord { SavedWord = word, SavedWordId = word.Id, User = user, UserId = user.Id };
+                if (_repoWrapper.UserSavedWords.FindByCondition(sw => sw.Equals(newSavedWord)).FirstOrDefault() == null)
                 {
                     _repoWrapper.User.Attach(user);
                     _repoWrapper.Word.Attach(word);
-                    UserSavedWord newSavedWord = new UserSavedWord { SavedWord = word, SavedWordId = word.Id, User = user, UserId = user.Id };
                     _repoWrapper.UserSavedWords.Create(newSavedWord);
                     _repoWrapper.Save();
                     return true;
