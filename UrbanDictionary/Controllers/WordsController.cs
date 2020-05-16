@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
@@ -47,13 +48,19 @@ namespace UrbanDictionary.Controllers
             return Ok(_serviceWrapper.Word.GetRandom());
         }
         
-        [HttpGet("search/{name}")]
-        public ActionResult<IEnumerable<WordDTO>> GetByName(string name, int pageNumber, int recordsPerPage)
+        [HttpGet("search/{name}/{skipNumber}")]
+        public ActionResult<IEnumerable<WordDTO>> GetByName(string name, int skipNumber)
         {
-            var words = _serviceWrapper.Word.GetByName(name, pageNumber, recordsPerPage);
+            var words = _serviceWrapper.Word.GetByName(name, skipNumber);
             if (words != null)
                 return Ok(words);
             else return BadRequest(name);
+        }
+
+        [HttpGet("searchCount/{name}/{skipNumber}")]
+        public ActionResult<long> GetCountByName(string name, int skipNumber)
+        {
+            return _serviceWrapper.Word.GetCountByName(name, skipNumber);
         }
 
         [HttpDelete("delete/{id}")]

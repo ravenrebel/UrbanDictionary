@@ -306,14 +306,21 @@
             </summary>
             <returns>Collection of <see cref="T:UrbanDictionary.BusinessLayer.DTO.WordDTO"/>s with the same random name.</returns>
         </member>
-        <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IWordService.GetByName(System.String,System.Int32,System.Int32)">
+        <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IWordService.GetByName(System.String,System.Int32)">
             <summary>
             Gets <see cref="T:UrbanDictionary.BusinessLayer.DTO.WordDTO"/>s with certain name on certain page.
             </summary>
             <param name="name"><see cref="P:UrbanDictionary.DataAccess.Entities.Word.Name"/>.</param>
-            <param name="pageNumber"></param>
-            <param name="recordsPerPage"></param>
+            <param name="skipNumber">Number of skipped words</param>
             <returns>Collection of words with certain name.</returns>
+        </member>
+        <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IWordService.GetCountByName(System.String,System.Int32)">
+            <summary>
+            Return count of words with certain name on certain page.
+            </summary>
+            <param name="name"><see cref="P:UrbanDictionary.DataAccess.Entities.Word.Name"/></param>
+            <param name="skipNumber">Number of skipped words</param>
+            <returns>Count of searched words.</returns>
         </member>
         <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IWordService.TryDelete(System.Int64)">
             <summary>
