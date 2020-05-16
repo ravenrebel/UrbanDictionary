@@ -30,10 +30,16 @@ namespace UrbanDictionary.BusinessLayer.Services.Contracts
         /// Gets <see cref="WordDTO"/>s with certain name on certain page.
         /// </summary>
         /// <param name="name"><see cref="Word.Name"/>.</param>
-        /// <param name="pageNumber"></param>
-        /// <param name="recordsPerPage"></param>
+        /// <param name="skipNumber">Number of skipped words</param>
         /// <returns>Collection of words with certain name.</returns>
-        IEnumerable<WordDTO> GetByName(string name, int pageNumber, int recordsPerPage);
+        IEnumerable<WordDTO> GetByName(string name, int skipNumber);
+        /// <summary>
+        /// Return count of words with certain name on certain page.
+        /// </summary>
+        /// <param name="name"><see cref="Word.Name"/></param>
+        /// <param name="skipNumber">Number of skipped words</param>
+        /// <returns>Count of searched words.</returns>
+        long GetCountByName(string name, int skipNumber);
         /// <summary>
         ///  Deletes word and return true if exists.
         /// </summary>

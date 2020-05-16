@@ -31,25 +31,22 @@ namespace UrbanDictionary.BusinessLayer.Services
 
         public IEnumerable<WordDTO> GetAll()
         {
-            return _mapper.MapToDTO(_repoWrapper.Word.FindAll().ToList());
+            return _mapper.MapToDTO(_repoWrapper.Word.FindAll());
         }
 
         public IEnumerable<WordDTO> GetRandom()
         {
             string name = _repoWrapper.Word.FindAll().OrderBy(w => Guid.NewGuid()).First().Name;
-            return _mapper.MapToDTO(_repoWrapper.Word.FindByCondition(w => w.Name.Equals(name)).ToList());
+            return _mapper.MapToDTO(_repoWrapper.Word.FindByCondition(w => w.Name.Equals(name)));
         }
 
-        public IEnumerable<WordDTO> GetByName(string name, int pageNumber, int recordsPerPage)
+        public IEnumerable<WordDTO> GetByName(string name, int skipNumber)
         {
-            if (pageNumber > 0 && recordsPerPage > 0)
-                return _mapper.MapToDTO(_repoWrapper.Word
-                    .FindByCondition(w => w.Name.Equals(name) && w.WordStatus.Equals(WordStatus.Сonfirmed))
-                    .OrderByDescending(w => w.LikesCount)
-                    .ThenBy(w => w.DislikesCount)
-                    .Skip(pageNumber * recordsPerPage)
-                    .Take(recordsPerPage).ToList());
-            else return null;
+            return _mapper.MapToDTO(_repoWrapper.Word
+                .FindByCondition(w => w.Name.Contains(name) && w.WordStatus.Equals(WordStatus.Сonfirmed))
+                .OrderByDescending(w => w.LikesCount)
+                .ThenBy(w => w.DislikesCount)
+                .Skip(skipNumber));
         }
 
         public bool TryDelete(long id)
@@ -69,12 +66,12 @@ namespace UrbanDictionary.BusinessLayer.Services
         {
             return _mapper.MapToDTO( _repoWrapper.Word.FindAll().OrderByDescending(w => w.LikesCount)
                 .ThenBy(w => w.DislikesCount)
-                .Take(10).ToList());
+                .Take(10));
         }
 
         public IEnumerable<WordDTO> GetLastTenAdded()
         {
-            return _mapper.MapToDTO(_repoWrapper.Word.FindAll().OrderByDescending(w => w.CreationDate).Take(10).ToList());
+            return _mapper.MapToDTO(_repoWrapper.Word.FindAll().OrderByDescending(w => w.CreationDate).Take(10));
         }
 
         public bool TryApproveWord(long id)
@@ -106,6 +103,15 @@ namespace UrbanDictionary.BusinessLayer.Services
         public IEnumerable<WordDTO> GetByTagName(string tag)
         {
             return _mapper.MapToDTO( _repoWrapper.Word.FindByCondition(w => w.WordTags.Any(wt => wt.Tag.Name.Equals(tag))));
+        }
+
+        public long GetCountByName(string name, int skipNumber)
+        {
+            return _repoWrapper.Word
+                .FindByCondition(w => w.Name.Contains(name) && w.WordStatus.Equals(WordStatus.Сonfirmed))
+                .OrderByDescending(w => w.LikesCount)
+                .ThenBy(w => w.DislikesCount)
+                .Skip(skipNumber).Count();
         }
     }
 }

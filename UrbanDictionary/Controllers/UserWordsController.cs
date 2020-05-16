@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using UrbanDictionary.BusinessLayer.DTO;
 using UrbanDictionary.BusinessLayer.Services.Contracts;
+using UrbanDictionary.DataAccess.Entities;
 
 namespace UrbanDictionary.Controllers
 {
@@ -14,10 +16,12 @@ namespace UrbanDictionary.Controllers
     public class UserWordsController : ControllerBase
     {
         private readonly IServiceWrapper _serviceWrapper;
+        private readonly UserManager<User> _userManager;
 
-        public UserWordsController(IServiceWrapper serviceWrapper)
+        public UserWordsController(IServiceWrapper serviceWrapper, UserManager<User> userManager)
         {
             _serviceWrapper = serviceWrapper;
+            _userManager = userManager;
         }
 
         [HttpGet("savedWords")]
@@ -87,6 +91,20 @@ namespace UrbanDictionary.Controllers
                 return Ok(id);
             }
             return NotFound(id);
+        }
+
+        [HttpPost("sendToModerator/{id}")]
+        public async Task<ActionResult> SendWordToModerator(long id)
+        {
+            var moderators = await _userManager.GetUsersInRoleAsync("Moderator");
+            User moderator = moderators.OrderBy(m => new Guid()).FirstOrDefault();
+
+            if (moderator != null)
+                if (_serviceWrapper.UserWords.TryAddToSavedWords(id, moderator))
+                {
+                    return Ok(id);
+                }
+            return BadRequest(id);
         }
     }
 }

@@ -223,10 +223,10 @@
         </member>
         <member name="T:UrbanDictionary.BusinessLayer.Services.Contracts.IUserWordsService">
             <summary>
-            Contains methods for performing actions with words for current <see cref="T:UrbanDictionary.DataAccess.Entities.User"/>.
+            Contains methods for performing interaction between words and <see cref="T:UrbanDictionary.DataAccess.Entities.User"/>.
             </summary>
             <remarks>
-            This class can get saved and created words, delete  words from saved ones and edit created ones.
+            This class can get saved and created words, delete words from saved ones and edit created ones.
             </remarks>
         </member>
         <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IUserWordsService.GetSavedWords">
@@ -240,6 +240,14 @@
             Saves the <see cref="T:UrbanDictionary.DataAccess.Entities.Word"/> for current <see cref="T:UrbanDictionary.DataAccess.Entities.User"/> and return true if succeeded.
             </summary>
             <param name="id"><see cref="P:UrbanDictionary.BusinessLayer.DTO.WordDTO.Id"/></param>
+            <returns>Returns false when operation did not succeed.</returns>
+        </member>
+        <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IUserWordsService.TryAddToSavedWords(System.Int64,UrbanDictionary.DataAccess.Entities.User)">
+            <summary>
+            Saves the <see cref="T:UrbanDictionary.DataAccess.Entities.Word"/> for specific <see cref="T:UrbanDictionary.DataAccess.Entities.User"/> and return true if succeeded.
+            </summary>
+            <param name="wordId"><see cref="P:UrbanDictionary.BusinessLayer.DTO.WordDTO.Id"/></param>
+            <param name="user"><see cref="T:UrbanDictionary.DataAccess.Entities.User"/> that saves the specific <see cref="T:UrbanDictionary.DataAccess.Entities.Word"/></param>
             <returns>Returns false when operation did not succeed.</returns>
         </member>
         <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IUserWordsService.TryDeleteSavedWord(System.Int64)">
@@ -298,14 +306,21 @@
             </summary>
             <returns>Collection of <see cref="T:UrbanDictionary.BusinessLayer.DTO.WordDTO"/>s with the same random name.</returns>
         </member>
-        <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IWordService.GetByName(System.String,System.Int32,System.Int32)">
+        <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IWordService.GetByName(System.String,System.Int32)">
             <summary>
             Gets <see cref="T:UrbanDictionary.BusinessLayer.DTO.WordDTO"/>s with certain name on certain page.
             </summary>
             <param name="name"><see cref="P:UrbanDictionary.DataAccess.Entities.Word.Name"/>.</param>
-            <param name="pageNumber"></param>
-            <param name="recordsPerPage"></param>
+            <param name="skipNumber">Number of skipped words</param>
             <returns>Collection of words with certain name.</returns>
+        </member>
+        <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IWordService.GetCountByName(System.String,System.Int32)">
+            <summary>
+            Return count of words with certain name on certain page.
+            </summary>
+            <param name="name"><see cref="P:UrbanDictionary.DataAccess.Entities.Word.Name"/></param>
+            <param name="skipNumber">Number of skipped words</param>
+            <returns>Count of searched words.</returns>
         </member>
         <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IWordService.TryDelete(System.Int64)">
             <summary>
