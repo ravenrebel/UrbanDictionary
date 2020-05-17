@@ -64,14 +64,18 @@ namespace UrbanDictionary.BusinessLayer.Services
 
         public IEnumerable<WordDTO> GetTopTen()
         {
-            return _mapper.MapToDTO( _repoWrapper.Word.FindAll().OrderByDescending(w => w.LikesCount)
+            return _mapper.MapToDTO( _repoWrapper.Word
+                .FindByCondition(w => w.WordStatus.Equals(WordStatus.Сonfirmed))
+                .OrderByDescending(w => w.LikesCount)
                 .ThenBy(w => w.DislikesCount)
                 .Take(10));
         }
 
         public IEnumerable<WordDTO> GetLastTenAdded()
         {
-            return _mapper.MapToDTO(_repoWrapper.Word.FindAll().OrderByDescending(w => w.CreationDate).Take(10));
+            return _mapper.MapToDTO(_repoWrapper.Word
+                .FindByCondition(w => w.WordStatus.Equals(WordStatus.Сonfirmed))
+                .OrderByDescending(w => w.CreationDate).Take(10));
         }
 
         public bool TryApproveWord(long id)
