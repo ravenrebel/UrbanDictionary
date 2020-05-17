@@ -46,10 +46,11 @@ namespace UrbanDictionary.Controllers
             {
                 _serviceWrapper.Save();
                 await _signInManager.SignInAsync(user, false);
-                return Ok();
+                var roles = await _userManager.GetRolesAsync(user);
+                return Ok(new { user.UserName, user.Email, Role = roles.First() });
             }
            
-            else return BadRequest("Incorrect login or password");
+            else return Ok();
         }
 
         [HttpPost("signIn")]
@@ -67,10 +68,10 @@ namespace UrbanDictionary.Controllers
 
             if (result.IsLockedOut)
             {
-                return BadRequest("Account is locked");
+                return Ok(false);
             }
 
-            else return BadRequest("Incorrect email or passwords");
+            else return Ok(false);
         }
 
         [HttpPost("signOut")]
