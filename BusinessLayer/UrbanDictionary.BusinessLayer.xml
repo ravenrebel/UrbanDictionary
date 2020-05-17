@@ -314,12 +314,11 @@
             <param name="skipNumber">Number of skipped words</param>
             <returns>Collection of words with certain name.</returns>
         </member>
-        <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IWordService.GetCountByName(System.String,System.Int32)">
+        <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IWordService.GetCountByName(System.String)">
             <summary>
             Return count of words with certain name on certain page.
             </summary>
             <param name="name"><see cref="P:UrbanDictionary.DataAccess.Entities.Word.Name"/></param>
-            <param name="skipNumber">Number of skipped words</param>
             <returns>Count of searched words.</returns>
         </member>
         <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IWordService.TryDelete(System.Int64)">

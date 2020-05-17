@@ -37,9 +37,8 @@ namespace UrbanDictionary.BusinessLayer.Services.Contracts
         /// Return count of words with certain name on certain page.
         /// </summary>
         /// <param name="name"><see cref="Word.Name"/></param>
-        /// <param name="skipNumber">Number of skipped words</param>
         /// <returns>Count of searched words.</returns>
-        long GetCountByName(string name, int skipNumber);
+        long GetCountByName(string name);
         /// <summary>
         ///  Deletes word and return true if exists.
         /// </summary>
