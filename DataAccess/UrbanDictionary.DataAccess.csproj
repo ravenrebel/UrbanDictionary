@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Users\nasty\Projects\UrbanDictionary\DataAccess\UrbanDictionary.DataAccess.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
