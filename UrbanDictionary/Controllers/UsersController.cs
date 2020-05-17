@@ -28,13 +28,13 @@ namespace UrbanDictionary.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<WordDTO>> Get()
+        public ActionResult<IEnumerable<UserDTO>> Get()
         {
             return Ok(_serviceWrapper.User.GetAll());
         }
 
         [HttpGet("search/{name}")]
-        public ActionResult<IEnumerable<WordDTO>> GetByName(string name)
+        public ActionResult<IEnumerable<UserDTO>> GetByName(string name)
         {
             return Ok(_serviceWrapper.User.GetByUserName(name));
         }
