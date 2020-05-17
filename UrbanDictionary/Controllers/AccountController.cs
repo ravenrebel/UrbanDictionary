@@ -31,10 +31,10 @@ namespace UrbanDictionary.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> SignUp(SignUpFormDTO signUpForm)
         {
-            User registeredUser = await _userManager.FindByEmailAsync(signUpForm.Email);
+            User registeredUser = await _userManager.FindByNameAsync(signUpForm.UserName);
             if (registeredUser != null)
             {
-                return BadRequest("User is registered.");
+                return Ok();
             }
 
             User user = new User { Email = signUpForm.Email, UserName = signUpForm.UserName };
@@ -46,10 +46,11 @@ namespace UrbanDictionary.Controllers
             {
                 _serviceWrapper.Save();
                 await _signInManager.SignInAsync(user, false);
-                return Ok("Account created");
+                var roles = await _userManager.GetRolesAsync(user);
+                return Ok(new { user.UserName, user.Email, Role = roles.First() });
             }
            
-            else return BadRequest("Incorrect login or password");
+            else return Ok();
         }
 
         [HttpPost("signIn")]
@@ -60,15 +61,17 @@ namespace UrbanDictionary.Controllers
                    await _signInManager.PasswordSignInAsync(signInForm.UserName, signInForm.Password, signInForm.RememberMe, false);
             if (result.Succeeded)
             {
-                return Ok();
+                User user = await _userManager.FindByNameAsync(signInForm.UserName);
+                var roles = await _userManager.GetRolesAsync(user);
+                return Ok(new { user.UserName, user.Email, Role = roles.First()});
             }
 
             if (result.IsLockedOut)
             {
-                return BadRequest("Account is locked");
+                return Ok(false);
             }
 
-            else return BadRequest("Incorrect email or passwords");
+            else return Ok(false);
         }
 
         [HttpPost("signOut")]

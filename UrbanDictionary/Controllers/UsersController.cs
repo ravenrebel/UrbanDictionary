@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +13,7 @@ using UrbanDictionary.DataAccess.Entities;
 namespace UrbanDictionary.Controllers
 {
     [ApiController]
-    [Route("api/users")]
+    [Route("api/users"), Authorize(Roles ="Admin")]
     public class UsersController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
