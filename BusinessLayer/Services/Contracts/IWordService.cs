@@ -73,5 +73,17 @@ namespace UrbanDictionary.BusinessLayer.Services.Contracts
         /// <param name="tag"><see cref="TagDTO.Name"/></param>
         /// <returns><see cref="WordDTO"/> collection</returns>
         IEnumerable<WordDTO> GetByTagName(string tag);
+        /// <summary>
+        /// Likes a certain <see cref="Word"/> return true if exists.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Returns true if <see cref="Word"/> is successfully liked.</returns>
+        bool TryLikeWord(long id);
+        /// <summary>
+        /// Dislikes a certain <see cref="Word"/> return true if exists.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Returns true if <see cref="Word"/> is successfully disliked.</returns>
+        bool TryDislikeWord(long id);
     }
 }

@@ -89,5 +89,19 @@ namespace UrbanDictionary.Controllers
         {
             return Ok(_serviceWrapper.Word.GetByTagName(tag));
         }
+
+        [HttpPut("like/{id}")]
+        public ActionResult Like(long id)
+        {
+            if (_serviceWrapper.Word.TryLikeWord(id)) return Ok(id);
+            return NotFound(id);
+        }
+
+        [HttpPut("dislike/{id}")]
+        public ActionResult Dislike(long id)
+        {
+            if (_serviceWrapper.Word.TryDislikeWord(id)) return Ok(id);
+            return NotFound(id);
+        }
     }
 }

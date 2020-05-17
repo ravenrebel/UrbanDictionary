@@ -117,5 +117,31 @@ namespace UrbanDictionary.BusinessLayer.Services
                 .ThenBy(w => w.DislikesCount)
                 .Count();
         }
+
+        public bool TryLikeWord(long id)
+        {
+            Word word = _repoWrapper.Word.FindByCondition(w => w.Id.Equals(id)).FirstOrDefault();
+            if (word != null)
+            {
+                word.LikesCount = word.LikesCount + 1;
+                _repoWrapper.Word.Update(word);
+                _repoWrapper.Save();
+                return true;
+            }
+            return false;
+        }
+
+        public bool TryDislikeWord(long id)
+        {
+            Word word = _repoWrapper.Word.FindByCondition(w => w.Id.Equals(id)).FirstOrDefault();
+            if (word != null)
+            {
+                word.DislikesCount = word.DislikesCount + 1;
+                _repoWrapper.Word.Update(word);
+                _repoWrapper.Save();
+                return true;
+            }
+            return false;
+        }
     }
 }
