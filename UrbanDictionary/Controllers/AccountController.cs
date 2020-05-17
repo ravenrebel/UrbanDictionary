@@ -31,10 +31,10 @@ namespace UrbanDictionary.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> SignUp(SignUpFormDTO signUpForm)
         {
-            User registeredUser = await _userManager.FindByEmailAsync(signUpForm.Email);
+            User registeredUser = await _userManager.FindByNameAsync(signUpForm.UserName);
             if (registeredUser != null)
             {
-                return BadRequest("User is registered.");
+                return Ok();
             }
 
             User user = new User { Email = signUpForm.Email, UserName = signUpForm.UserName };
