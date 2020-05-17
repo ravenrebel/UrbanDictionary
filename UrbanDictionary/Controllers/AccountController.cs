@@ -40,10 +40,10 @@ namespace UrbanDictionary.Controllers
             User user = new User { Email = signUpForm.Email, UserName = signUpForm.UserName };
            
             var result = await _userManager.CreateAsync(user, signUpForm.Password);
-            await _userManager.AddToRoleAsync(user, "User");
 
             if (result.Succeeded)
             {
+                await _userManager.AddToRoleAsync(user, "User");
                 _serviceWrapper.Save();
                 await _signInManager.SignInAsync(user, false);
                 var roles = await _userManager.GetRolesAsync(user);
