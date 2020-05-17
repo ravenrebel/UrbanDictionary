@@ -63,21 +63,21 @@ namespace UrbanDictionary.Controllers
             return _serviceWrapper.Word.GetCountByName(name);
         }
 
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("delete/{id}"), Authorize(Roles = "Moderator")]
         public ActionResult Delete(long id)
         {
             if (_serviceWrapper.Word.TryDelete(id)) return Ok(id);
             return NotFound(id);
         }
 
-        [HttpPut("approve/{id}")]
+        [HttpPut("approve/{id}"), Authorize(Roles = "Moderator")]
         public ActionResult Approve(long id)
         {
             if (_serviceWrapper.Word.TryApproveWord(id)) return Ok(id);
             return BadRequest(id);
         }
 
-        [HttpPut("disapprove/{id}")]
+        [HttpPut("disapprove/{id}"), Authorize(Roles = "Moderator")]
         public ActionResult Disapprove(long id)
         {
             if (_serviceWrapper.Word.TryDisapproveWord(id)) return Ok(id);

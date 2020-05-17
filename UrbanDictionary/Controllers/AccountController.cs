@@ -46,7 +46,7 @@ namespace UrbanDictionary.Controllers
             {
                 _serviceWrapper.Save();
                 await _signInManager.SignInAsync(user, false);
-                return Ok("Account created");
+                return Ok();
             }
            
             else return BadRequest("Incorrect login or password");
@@ -60,7 +60,9 @@ namespace UrbanDictionary.Controllers
                    await _signInManager.PasswordSignInAsync(signInForm.UserName, signInForm.Password, signInForm.RememberMe, false);
             if (result.Succeeded)
             {
-                return Ok();
+                User user = await _userManager.FindByNameAsync(signInForm.UserName);
+                var roles = await _userManager.GetRolesAsync(user);
+                return Ok(new { user.UserName, user.Email, Role = roles.First()});
             }
 
             if (result.IsLockedOut)

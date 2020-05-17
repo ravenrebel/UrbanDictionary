@@ -170,13 +170,15 @@ namespace UrbanDictionary
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
-
+           
             if (!env.IsDevelopment())
             {
                 app.UseSpaStaticFiles();
             }
 
             app.UseRouting();
+
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
