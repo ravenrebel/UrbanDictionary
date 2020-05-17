@@ -50,6 +50,7 @@ namespace UrbanDictionary.XUnit
             var res = testService.GetAll();
 
             Assert.NotNull(res);
+
         }
         [Fact]
         public void GetRandom_test()
@@ -102,7 +103,7 @@ namespace UrbanDictionary.XUnit
 
             WordService testService = new WordService(_repoWrapper.Object, _mapper.Object);
 
-            var res = testService.GetByName("test",0);
+            var res = testService.GetByName("test",0).AsQueryable().ToList();
 
             Assert.NotNull(res);
         }
@@ -133,35 +134,6 @@ namespace UrbanDictionary.XUnit
             var res = testService.TryDelete(1);
 
             Assert.True(res);
-
-        }
-
-        [Fact]
-        public void FalseExpectedTryDelete_test()
-        {
-            _repoWrapper.Setup(w => w.Word.FindByCondition(It.IsAny<Expression<Func<Word, bool>>>())).Returns(new List<Word> {
-                new Word
-                {
-                    Id=1,
-                    Name="test",
-                    WordStatus=WordStatus.Ñonfirmed,
-                    Definition="",
-                    Example = "",
-                    LikesCount=1,
-                    DislikesCount = 0,
-                    CreationDate = new DateTime(2020,01,02),
-                    Author=new User
-                    {
-                        UserName="Lolka"
-                    }
-                }
-            }.AsQueryable());
-
-            WordService testService = new WordService(_repoWrapper.Object, _mapper.Object);
-
-            var res = testService.TryDelete(0);
-
-            Assert.False(res);
 
         }
 

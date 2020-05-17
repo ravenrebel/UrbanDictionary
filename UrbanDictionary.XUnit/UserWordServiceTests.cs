@@ -181,9 +181,6 @@ namespace UrbanDictionary.XUnit
 
             UserWordsService testService = new UserWordsService(_repoWrapper.Object, _httpContextAccessor.Object, _mapper.Object);
 
-            //var res = testService.TryAddToSavedWords(_repoWrapper.Object.Word.FindByCondition(a=>a.Id==2).FirstOrDefault().Id, _currentUser);
-
-            //Assert.True(res);
         }
     }
 }

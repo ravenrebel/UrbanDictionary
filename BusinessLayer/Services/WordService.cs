@@ -31,7 +31,7 @@ namespace UrbanDictionary.BusinessLayer.Services
 
         public IEnumerable<WordDTO> GetAll()
         {
-            return _mapper.MapToDTO(_repoWrapper.Word.FindAll());
+            return _mapper.MapToDTO(_repoWrapper.Word.FindAll()).ToList();
         }
 
         public IEnumerable<WordDTO> GetRandom()

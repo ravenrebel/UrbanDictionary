@@ -96,28 +96,5 @@ namespace UrbanDictionary.XUnit
 
         }
 
-        [Fact]
-        public void FalseExpectedTryDelete_test()
-        {
-            _repoWrapper.Setup(w => w.User.FindByCondition(It.IsAny<Expression<Func<User, bool>>>())).Returns(new List<User> {
-                new User
-                {
-                    UserName="Lolka",
-                    Email="lolka@gmail.com"
-                },
-                new User
-                {
-                    UserName="Danila",
-                    Email="danila@gmail.com"
-                }
-            }.AsQueryable());
-
-            UserService testService = new UserService(_repoWrapper.Object, _mapper.Object);
-
-            bool res = testService.TryDelete("");
-
-            Assert.False(res);
-
-        }
     }
 }
