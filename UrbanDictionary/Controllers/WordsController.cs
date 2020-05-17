@@ -63,21 +63,21 @@ namespace UrbanDictionary.Controllers
             return _serviceWrapper.Word.GetCountByName(name);
         }
 
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("delete/{id}"), Authorize(Roles = "Moderator")]
         public ActionResult Delete(long id)
         {
             if (_serviceWrapper.Word.TryDelete(id)) return Ok(id);
             return NotFound(id);
         }
 
-        [HttpPut("approve/{id}")]
+        [HttpPut("approve/{id}"), Authorize(Roles = "Moderator")]
         public ActionResult Approve(long id)
         {
             if (_serviceWrapper.Word.TryApproveWord(id)) return Ok(id);
             return BadRequest(id);
         }
 
-        [HttpPut("disapprove/{id}")]
+        [HttpPut("disapprove/{id}"), Authorize(Roles = "Moderator")]
         public ActionResult Disapprove(long id)
         {
             if (_serviceWrapper.Word.TryDisapproveWord(id)) return Ok(id);
@@ -88,6 +88,20 @@ namespace UrbanDictionary.Controllers
         public ActionResult<IEnumerable<WordDTO>> GetByTag(string tag)
         {
             return Ok(_serviceWrapper.Word.GetByTagName(tag));
+        }
+
+        [HttpPut("like/{id}")]
+        public ActionResult Like(long id)
+        {
+            if (_serviceWrapper.Word.TryLikeWord(id)) return Ok(id);
+            return NotFound(id);
+        }
+
+        [HttpPut("dislike/{id}")]
+        public ActionResult Dislike(long id)
+        {
+            if (_serviceWrapper.Word.TryDislikeWord(id)) return Ok(id);
+            return NotFound(id);
         }
     }
 }

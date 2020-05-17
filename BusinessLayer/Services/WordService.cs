@@ -36,8 +36,8 @@ namespace UrbanDictionary.BusinessLayer.Services
 
         public IEnumerable<WordDTO> GetRandom()
         {
-            string name = _repoWrapper.Word.FindAll().OrderBy(w => Guid.NewGuid()).First().Name;
-            return _mapper.MapToDTO(_repoWrapper.Word.FindByCondition(w => w.Name.Equals(name)));
+            string name = _repoWrapper.Word.FindByCondition(w => w.WordStatus.Equals(WordStatus.Сonfirmed)).OrderBy(w => Guid.NewGuid()).First().Name;
+            return _mapper.MapToDTO(_repoWrapper.Word.FindByCondition(w => w.Name.Equals(name) && w.WordStatus.Equals(WordStatus.Сonfirmed)));
         }
 
         public IEnumerable<WordDTO> GetByName(string name, int skipNumber)
@@ -106,7 +106,8 @@ namespace UrbanDictionary.BusinessLayer.Services
 
         public IEnumerable<WordDTO> GetByTagName(string tag)
         {
-            return _mapper.MapToDTO( _repoWrapper.Word.FindByCondition(w => w.WordTags.Any(wt => wt.Tag.Name.Equals(tag))));
+            return _mapper.MapToDTO( _repoWrapper.Word
+                .FindByCondition(w => w.WordTags.Any(wt => wt.Tag.Name.Equals(tag)) && w.WordStatus.Equals(WordStatus.Сonfirmed)));
         }
 
         public long GetCountByName(string name)
@@ -116,6 +117,32 @@ namespace UrbanDictionary.BusinessLayer.Services
                 .OrderByDescending(w => w.LikesCount)
                 .ThenBy(w => w.DislikesCount)
                 .Count();
+        }
+
+        public bool TryLikeWord(long id)
+        {
+            Word word = _repoWrapper.Word.FindByCondition(w => w.Id.Equals(id)).FirstOrDefault();
+            if (word != null)
+            {
+                word.LikesCount = word.LikesCount + 1;
+                _repoWrapper.Word.Update(word);
+                _repoWrapper.Save();
+                return true;
+            }
+            return false;
+        }
+
+        public bool TryDislikeWord(long id)
+        {
+            Word word = _repoWrapper.Word.FindByCondition(w => w.Id.Equals(id)).FirstOrDefault();
+            if (word != null)
+            {
+                word.DislikesCount = word.DislikesCount + 1;
+                _repoWrapper.Word.Update(word);
+                _repoWrapper.Save();
+                return true;
+            }
+            return false;
         }
     }
 }
