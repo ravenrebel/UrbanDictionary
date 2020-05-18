@@ -36,8 +36,10 @@ namespace UrbanDictionary.BusinessLayer.Services
 
         public IEnumerable<WordDTO> GetRandom()
         {
-            string name = _repoWrapper.Word.FindByCondition(w => w.WordStatus.Equals(WordStatus.Сonfirmed)).OrderBy(w => Guid.NewGuid()).First().Name;
-            return _mapper.MapToDTO(_repoWrapper.Word.FindByCondition(w => w.Name.Equals(name) && w.WordStatus.Equals(WordStatus.Сonfirmed)));
+            Word word = _repoWrapper.Word.FindByCondition(w => w.WordStatus.Equals(WordStatus.Сonfirmed)).OrderBy(w => Guid.NewGuid()).FirstOrDefault();
+            if (word != null)
+                return _mapper.MapToDTO(_repoWrapper.Word.FindByCondition(w => w.Name.Equals(word.Name) && w.WordStatus.Equals(WordStatus.Сonfirmed)));
+            else return new List<WordDTO>();
         }
 
         public IEnumerable<WordDTO> GetByName(string name, int skipNumber)
