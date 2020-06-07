@@ -43,7 +43,7 @@ namespace UrbanDictionary.Controllers
             {
                 return Ok(id);
             }
-            return BadRequest(id);
+            return NotFound(id);
         }
 
         [HttpDelete("deleteSavedWord/{id}")]
@@ -68,14 +68,14 @@ namespace UrbanDictionary.Controllers
         }
 
         [HttpPost("createWord")]
-        public ActionResult<CreateEditFormWordDTO> Create(CreateEditFormWordDTO word)
+        public ActionResult<CreateWordFormDTO> Create(CreateWordFormDTO word)
         {
             if (_serviceWrapper.UserWords.TryCreateWord(word)) return Created("", word);
             return BadRequest(word);
         }
 
         [HttpPut("editWord")]
-        public ActionResult<CreateEditFormWordDTO> Edit(CreateEditFormWordDTO word)
+        public ActionResult<CreateWordFormDTO> Edit(CreateWordFormDTO word)
         {
             if (_serviceWrapper.UserWords.TryEditCreatedWord(word))
             {
@@ -105,7 +105,7 @@ namespace UrbanDictionary.Controllers
                 {
                     return Ok(id);
                 }
-            return BadRequest(id);
+            return NotFound(id);
         }
     }
 }
