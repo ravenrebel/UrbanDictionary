@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -55,16 +54,8 @@ namespace UrbanDictionary
                     });
             });
 
-            //services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
             services.AddHttpContextAccessor();
-
             services.AddControllersWithViews();
-
-            // In production, the Angular files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/dist";
-            });
 
             services.AddSwaggerGen(c => 
             {
@@ -90,15 +81,15 @@ namespace UrbanDictionary
             //    options.ClientSecret = Configuration.GetSection("GoogleAuthentication:GoogleClientSecret").Value;
             //});
 
-            services.Configure<DataProtectionTokenProviderOptions>(options =>
-                options.TokenLifespan = TimeSpan.FromHours(3));
+            //services.Configure<DataProtectionTokenProviderOptions>(options =>
+            //    options.TokenLifespan = TimeSpan.FromHours(3));
 
             services.ConfigureApplicationCookie(options =>
             {
                 options.Cookie.HttpOnly = true;
                 options.ExpireTimeSpan = TimeSpan.FromDays(5);
-                options.LoginPath = "/api/account/login";//??
-                options.LogoutPath = "/api/account/logout";//??
+                options.LoginPath = "/api/account/login";
+                options.LogoutPath = "/api/account/logout";
             });
         }
 
@@ -107,7 +98,7 @@ namespace UrbanDictionary
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
 
-            List<string> roles = new List<string>() { "Admin", "Moderator", "User" };
+            var roles = new List<string>() { "Admin", "Moderator", "User" };
             foreach (string role in roles)
             {
                 if (!await roleManager.RoleExistsAsync(role))
@@ -170,14 +161,7 @@ namespace UrbanDictionary
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
-           
-            if (!env.IsDevelopment())
-            {
-                app.UseSpaStaticFiles();
-            }
-
             app.UseRouting();
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -195,20 +179,6 @@ namespace UrbanDictionary
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "UrbanDictionary API V1");
-            });
-
-            app.UseSpa(spa =>
-            {
-                // To learn more about options for serving an Angular SPA from ASP.NET Core,
-                // see https://go.microsoft.com/fwlink/?linkid=864501
-
-                spa.Options.SourcePath = "ClientApp";
-
-                if (env.IsDevelopment())
-                {
-                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
-                    //spa.UseAngularCliServer(npmScript: "start");
-                }
             });
         }
     }

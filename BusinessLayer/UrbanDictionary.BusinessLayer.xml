@@ -361,6 +361,20 @@
             <param name="tag"><see cref="P:UrbanDictionary.BusinessLayer.DTO.TagDTO.Name"/></param>
             <returns><see cref="T:UrbanDictionary.BusinessLayer.DTO.WordDTO"/> collection</returns>
         </member>
+        <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IWordService.TryLikeWord(System.Int64)">
+            <summary>
+            Likes a certain <see cref="T:UrbanDictionary.DataAccess.Entities.Word"/> return true if exists.
+            </summary>
+            <param name="id"></param>
+            <returns>Returns true if <see cref="T:UrbanDictionary.DataAccess.Entities.Word"/> is successfully liked.</returns>
+        </member>
+        <member name="M:UrbanDictionary.BusinessLayer.Services.Contracts.IWordService.TryDislikeWord(System.Int64)">
+            <summary>
+            Dislikes a certain <see cref="T:UrbanDictionary.DataAccess.Entities.Word"/> return true if exists.
+            </summary>
+            <param name="id"></param>
+            <returns>Returns true if <see cref="T:UrbanDictionary.DataAccess.Entities.Word"/> is successfully disliked.</returns>
+        </member>
         <member name="T:UrbanDictionary.BusinessLayer.Services.ServiceWrapper">
             <inheritdoc cref="T:UrbanDictionary.BusinessLayer.Services.Contracts.IServiceWrapper"/>
         </member>
