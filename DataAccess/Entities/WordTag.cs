@@ -12,14 +12,12 @@ namespace UrbanDictionary.DataAccess.Entities
         /// <see cref="Entities.Word"/> Id of words with particular <see cref="Tag"/>.
         /// </summary>
         public long WordId { get; set; }
-        [ForeignKey("WordId")]
         public Word Word { get; set; }
 
         /// <summary>
         /// <see cref="Entities.Tag"/> Id of words with particular <see cref="Word"/>.
         /// </summary>
         public long TagId { get; set; }
-        [ForeignKey("TagId")]
         public Tag Tag { get; set; }
     }
 }

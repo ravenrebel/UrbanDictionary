@@ -31,8 +31,7 @@ namespace UrbanDictionary.BusinessLayer.DTO.Mapper
             dto.CreationDate = entity.CreationDate;
             dto.WordStatus = entity.WordStatus;
             dto.AuthorName = _repoWrapper.User.FindByCondition(u => u.Id.Equals(entity.AuthorId)).FirstOrDefault()?.UserName;
-            IEnumerable<string> tags = _repoWrapper.Tag.FindByCondition(t => t.WordTags.Any(w => w.WordId.Equals(entity.Id))).Select(t => t.Name);
-            dto.Tags = tags;
+            dto.Tags = _repoWrapper.Tag.FindByCondition(t => t.WordTags.Any(w => w.WordId.Equals(entity.Id))).Select(t => t.Name).ToList();
 
             return dto;
         }

@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using UrbanDictionary.DataAccess.Entities;
 
 namespace UrbanDictionary.DataAccess.Data
@@ -74,7 +71,6 @@ namespace UrbanDictionary.DataAccess.Data
                 .HasOne<Word>(uw => uw.SavedWord)
                 .WithMany(w => w.UserSavedWords)
                 .HasForeignKey(uw => uw.SavedWordId);
-
         }
     }
 }

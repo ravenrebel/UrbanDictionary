@@ -43,8 +43,7 @@ namespace UrbanDictionary.BusinessLayer.Services.Contracts
         ///  Deletes word and return true if exists.
         /// </summary>
         /// <param name="id"><see cref="WordDTO.Id"/></param>
-        /// <returns>Returns true if word is successfully deleted.</returns>
-        bool TryDelete(long id);
+        void Delete(long id);
         /// <summary>
         /// Gets top 10 words with the greatest <see cref="Word.LikesCount"/> and the smallest <see cref="Word.DislikesCount"/>. 
         /// </summary>
@@ -60,13 +59,13 @@ namespace UrbanDictionary.BusinessLayer.Services.Contracts
         /// </summary>
         /// <param name="id"><see cref="WordDTO.Id"/></param>
         /// <returns>Returns true if word is successfully approved.</returns>        
-        bool TryApproveWord(long id);
+        bool ApproveWord(long id);
         /// <summary>
         /// Disapproves <see cref="Word"/> and return true if exists and its status is <see cref="WordStatus.OnModeration"/>.
         /// </summary>
         /// <param name="id"><see cref="WordDTO.Id"/></param>
         /// <returns>Returns true if <see cref="Word"/> is successfully disapproved.</returns>        
-        bool TryDisapproveWord(long id);
+        bool DisapproveWord(long id);
         /// <summary>
         ///  Gets words by certain <see cref="Tag.Name"/>.
         /// </summary>
@@ -78,12 +77,12 @@ namespace UrbanDictionary.BusinessLayer.Services.Contracts
         /// </summary>
         /// <param name="id"></param>
         /// <returns>Returns true if <see cref="Word"/> is successfully liked.</returns>
-        bool TryLikeWord(long id);
+        bool LikeWord(long id);
         /// <summary>
         /// Dislikes a certain <see cref="Word"/> return true if exists.
         /// </summary>
         /// <param name="id"></param>
         /// <returns>Returns true if <see cref="Word"/> is successfully disliked.</returns>
-        bool TryDislikeWord(long id);
+        bool DislikeWord(long id);
     }
 }

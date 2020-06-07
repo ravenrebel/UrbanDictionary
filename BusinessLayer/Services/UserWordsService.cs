@@ -92,7 +92,7 @@ namespace UrbanDictionary.BusinessLayer.Services
             return null;
         }
 
-        public bool TryCreateWord(CreateEditFormWordDTO wordDto)
+        public bool TryCreateWord(CreateWordFormDTO wordDto)
         {
             if (_currentUser != null)
             { 
@@ -123,7 +123,7 @@ namespace UrbanDictionary.BusinessLayer.Services
             return false;
         }
 
-        public bool TryEditCreatedWord(CreateEditFormWordDTO wordDto)
+        public bool TryEditCreatedWord(CreateWordFormDTO wordDto)
         {
             if (_currentUser != null)
             { 

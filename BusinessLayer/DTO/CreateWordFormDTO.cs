@@ -8,7 +8,7 @@ namespace UrbanDictionary.BusinessLayer.DTO
     /// Contains information about <see cref="Word"/>  that <see cref="User"/> can create and edit.
     /// Also contains its primary key.
     /// </summary>
-    public class CreateEditFormWordDTO
+    public class CreateWordFormDTO
     {
         ///<inheritdoc cref="BaseEntity.Id"/>     
         public long Id { get; set; }

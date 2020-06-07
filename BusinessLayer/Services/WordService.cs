@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 using UrbanDictionary.BusinessLayer.DTO;
 using UrbanDictionary.BusinessLayer.DTO.Mapper;
 using UrbanDictionary.BusinessLayer.Services.Contracts;
@@ -34,9 +32,16 @@ namespace UrbanDictionary.BusinessLayer.Services
             return _mapper.MapToDTO(_repoWrapper.Word.FindAll());
         }
 
+        private IQueryable<Word> GetConfirmed()
+        {
+            return _repoWrapper.Word.FindByCondition(w => w.WordStatus.Equals(WordStatus.Сonfirmed));
+        }
+
         public IEnumerable<WordDTO> GetRandom()
         {
-            Word word = _repoWrapper.Word.FindByCondition(w => w.WordStatus.Equals(WordStatus.Сonfirmed)).OrderBy(w => Guid.NewGuid()).FirstOrDefault();
+            Random random = new Random();
+            int order = random.Next();
+            Word word = GetConfirmed().OrderBy(w => order).FirstOrDefault();
             if (word != null)
                 return _mapper.MapToDTO(_repoWrapper.Word.FindByCondition(w => w.Name.Equals(word.Name) && w.WordStatus.Equals(WordStatus.Сonfirmed)));
             else return new List<WordDTO>();
@@ -44,30 +49,21 @@ namespace UrbanDictionary.BusinessLayer.Services
 
         public IEnumerable<WordDTO> GetByName(string name, int skipNumber)
         {
-            return _mapper.MapToDTO(_repoWrapper.Word
-                .FindByCondition(w => w.Name.Contains(name) && w.WordStatus.Equals(WordStatus.Сonfirmed))
+            return _mapper.MapToDTO(GetByName(name)
                 .OrderByDescending(w => w.LikesCount)
                 .ThenBy(w => w.DislikesCount)
                 .Skip(skipNumber));
         }
 
-        public bool TryDelete(long id)
+        public void Delete(long id)
         {
-            Word word = _repoWrapper.Word.FindByCondition(w => w.Id.Equals(id)).FirstOrDefault();
-            if (word != null)
-            {
-                _repoWrapper.Word.Delete(word);
-                _repoWrapper.Save();
-
-                return true;
-            }
-            return false;
+             _repoWrapper.Word.Delete(_repoWrapper.Word.FindByCondition(w => w.Id.Equals(id)).FirstOrDefault());
+             _repoWrapper.Save();
         }
 
         public IEnumerable<WordDTO> GetTopTen()
         {
-            return _mapper.MapToDTO( _repoWrapper.Word
-                .FindByCondition(w => w.WordStatus.Equals(WordStatus.Сonfirmed))
+            return _mapper.MapToDTO(GetConfirmed()
                 .OrderByDescending(w => w.LikesCount)
                 .ThenBy(w => w.DislikesCount)
                 .Take(10));
@@ -75,33 +71,28 @@ namespace UrbanDictionary.BusinessLayer.Services
 
         public IEnumerable<WordDTO> GetLastTenAdded()
         {
-            return _mapper.MapToDTO(_repoWrapper.Word
-                .FindByCondition(w => w.WordStatus.Equals(WordStatus.Сonfirmed))
-                .OrderByDescending(w => w.CreationDate).Take(10));
+            return _mapper.MapToDTO(GetConfirmed().OrderByDescending(w => w.CreationDate).Take(10));
         }
 
-        public bool TryApproveWord(long id)
+        public bool ApproveWord(long id)
         {
             return ChangeWordStatus(id, WordStatus.Сonfirmed);
         }
 
-        public bool TryDisapproveWord(long id)
+        public bool DisapproveWord(long id)
         {
             return ChangeWordStatus(id, WordStatus.Unconfirmed);
         }
 
         private bool ChangeWordStatus(long id, WordStatus status)
         {
-            Word word = _repoWrapper.Word.FindByCondition(w => w.Id.Equals(id)).FirstOrDefault();
+            Word word = _repoWrapper.Word.FindByCondition(w => w.Id.Equals(id) && w.WordStatus.Equals(WordStatus.OnModeration)).FirstOrDefault();
             if (word != null)
             {
-                if (word.WordStatus.Equals(WordStatus.OnModeration))
-                {
-                    word.WordStatus = status;
-                    _repoWrapper.Word.Update(word);
-                    _repoWrapper.Save();
-                    return true;
-                }
+                word.WordStatus = status;
+                _repoWrapper.Word.Update(word);
+                _repoWrapper.Save();
+               return true;
             }
             return false;
         }
@@ -114,16 +105,17 @@ namespace UrbanDictionary.BusinessLayer.Services
 
         public long GetCountByName(string name)
         {
-            return _repoWrapper.Word
-                .FindByCondition(w => w.Name.Contains(name) && w.WordStatus.Equals(WordStatus.Сonfirmed))
-                .OrderByDescending(w => w.LikesCount)
-                .ThenBy(w => w.DislikesCount)
-                .Count();
+            return GetByName(name).Count();
         }
 
-        public bool TryLikeWord(long id)
+        private IQueryable<Word> GetByName(string name)
         {
-            Word word = _repoWrapper.Word.FindByCondition(w => w.Id.Equals(id)).FirstOrDefault();
+            return _repoWrapper.Word.FindByCondition(w => w.Name.Contains(name) && w.WordStatus.Equals(WordStatus.Сonfirmed));
+        }
+
+        public bool LikeWord(long id)
+        {
+            Word word = GetConfirmedById(id);
             if (word != null)
             {
                 word.LikesCount = word.LikesCount + 1;
@@ -134,9 +126,9 @@ namespace UrbanDictionary.BusinessLayer.Services
             return false;
         }
 
-        public bool TryDislikeWord(long id)
+        public bool DislikeWord(long id)
         {
-            Word word = _repoWrapper.Word.FindByCondition(w => w.Id.Equals(id)).FirstOrDefault();
+            Word word = GetConfirmedById(id);
             if (word != null)
             {
                 word.DislikesCount = word.DislikesCount + 1;
@@ -145,6 +137,11 @@ namespace UrbanDictionary.BusinessLayer.Services
                 return true;
             }
             return false;
+        }
+
+        private Word GetConfirmedById(long id)
+        {
+            return _repoWrapper.Word.FindByCondition(w => w.Id.Equals(id) && w.WordStatus.Equals(WordStatus.Сonfirmed)).FirstOrDefault();
         }
     }
 }

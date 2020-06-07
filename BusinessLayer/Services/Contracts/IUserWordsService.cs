@@ -47,13 +47,13 @@ namespace UrbanDictionary.BusinessLayer.Services.Contracts
         /// </summary>
         /// <param name="wordDto"></param>
         /// <returns>Returns false when operation did not succeed.</returns>
-        bool TryCreateWord(CreateEditFormWordDTO wordDto);
+        bool TryCreateWord(CreateWordFormDTO wordDto);
         /// <summary>
         /// Edits <see cref="Word"/> if current <see cref="User"/> is its author and returns true if succeeded.
         /// </summary>
         /// <param name="wordDTO"></param>
         /// <returns>Returns false when operation did not succeed.</returns>
-        bool TryEditCreatedWord(CreateEditFormWordDTO wordDTO);
+        bool TryEditCreatedWord(CreateWordFormDTO wordDTO);
         /// <summary>
         /// Deletes <see cref="Word"/> if current <see cref="User"/> is its author and returns true if succeeded.
         /// </summary>

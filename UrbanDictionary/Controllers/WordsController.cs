@@ -51,10 +51,7 @@ namespace UrbanDictionary.Controllers
         [HttpGet("search/{name}/{skipNumber}")]
         public ActionResult<IEnumerable<WordDTO>> GetByName(string name, int skipNumber)
         {
-            var words = _serviceWrapper.Word.GetByName(name, skipNumber);
-            if (words != null)
-                return Ok(words);
-            else return BadRequest(name);
+            return Ok(_serviceWrapper.Word.GetByName(name, skipNumber));
         }
 
         [HttpGet("searchCount/{name}")]
@@ -66,22 +63,22 @@ namespace UrbanDictionary.Controllers
         [HttpDelete("delete/{id}"), Authorize(Roles = "Moderator")]
         public ActionResult Delete(long id)
         {
-            if (_serviceWrapper.Word.TryDelete(id)) return Ok(id);
-            return NotFound(id);
+            _serviceWrapper.Word.Delete(id);
+            return Ok(id);
         }
 
         [HttpGet("approve/{id}"), Authorize(Roles = "Moderator")]
         public ActionResult Approve(long id)
         {
-            if (_serviceWrapper.Word.TryApproveWord(id)) return Ok(id);
-            return BadRequest(id);
+            if (_serviceWrapper.Word.ApproveWord(id)) return Ok(id);
+            return NotFound(id);
         }
 
         [HttpGet("disapprove/{id}"), Authorize(Roles = "Moderator")]
         public ActionResult Disapprove(long id)
         {
-            if (_serviceWrapper.Word.TryDisapproveWord(id)) return Ok(id);
-            return BadRequest(id);
+            if (_serviceWrapper.Word.DisapproveWord(id)) return Ok(id);
+            return NotFound(id);
         }
 
         [HttpGet("getByTag/{tag}")]
@@ -93,14 +90,14 @@ namespace UrbanDictionary.Controllers
         [HttpGet("like/{id}")]
         public ActionResult Like(long id)
         {
-            if (_serviceWrapper.Word.TryLikeWord(id)) return Ok(id);
+            if (_serviceWrapper.Word.LikeWord(id)) return Ok(id);
             return NotFound(id);
         }
 
         [HttpGet("dislike/{id}")]
         public ActionResult Dislike(long id)
         {
-            if (_serviceWrapper.Word.TryDislikeWord(id)) return Ok(id);
+            if (_serviceWrapper.Word.DislikeWord(id)) return Ok(id);
             return NotFound(id);
         }
     }

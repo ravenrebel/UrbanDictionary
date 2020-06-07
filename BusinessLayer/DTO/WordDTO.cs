@@ -41,7 +41,7 @@ namespace UrbanDictionary.BusinessLayer.DTO
         /// <inheritdoc cref="Word.DislikesCount"/>
         public int DislikesCount { get; set; }
 
-        /// <inheritdoc cref="CreateEditFormWordDTO.Tags"/>
+        /// <inheritdoc cref="CreateWordFormDTO.Tags"/>
         public IEnumerable<string> Tags { get; set; }
     }
 }
