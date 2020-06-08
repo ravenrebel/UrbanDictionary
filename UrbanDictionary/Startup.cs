@@ -39,8 +39,8 @@ namespace UrbanDictionary
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContextPool<UrbanDictionaryDBContext>(options =>
-                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddDbContextPool<UrbanDictionaryDBContext>(options =>
+            //    options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddIdentity<User, IdentityRole>()
                     .AddEntityFrameworkStores<UrbanDictionaryDBContext>()
                     .AddDefaultTokenProviders();
@@ -135,13 +135,13 @@ namespace UrbanDictionary
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            //builder.Register(c =>
-            //{
-            //    var config = c.Resolve<IConfiguration>();
-            //    var options = new DbContextOptionsBuilder<UrbanDictionaryDBContext>();
-            //    options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
-            //    return new UrbanDictionaryDBContext(options.Options);
-            //});
+            builder.Register(c =>
+            {
+                var config = c.Resolve<IConfiguration>();
+                var options = new DbContextOptionsBuilder<UrbanDictionaryDBContext>();
+                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
+                return new UrbanDictionaryDBContext(options.Options);
+            });
             builder.RegisterType<RepositoryWrapper>().As<IRepositoryWrapper>();
             builder.RegisterType<ServiceWrapper>().As<IServiceWrapper>();
             builder.RegisterType<WordServiceMapper>().As<IMapper<Word, WordDTO>>();

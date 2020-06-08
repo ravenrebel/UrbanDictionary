@@ -39,7 +39,7 @@ namespace UrbanDictionary.Controllers
             return Ok(_serviceWrapper.User.GetByUserName(name));
         }
 
-        [HttpGet("changeRole/{id}")]
+        [HttpPost("changeRole/{id}/{roleName}")]
         public async Task<ActionResult> ChangRole(string id, string roleName)
         {
             var role = await _roleManager.FindByNameAsync(roleName);

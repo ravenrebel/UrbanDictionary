@@ -67,14 +67,14 @@ namespace UrbanDictionary.Controllers
             return Ok(id);
         }
 
-        [HttpGet("approve/{id}"), Authorize(Roles = "Moderator")]
+        [HttpPost("approve/{id}"), Authorize(Roles = "Moderator")]
         public ActionResult Approve(long id)
         {
             if (_serviceWrapper.Word.ApproveWord(id)) return Ok(id);
             return NotFound(id);
         }
 
-        [HttpGet("disapprove/{id}"), Authorize(Roles = "Moderator")]
+        [HttpPost("disapprove/{id}"), Authorize(Roles = "Moderator")]
         public ActionResult Disapprove(long id)
         {
             if (_serviceWrapper.Word.DisapproveWord(id)) return Ok(id);
@@ -87,14 +87,14 @@ namespace UrbanDictionary.Controllers
             return Ok(_serviceWrapper.Word.GetByTagName(tag));
         }
 
-        [HttpGet("like/{id}")]
+        [HttpPost("like/{id}")]
         public ActionResult Like(long id)
         {
             if (_serviceWrapper.Word.LikeWord(id)) return Ok(id);
             return NotFound(id);
         }
 
-        [HttpGet("dislike/{id}")]
+        [HttpPost("dislike/{id}")]
         public ActionResult Dislike(long id)
         {
             if (_serviceWrapper.Word.DislikeWord(id)) return Ok(id);
