@@ -64,7 +64,9 @@ namespace UrbanDictionary
                                   builder =>
                                   {
                                       builder.WithOrigins("http://localhost:4200",
-                                                          "https://urban-dictionary-ua.herokuapp.com");
+                                                          "https://urban-dictionary-ua.herokuapp.com")
+                                      .AllowAnyHeader()
+                                      .AllowAnyMethod();
                                   });
             });
 
