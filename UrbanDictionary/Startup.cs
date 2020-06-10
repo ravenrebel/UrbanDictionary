@@ -32,6 +32,8 @@ namespace UrbanDictionary
             Configuration = configuration;
         }
 
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public IConfiguration Configuration { get; }
 
         public ILifetimeScope AutofacContainer { get; private set; }
@@ -55,6 +57,17 @@ namespace UrbanDictionary
             });
 
             services.AddHttpContextAccessor();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                  builder =>
+                                  {
+                                      builder.WithOrigins("http://localhost:4200",
+                                                          "https://urban-dictionary-ua.herokuapp.com");
+                                  });
+            });
+
             services.AddControllersWithViews();
 
             services.AddSwaggerGen(c => 
@@ -169,6 +182,7 @@ namespace UrbanDictionary
             app.UseCookiePolicy();
             app.UseAuthentication();
             app.UseRouting();
+            app.UseCors(MyAllowSpecificOrigins);
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

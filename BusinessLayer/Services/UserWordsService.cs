@@ -29,7 +29,7 @@ namespace UrbanDictionary.BusinessLayer.Services
         {
             _repoWrapper = repoWrapper;
             _wordMapper = wordMapper;
-            _currentUser = _repoWrapper.User.FindByCondition(u => u.UserName.Equals(httpContextAccessor.HttpContext.User.Identity.Name))
+            _currentUser = _repoWrapper?.User.FindByCondition(u => u.UserName.Equals(httpContextAccessor.HttpContext.User.Identity.Name))
                    .FirstOrDefault();
         }
 
