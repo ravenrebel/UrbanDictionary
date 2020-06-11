@@ -71,7 +71,7 @@ namespace UrbanDictionary.Controllers
         public ActionResult<CreateWordFormDTO> Create(CreateWordFormDTO word)
         {
             if (_serviceWrapper.UserWords.TryCreateWord(word)) return Created("", word);
-            return BadRequest(word);
+            return Ok(false);
         }
 
         [HttpPut("editWord")]
@@ -81,7 +81,7 @@ namespace UrbanDictionary.Controllers
             {
                 return Ok(word);
             }
-            return BadRequest(word);
+            return Ok(false);
         }
 
         [HttpDelete("deleteCreatedWord/{id}")]

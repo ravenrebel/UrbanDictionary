@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -34,7 +33,7 @@ namespace UrbanDictionary.Controllers
             User registeredUser = await _userManager.FindByNameAsync(signUpForm.UserName);
             if (registeredUser != null)
             {
-                return Ok();
+                return Ok(false);
             }
 
             User user = new User { Email = signUpForm.Email, UserName = signUpForm.UserName };
@@ -50,7 +49,7 @@ namespace UrbanDictionary.Controllers
                 return Ok(new { user.UserName, user.Email, Role = roles.First() });
             }
            
-            else return Ok();
+            else return Ok(false);
         }
 
         [HttpPost("signIn")]
@@ -75,11 +74,16 @@ namespace UrbanDictionary.Controllers
         }
 
         [HttpPost("signOut")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
             return Ok();
+        }
+
+        [HttpGet("currentUserName")]
+        public ActionResult<string> GetCurrentUserName()
+        {
+            return Ok(HttpContext.User.Identity.Name);
         }
     }
 }

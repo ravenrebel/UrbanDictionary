@@ -29,7 +29,7 @@ namespace UrbanDictionary.BusinessLayer.Services
         {
             _repoWrapper = repoWrapper;
             _wordMapper = wordMapper;
-            _currentUser = _repoWrapper?.User.FindByCondition(u => u.UserName.Equals(httpContextAccessor.HttpContext.User.Identity.Name))
+            _currentUser = _repoWrapper?.User.FindByCondition(u => u.UserName == httpContextAccessor.HttpContext.User.Identity.Name)
                    .FirstOrDefault();
         }
 
@@ -37,7 +37,7 @@ namespace UrbanDictionary.BusinessLayer.Services
         {
             if (_currentUser != null)
             {
-                return _wordMapper.MapToDTO(_repoWrapper.Word.FindByCondition(w => w.UserSavedWords.Any(uw => uw.UserId.Equals(_currentUser.Id))));
+                return _wordMapper.MapToDTO(_repoWrapper.Word.FindByCondition(w => w.UserSavedWords.Any(uw => uw.UserId == _currentUser.Id)));
             }
             return null;
         }
@@ -69,24 +69,26 @@ namespace UrbanDictionary.BusinessLayer.Services
         {
             if (_currentUser != null)
             {
-                UserSavedWord savedWord = _repoWrapper
-                        .UserSavedWords.FindByCondition(sw => sw.UserId.Equals(_currentUser.Id) && sw.SavedWordId.Equals(id))
-                        .FirstOrDefault();
-                if (savedWord != null)
-                {
-                    _repoWrapper.UserSavedWords.Delete(savedWord);
-                    _repoWrapper.Save();
-                    return true;
-                }
+                DeleteSavedWord(id);
+                return true;
             }
             return false;
+        }
+
+        public void DeleteSavedWord(long id)
+        {
+            UserSavedWord savedWord = _repoWrapper
+                    .UserSavedWords.FindByCondition(sw => sw.UserId == _currentUser.Id && sw.SavedWordId.Equals(id))
+                    .FirstOrDefault();
+            _repoWrapper.UserSavedWords.Delete(savedWord);
+            _repoWrapper.Save();
         }
 
         public IEnumerable<WordDTO> GetCreatedWords()
         {
             if (_currentUser != null)
             {
-                var createdWords = _repoWrapper.Word.FindByCondition(w => w.AuthorId.Equals(_currentUser.Id));
+                var createdWords = _repoWrapper.Word.FindByCondition(w => w.AuthorId == _currentUser.Id);
                 return _wordMapper.MapToDTO(createdWords);
             }
             return null;
@@ -96,40 +98,33 @@ namespace UrbanDictionary.BusinessLayer.Services
         {
             if (_currentUser != null)
             { 
-                if (wordDto.Name == null || wordDto.Definition == null) return false;
-                Word word = new Word { Definition = wordDto.Definition, Image = wordDto.Image, Example = wordDto.Example, Name = wordDto.Name,  AuthorId = _currentUser.Id };
-                _repoWrapper.Word.Create(word);
-
-                foreach (string tagName in wordDto.Tags.Distinct())
-                {
-                    Tag tag = _repoWrapper.Tag.FindByCondition(t => t.Name.Equals(tagName)).FirstOrDefault();
-                    if (tag == null)
-                    {
-                        tag = new Tag();
-                        tag.Name = tagName;
-                        _repoWrapper.Tag.Create(tag);
-                    }
-                    else
-                    {
-                        _repoWrapper.Tag.Attach(tag);
-                    }
-                    WordTag wordTag = new WordTag { Tag = tag, Word = word, TagId = tag.Id, WordId = word.Id };
-                    _repoWrapper.WordTag.Create(wordTag);
-                }
-
-                _repoWrapper.Save();
+                if (wordDto?.Name == null || wordDto.Definition == null) return false;
+                CreateWord(wordDto);
                 return true;
             }
             return false;
+        }
+
+        public void CreateWord(CreateWordFormDTO wordDto)
+        {
+            Word word = new Word { Definition = wordDto?.Definition, Image = wordDto.Image, Example = wordDto.Example, Name = wordDto.Name, AuthorId = _currentUser.Id };
+            _repoWrapper.Word.Create(word);
+
+            foreach (string tagName in wordDto.Tags.Distinct())
+            {
+                CreateTag(tagName, word);
+            }
+
+            _repoWrapper.Save();
         }
 
         public bool TryEditCreatedWord(CreateWordFormDTO wordDto)
         {
             if (_currentUser != null)
             { 
-                if (wordDto.Name == null || wordDto.Definition == null) return false;
+                if (wordDto?.Name == null || wordDto.Definition == null) return false;
 
-                Word word = _repoWrapper.Word.FindByCondition(w => w.Id.Equals(wordDto.Id) && w.AuthorId.Equals(_currentUser.Id)).FirstOrDefault();
+                Word word = _repoWrapper.Word.FindByCondition(w => w.Id.Equals(wordDto.Id) && w.AuthorId == _currentUser.Id).FirstOrDefault();
                 if (word != null)
                 {
                     word.Image = wordDto.Image;
@@ -148,19 +143,7 @@ namespace UrbanDictionary.BusinessLayer.Services
                     {
                         if (!oldTags.Keys.Contains(tagName))
                         {
-                            Tag tag = _repoWrapper.Tag.FindByCondition(t => t.Name.Equals(tagName)).FirstOrDefault();
-                            if (tag == null)
-                            {
-                                tag = new Tag();
-                                tag.Name = tagName;
-                                _repoWrapper.Tag.Create(tag);
-                            }
-                            else
-                            {
-                                _repoWrapper.Tag.Attach(tag);
-                            }
-                            WordTag wordTag = new WordTag { Tag = tag, Word = word, TagId = tag.Id, WordId = word.Id };
-                            _repoWrapper.WordTag.Create(wordTag);
+                            CreateTag(tagName, word);
                         }
                         else
                         {
@@ -180,20 +163,38 @@ namespace UrbanDictionary.BusinessLayer.Services
             return false;
         }
 
+        private void CreateTag(string tagName, Word word)
+        {
+            Tag tag = _repoWrapper.Tag.FindByCondition(t => t.Name == tagName).FirstOrDefault();
+            if (tag == null)
+            {
+                tag = new Tag();
+                tag.Name = tagName;
+                _repoWrapper.Tag.Create(tag);
+            }
+            else
+            {
+                _repoWrapper.Tag.Attach(tag);
+            }
+            WordTag wordTag = new WordTag { Tag = tag, Word = word, TagId = tag.Id, WordId = word.Id };
+            _repoWrapper.WordTag.Create(wordTag);
+        }
+
         public bool TryDeleteCreatedWord(long id)
         {
             if (_currentUser != null)
             {
-                Word word = _repoWrapper.Word.FindByCondition(w => w.Id.Equals(id) && w.AuthorId.Equals(_currentUser.Id)).FirstOrDefault();
-                if (word != null)
-                {
-                    _repoWrapper.Word.Delete(word);
-                    _repoWrapper.Save();
-
-                    return true;
-                }
+                DeleteCreatedWord(id);
+                return true;
             } 
             return false;
+        }
+
+        public void DeleteCreatedWord(long id)
+        {
+             Word word = _repoWrapper.Word.FindByCondition(w => w.Id.Equals(id) && w.AuthorId == _currentUser.Id).FirstOrDefault();
+              _repoWrapper.Word.Delete(word);
+              _repoWrapper.Save();
         }
     }
 }

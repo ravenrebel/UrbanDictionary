@@ -182,9 +182,9 @@ namespace UrbanDictionary
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-            app.UseAuthentication();
             app.UseRouting();
             app.UseCors(MyAllowSpecificOrigins);
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
